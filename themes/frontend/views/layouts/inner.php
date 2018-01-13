@@ -25,25 +25,21 @@
 
     $cs->registerCssFile($baseUrl.'/css/bootstrap.min.css');
     $cs->registerCssFile($baseUrl.'/css/bootstrap-rtl.min.css');
-    $cs->registerCssFile($baseUrl.'/css/bootstrap-select.min.css');
     $cs->registerCssFile($baseUrl.'/css/fontiran.css');
     $cs->registerCssFile($baseUrl.'/css/font-awesome.css');
-    $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.css?3.3');
-    $cs->registerCssFile($baseUrl.'/css/responsive-theme.css?3.3');
+    $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.css');
+    $cs->registerCssFile($baseUrl.'/css/responsive-theme.css');
 
     $cs->registerScriptFile($baseUrl.'/js/bootstrap.min.js', CClientScript::POS_END);
-    $cs->registerScriptFile($baseUrl.'/js/bootstrap-select.min.js', CClientScript::POS_END);
-    $cs->registerScriptFile($baseUrl.'/js/jquery.nicescroll.min.js', CClientScript::POS_END);
-    $cs->registerScriptFile($baseUrl.'/js/jquery.script.js?3.3', CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl.'/js/jquery.script.js', CClientScript::POS_END);
     ?>
 </head>
 <body>
-<?php $this->renderPartial('//partial-views/_header');?>
-<?php if(isset($this->breadcrumbs) && $this->breadcrumbs):?>
-<?php $this->renderPartial('//partial-views/_breadcrumb');?>
-<?php endif; ?>
-<?php echo $content;?>
-<?php $this->renderPartial('//partial-views/_login_popup');?>
-<?php $this->renderPartial('//partial-views/_footer');?>
+<div class="page inner">
+    <?php $this->renderPartial('//partial-views/_header');?>
+    <?php echo $content;?>
+    <?php $this->renderPartial('//partial-views/_footer');?>
+    <?php $this->renderPartial('//partial-views/_login_popup');?>
+</div>
 </body>
 </html>

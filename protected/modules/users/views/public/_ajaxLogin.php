@@ -56,15 +56,18 @@ if(!isset($loading_parent) || empty($loading_parent))
     )); ?>
         <p id="login-error" class="errorMessage"></p>
         <p id="UserLoginForm_authenticate_field_em_" class="errorMessage"></p>
-        <div class="form-group">
-            <?php echo $form->textField($model, 'verification_field_value', array('class' => 'ltr text-right form-control', 'placeholder' => $model->getAttributeLabel('verification_field_value'))); ?>
-            <?php echo $form->error($model, 'verification_field_value'); ?>
-        </div>
+    <input class="text-field" type="text" name="Users[username]" placeholder="نام کاربری">
+    <input class="text-field" type="password" name="Users[password]" placeholder="رمز عبور">
+    <input class="text-field" type="password" name="Users[repeatPassword]" placeholder="تکرار رمز عبور">
+    <input class="text-field" type="email" name="Users[email]" placeholder="ایمیل">
+    <button class="btn btn-primary" type="submit"  value="ادامه">ادامه</button>
+    <p class="text-center">با کلیک کردن بر روی ادامه شما موافقت می کنید که <?= Yii::app()->name?> اجازه ارسال یک ایمیل تأیید به آدرس ارائه شده در بالا را بدهند.</p>
 
-        <div class="form-group">
-            <?php echo $form->passwordField($model, 'password', array('class' => 'form-control', 'placeholder' => 'رمز عبور')); ?>
-            <?php echo $form->error($model, 'password'); ?>
-        </div>
+        <?php echo $form->textField($model, 'verification_field_value', array('class' => 'ltr text-right text-field', 'placeholder' => $model->getAttributeLabel('verification_field_value'))); ?>
+        <?php echo $form->error($model, 'verification_field_value'); ?>
+
+        <?php echo $form->passwordField($model, 'password', array('class' => 'form-control', 'placeholder' => 'رمز عبور')); ?>
+        <?php echo $form->error($model, 'password'); ?>
 
         <div class="form-group text-right">
             <?= $form->checkBox($model,'rememberMe',array('id'=>'remember-me', 'class' => 'form-control')); ?>

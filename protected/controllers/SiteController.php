@@ -48,8 +48,14 @@ class SiteController extends Controller
         Yii::app()->theme = "frontend";
         $this->layout = "public";
 
-        $this->render('index', array(
-        ));
+        $cr = new CDbCriteria();
+        $cr->compare('title', 'گا', true);
+        $cr->compare('id', 2, false,"OR");
+
+
+        $slider = Tags::model()->findAll($cr);
+
+        $this->render('index', compact('slider'));
     }
 
     /**
@@ -129,7 +135,7 @@ class SiteController extends Controller
     {
         Yii::import('pages.models.*');
         Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/public';
+        $this->layout = '//layouts/inner';
         $model = Pages::model()->findByPk(2);
         $this->render('//site/pages/page', array('model' => $model));
     }

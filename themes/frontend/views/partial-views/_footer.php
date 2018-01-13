@@ -1,23 +1,22 @@
-<footer>
-    <div class="center-box relative">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <?php $this->renderPartial('//partial-views/_socials') ?>
-                <ul class="nav">
-                    <li><a href="<?= $this->createUrl('/terms') ?>">قوانین و مقررات</a></li>
-                    <li><a href="<?= $this->createUrl('/about') ?>">درباره ما</a></li>
-                    <li><a href="<?= $this->createUrl('/contact') ?>">تماس با ما</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right">
-                <div class="copyright-box">
-                    <span>کلیه حقوق مادی و معنوی این سایت متعلق به <span class="text-danger">شرکت آراخودرو</span> می‌باشد.</span>
-                    <br>
-                    <div class="ltr">
-                        <b>Copyright &copy; 2017 CarCadeh Co.</b>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="footer">
+    <div class="container">
+        <img src="svg/logo.jpg" class="logo">
+        <ul class="list-unstyled">
+            <li>
+                <span><a href="<?= $this->createAbsoluteUrl('/terms') ?>">شرایط</a></span>
+                | <span><a href="#">حریم خصوصی</a></span>
+                | <span><a href="#">کپی رایت</a></span>
+                | <span><a href="#">سوالات متداول</a></span>
+            </li>
+            <li><a href="#">&copy; TheTopTens 2005-2017 &reg; کلیه حقوق محفوظ است.</a></li>
+        </ul>
+        <ul class="navbar-social">
+            <li><a href="#">
+                    <i class="facebook-icon"></i>
+                </a></li>
+            <li><a href="#">
+                    <i class="google-icon"></i>
+                </a></li>
+        </ul>
     </div>
-</footer>
+</div>
