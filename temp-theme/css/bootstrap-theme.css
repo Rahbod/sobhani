@@ -398,6 +398,8 @@ body{
     display: block;
     font-size: 11px;
     padding: 12px;
+    height: 44px;
+    overflow: hidden;
     line-height: 17px;
 }
 .content{

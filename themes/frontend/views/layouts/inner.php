@@ -37,7 +37,12 @@
 <body>
 <div class="page inner">
     <?php $this->renderPartial('//partial-views/_header');?>
-    <?php echo $content;?>
+    <div class="content">
+        <div class="container">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 right-side"><?php $this->renderPartial('//partial-views/_right_col');?></div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 left-side"><div class="context"><?php echo $content;?></div></div>
+        </div>
+    </div>
     <?php $this->renderPartial('//partial-views/_footer');?>
     <?php $this->renderPartial('//partial-views/_login_popup');?>
 </div>

@@ -38,6 +38,7 @@ return array(
 		'setting',
 		'pages',
 		'places',
+		'lists',
 	),
 
 	// application components
@@ -69,9 +70,11 @@ return array(
 			'showScriptName'=>false,
 			'appendParams'=>true,
 			'rules'=>array(
+				'lists' => 'lists/public/index',
+				'<action:(new|suggest|latest)>' => 'lists/public/<action>',
 				'<action:(about|contact|help|terms|search)>' => 'site/<action>',
 				'<action:(logout|dashboard|googleLogin|transactions|login|register|changePassword|profile|upgradePlan)>' => 'users/public/<action>',
-				'<module:\w+>/<id:\d+>'=>'<module>/manage/view',
+				'<module:\w+>/<id:\d+>'=>'<module>/public/view',
 				'<module:\w+>/<controller:\w+>'=>'<module>/<controller>/index',
 				'<controller:\w+>/<action:\w+>/<id:\d+>/<title:(.*)>'=>'<controller>/<action>',
 				'<controller:\w+>/<id:\d+>/<title:(.*)>'=>'<controller>/view',

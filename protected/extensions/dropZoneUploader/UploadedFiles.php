@@ -65,8 +65,7 @@ class UploadedFiles
             $path = $this->normalizePath($filePath);
             $url = $this->normalizeUrl($filePath);
         }
-
-        if((string)$filename && file_exists($path . $filename))
+        if((string)$filename && is_file($path . $filename))
             $this->_storedFiles[] = [
                 'name' => $filename,
                 'src' => $url . $filename,
@@ -171,6 +170,7 @@ class UploadedFiles
                     $this->add($filename);
                 }
         }else{
+            
             if($oldFilename != $newFilename){
                 $this->saveFile($this->normalizePath($newFilePath) . $newFilename, $this->getPath() . $newFilename);
                 $this->replace($oldFilename, $newFilename);

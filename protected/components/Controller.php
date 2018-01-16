@@ -4,7 +4,6 @@
  * All controller classes for this application should extend from this base class.
  *
  * @var $userDetails UserDetails
- * @var $brands Brands[]
  * @var $chassis array
  */
 class Controller extends AuthController
@@ -47,7 +46,6 @@ class Controller extends AuthController
     public $aboutFooter;
     public $siteAppUrls = array();
     public $pageSizes = array(10 => 10, 20 => 20, 50 => 50, 100 => 100);
-    public $brands;
     public $chassis;
     public $prices;
     public $leftBox;
@@ -111,27 +109,6 @@ class Controller extends AuthController
                     'url' => array('/admins/dashboard')
                 ),
                 array(
-                    'label' => '<i class="fa fa-picture-o"></i><span>اسلایدشو</span> <i class="fa fa-angle-left pull-left"></i>',
-                    'url' => '#',
-                    'itemOptions' => array('class' => 'treeview', 'tabindex' => "-1"),
-                    'submenuOptions' => array('class' => 'treeview-menu'),
-                    'items' => array(
-                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت تصاویر', 'url' => Yii::app()->createUrl('/slideshow/manage/admin/')),
-                        array('label' => '<i class="fa fa-circle-o"></i>افزودن تصویر جدید', 'url' => Yii::app()->createUrl('/slideshow/manage/create')),
-                    )
-                ),
-                array(
-                    'label' => '<i class="fa fa-car"></i><span>آگهی ها</span> <i class="fa fa-angle-left pull-left"></i>',
-                    'url' => '#',
-                    'itemOptions' => array('class' => 'treeview', 'tabindex' => "-1"),
-                    'submenuOptions' => array('class' => 'treeview-menu'),
-                    'items' => array(
-                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت آگهی های ماشین', 'url' => Yii::app()->createUrl('/car/manage/admin/')),
-                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت برندها', 'url' => Yii::app()->createUrl('/car/brands/admin')),
-                        array('label' => '<i class="fa fa-circle-o"></i>گزارشات اشکال در آگهی', 'url' => Yii::app()->createUrl('/car/manage/problemReports')),
-                    )
-                ),
-                array(
                     'label' => '<i class="fa fa-bars"></i><span>لیست ها</span> <i class="fa fa-angle-left pull-left"></i>',
                     'url' => '#',
                     'itemOptions' => array('class' => 'treeview', 'tabindex' => "-1"),
@@ -142,35 +119,13 @@ class Controller extends AuthController
                     )
                 ),
                 array(
-                    'label' => '<i class="fa fa-map-marker"></i><span>مکان ها</span> <i class="fa fa-angle-left pull-left"></i>',
+                    'label' => '<i class="fa fa-ticket"></i><span>دسته بندی لیست ها</span> <i class="fa fa-angle-left pull-left"></i>',
                     'url' => '#',
                     'itemOptions' => array('class' => 'treeview', 'tabindex' => "-1"),
                     'submenuOptions' => array('class' => 'treeview-menu'),
                     'items' => array(
-                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت کشور ها', 'url' => Yii::app()->createUrl('/places/countries/admin/')),
-                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت استان ها', 'url' => Yii::app()->createUrl('/places/towns/admin/')),
-                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت شهر ها', 'url' => Yii::app()->createUrl('/places/cities/admin/')),
-                    )
-                ),
-                array(
-                    'label' => '<i class="fa fa-support"></i><span>تماس با ما</span> <i class="fa fa-angle-left pull-left"></i>',
-                    'url' => '#',
-                    'itemOptions' => array('class' => 'treeview', 'tabindex' => "-1"),
-                    'submenuOptions' => array('class' => 'treeview-menu'),
-                    'items' => array(
-                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت پیام ها', 'url' => Yii::app()->createUrl('/contact/messages/admin')),
-                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت بخش های تماس ', 'url' => Yii::app()->createUrl('/contact/department/admin')),
-                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت دریافت کنندگان ', 'url' => Yii::app()->createUrl('/contact/receivers/admin')),
-                    )
-                ),
-                array(
-                    'label' => '<i class="fa fa-building"></i><span>نمایشگاه</span> <i class="fa fa-angle-left pull-left"></i>',
-                    'url' => '#',
-                    'itemOptions' => array('class' => 'treeview', 'tabindex' => "-1"),
-                    'submenuOptions' => array('class' => 'treeview-menu'),
-                    'items' => array(
-                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت نمایشگاه ها', 'url' => Yii::app()->createUrl('/users/manage/dealerships')),
-                        array('label' => '<i class="fa fa-circle-o"></i>درخواست های ثبت نمایشگاه', 'url' => Yii::app()->createUrl('/users/manage/dealershipRequests')),
+                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت', 'url' => Yii::app()->createUrl('/lists/category/admin/')),
+                        array('label' => '<i class="fa fa-circle-o"></i>افزودن دسته بندی لیست', 'url' => Yii::app()->createUrl('/lists/category/create')),
                     )
                 ),
                 array(
@@ -191,7 +146,6 @@ class Controller extends AuthController
                     'submenuOptions' => array('class' => 'treeview-menu'),
                     'items' => array(
                         array('label' => '<i class="fa fa-circle-o"></i>مدیریت کاربران', 'url' => Yii::app()->createUrl('/users/manage')),
-                        array('label' => '<i class="fa fa-circle-o"></i>پلن ها', 'url' => Yii::app()->createUrl('/users/plans/admin')),
                     )
                 ),
                 array(
@@ -201,10 +155,8 @@ class Controller extends AuthController
                     'submenuOptions' => array('class' => 'treeview-menu'),
                     'items' => array(
                         array('label' => '<i class="fa fa-circle-o"></i>عمومی', 'url' => Yii::app()->createUrl('/setting/manage/changeSetting')),
-                        array('label' => '<i class="fa fa-circle-o"></i>گوگل مپ', 'url' => Yii::app()->createUrl('/map/manage/update/1')),
                         array('label' => '<i class="fa fa-circle-o"></i>صفحات متنی', 'url' => Yii::app()->createUrl('/pages/manage/admin/slug/base')),
                         array('label' => '<i class="fa fa-circle-o"></i>شبکه های اجتماعی', 'url' => Yii::app()->createUrl('/setting/manage/socialLinks')),
-                        array('label' => '<i class="fa fa-circle-o"></i>تنظیمات درگاه', 'url' => Yii::app()->createUrl('/setting/manage/gatewaySetting')),
                     )
                 ),
                 array(
@@ -388,53 +340,5 @@ class Controller extends AuthController
         }
 
         return false;
-    }
-
-    /**
-     * Print Star tags
-     * @param $rate int
-     * @return string
-     */
-    public static function printRateStars($rate)
-    {
-        $starFull = '<i class="icon"></i>';
-        $starHalf = '<i class="icon half"></i>';
-        $starQ1 = '<i class="icon quarter1"></i>';
-        $starQ3 = '<i class="icon quarter3"></i>';
-        $starEmpty = '<i class="icon off"></i>';
-
-        $rateInteger = floor($rate);
-        $rateHalf = ($rate - $rateInteger) >= 0.5?true:false;
-        $html = '';
-        for($i = 1;$i <= $rateInteger;$i++){
-            $html .= $starFull;
-        }
-        if($rateHalf){
-            $rateQ3 = ($rate - $rateInteger) >= 0.75?true:false;
-            if($rateQ3)
-                $html .= $starQ3;
-            else
-                $html .= $starHalf;
-            $index = $rateInteger + 1;
-        }else{
-            $rateQ1 = ($rate - $rateInteger) >= 0.25?true:false;
-            if($rateQ1){
-                $html .= $starQ1;
-                $index = $rateInteger + 1;
-            }else
-                $index = $rateInteger;
-        }
-        for($i = 5;$i > $index;$i--){
-            $html .= $starEmpty;
-        }
-        return $html;
-    }
-
-    public function getActiveGateway()
-    {
-        $active_gateway = strtolower(SiteSetting::getOption('gateway_active'));
-        if($active_gateway != 'zarinpal' && $active_gateway != 'mellat')
-            die('Gateway invalid!! Valid gateways is "zarinpal" or "mellat". Please change gateway in main.php file.');
-        return $active_gateway;
     }
 }

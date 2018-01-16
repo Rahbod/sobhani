@@ -164,13 +164,13 @@ class dropZoneUploader extends CWidget
             if($this->serverFiles instanceof UploadedFiles)
             {
                 $data = $this->maxFiles>1?$this->serverFiles->getFiles():(isset($this->serverFiles->getFiles()[0])?$this->serverFiles->getFiles()[0]:null);
-                $data = CJSON::encode($data);
+                $data = $data?CJSON::encode($data):false;
             }
 
-            if($this->maxFiles > 1)
-            {
-                $filesAddScript = '
-                var data = '.$data.';
+            if($data){
+                if($this->maxFiles > 1){
+                    $filesAddScript = '
+                var data = ' . $data . ';
                 $.each(data, function(key,value){
                     var mockFile = { name: value.name, size: value.size ,serverName : value.name ,accepted : true};
                     if ((thisDropzone.options.maxFiles != null) && thisDropzone.getAcceptedFiles().length < thisDropzone.options.maxFiles) {
@@ -182,14 +182,13 @@ class dropZoneUploader extends CWidget
                         }
                         thisDropzone.options.complete.call(thisDropzone, mockFile);
                         thisDropzone.files.push(mockFile);
-                        createHiddenInput'.self::camelCase($this->id).'(mockFile ,"'.$hiddenFieldName.'", value.name);
+                        createHiddenInput' . self::camelCase($this->id) . '(mockFile ,"' . $hiddenFieldName . '", value.name);
                     }
                 });
                 ';
-            }else
-            {
-                $filesAddScript = '
-                var value = '.$data.';
+                }else{
+                    $filesAddScript = '
+                var value = ' . $data . ';
                 var mockFile = { name: value.name, size: value.size ,serverName : value.name ,accepted : true};
                 if ((thisDropzone.options.maxFiles != null) && thisDropzone.getAcceptedFiles().length < thisDropzone.options.maxFiles) {
                     thisDropzone.options.addedfile.call(thisDropzone, mockFile);
@@ -200,11 +199,12 @@ class dropZoneUploader extends CWidget
                     }
                     thisDropzone.options.complete.call(thisDropzone, mockFile);
                     thisDropzone.files.push(mockFile);
-                    createHiddenInput'.self::camelCase($this->id).'(mockFile ,"'.$hiddenFieldName.'", value.name);
+                    createHiddenInput' . self::camelCase($this->id) . '(mockFile ,"' . $hiddenFieldName . '", value.name);
                 }
                 ';
-            }
-
+                }
+            }else
+                $filesAddScript='';
             $addedFiles = '
                 var extArr = ["jpg","jpeg","png","bmp","gif"];
                 var thisDropzone = this;
