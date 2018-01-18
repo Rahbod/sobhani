@@ -39,6 +39,47 @@ return array(
 		'pages',
 		'places',
 		'lists',
+		'comments'=>array(
+			//you may override default config for all connecting models
+			'defaultModelConfig' => array(
+				//only registered users can post comments
+				'registeredOnly' => true,
+				'useCaptcha' => false,
+				//allow comment tree
+				'allowSubcommenting' => false,
+				//display comments after moderation
+				'premoderate' => true,
+				//action for postig comment
+				'postCommentAction' => '/comments/comment/postComment',
+				//super user condition(display comment list in admin view and automoderate comments)
+				'isSuperuser'=>'Yii::app()->user->checkAccess("moderate")',
+				//order direction for comments
+				'orderComments'=>'DESC',
+				'translationCategory'=>'comments',
+				'showEmail' => false
+			),
+			//the models for commenting
+			'commentableModels'=>array(
+				//model with individual settings
+				'Lists'=>array(
+					'premoderate' => true,
+					'allowSubcommenting'=>true,
+					'isSuperuser'=>'!Yii::app()->user->isGuest && Yii::app()->user->type == \'admin\'',
+					'orderComments'=>'DESC',
+					//config for create link to view model page(page with comments)
+					'pageUrl'=>array(
+						'route'=>'lists/',
+						'data'=>array('id'=>'id','title'=>'title')
+					),
+				),
+			),
+			'userConfig'=>array(
+				'class'=>'Users',
+				'nameProperty'=>'userDetails.fa_name',
+				'emailProperty'=>'email',
+//				'rateProperty'=>'bookRate.rate',
+			),
+		)
 	),
 
 	// application components
@@ -71,9 +112,11 @@ return array(
 			'appendParams'=>true,
 			'rules'=>array(
 				'lists' => 'lists/public/index',
-				'<action:(new|suggest|latest)>' => 'lists/public/<action>',
-				'<action:(about|contact|help|terms|search)>' => 'site/<action>',
-				'<action:(logout|dashboard|googleLogin|transactions|login|register|changePassword|profile|upgradePlan)>' => 'users/public/<action>',
+				'lists/category/<id:\d+>'=>'lists/category/view',
+				'new' => 'lists/public/new',
+				'<type:(recommended|latest)>' => 'lists/public/rows',
+				'<action:(about|contact|help|terms|search|faq)>' => 'site/<action>',
+				'<action:(logout|dashboard|googleLogin|login|register|changePassword|forgetPassword|profile|notifications|recoverPassword|bookmarks)>' => 'users/public/<action>',
 				'<module:\w+>/<id:\d+>'=>'<module>/public/view',
 				'<module:\w+>/<controller:\w+>'=>'<module>/<controller>/index',
 				'<controller:\w+>/<action:\w+>/<id:\d+>/<title:(.*)>'=>'<controller>/<action>',

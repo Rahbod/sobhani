@@ -1,13 +1,15 @@
 <div class="footer">
     <div class="container">
-        <img src="<?= Yii::app()->theme->baseUrl ?>/svg/logo.jpg" class="logo">
+        <a href="<?= Yii::app()->getBaseUrl(true)?>">
+            <img src="<?= Yii::app()->theme->baseUrl ?>/svg/logo.jpg" class="logo">
+        </a>
         <ul class="list-unstyled">
             <li>
                 <span><a href="<?= $this->createAbsoluteUrl('/terms') ?>">شرایط</a></span>
                 | <span><a href="<?= $this->createAbsoluteUrl('/faq') ?>">سوالات متداول</a></span>
                 | <span><a href="<?= $this->createAbsoluteUrl('/about') ?>">درباره ما</a></span>
             </li>
-            <li><a href="#">&copy; TheTopTens 2005-2017 &reg; کلیه حقوق محفوظ است.</a></li>
+            <li>&copy; TheTopTens 2005-2017 &reg; کلیه حقوق محفوظ است.</li>
         </ul>
         <ul class="navbar-social">
             <li>

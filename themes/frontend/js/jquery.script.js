@@ -1,4 +1,9 @@
 $(document).ready(function() {
+    $.ajaxSetup({
+        data: {
+            'YII_CSRF_TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $("body").on("click", ".mobile-search-trigger", function(){
         $(".mobile-search").show();
     }).on("click", ".close-search-container", function(){

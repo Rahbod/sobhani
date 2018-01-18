@@ -9,25 +9,19 @@
     </ul>
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
-            <a href="#"> بهترین فیلم ها با بودجه کمتر از 5 میلیون دلار</a>
-            <a href="#"> اشتباهات صحنه در فیلم های معروف</a>
-            <a href="#">بهترین برندهای دوچرخه کوهستان</a>
-            <a href="#">بازی های ویدئویی 2017</a>
-            <a href="#">بهترین آهنگ های سال 2017</a>
+            <?php foreach($this->getSpecialLists() as $list): ?>
+                <a href="<?= $list->getViewUrl() ?>"><?= $list->title ?></a>
+            <?php endforeach; ?>
         </div>
         <div id="menu1" class="tab-pane fade">
-            <a href="#">بازی های ویدئویی 2017</a>
-            <a href="#">بهترین آهنگ های سال 2017</a>
-            <a href="#"> بهترین فیلم ها با بودجه کمتر از 5 میلیون دلار</a>
-            <a href="#"> اشتباهات صحنه در فیلم های معروف</a>
-            <a href="#">بهترین برندهای دوچرخه کوهستان</a>
+            <?php foreach($this->getPopularLists() as $list): ?>
+                <a href="<?= $list->getViewUrl() ?>"><?= $list->title ?></a>
+            <?php endforeach; ?>
         </div>
         <div id="menu2" class="tab-pane fade">
-            <a href="#"> اشتباهات صحنه در فیلم های معروف</a>
-            <a href="#">بازی های ویدئویی 2017</a>
-            <a href="#"> بهترین فیلم ها با بودجه کمتر از 5 میلیون دلار</a>
-            <a href="#">بهترین آهنگ های سال 2017</a>
-            <a href="#">بهترین برندهای دوچرخه کوهستان</a>
+            <?php foreach($this->getLatestLists() as $list): ?>
+                <a href="<?= $list->getViewUrl() ?>"><?= $list->title ?></a>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>

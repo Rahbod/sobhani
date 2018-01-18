@@ -226,7 +226,7 @@ class Controller extends AuthController
      * @param string $postfix
      * @return mixed|string
      */
-    public static function normalizeNumber($number,$numberFormat = true, $persianNumber = true, $postfix = 'تومان')
+    public static function normalizeNumber($number, $numberFormat = true, $persianNumber = true, $postfix = 'تومان')
     {
         $number = $numberFormat?number_format($number):$number;
         $number = $persianNumber?Controller::parseNumbers($number):$number;
@@ -340,5 +340,58 @@ class Controller extends AuthController
         }
 
         return false;
+    }
+
+    /**
+     * @param int $limit
+     * @return Lists[]
+     */
+    public function getSpecialLists($limit = 5)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('status', Lists::STATUS_APPROVED);
+        $criteria->compare('user_type', "admin");
+        $criteria->order = 'id DESC';
+        $criteria->limit = $limit;
+        return Lists::model()->findAll($criteria);
+    }
+
+    /**
+     * @param int $limit
+     * @return Lists[]
+     */
+    public function getPopularLists($limit = 5)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('status', Lists::STATUS_APPROVED);
+        $criteria->order = 'seen DESC';
+        $criteria->limit = $limit;
+        return Lists::model()->findAll($criteria);
+    }
+
+    /**
+     * @param int $limit
+     * @return Lists[]
+     */
+    public function getLatestLists($limit = 5)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('status', Lists::STATUS_APPROVED);
+        $criteria->order = 'id DESC';
+        $criteria->limit = $limit;
+        return Lists::model()->findAll($criteria);
+    }
+
+    /**
+     * @param int $limit
+     * @return Lists[]
+     */
+    public function getTopLists($limit = 10)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('status', Lists::STATUS_APPROVED);
+        $criteria->order = 'id DESC';
+        $criteria->limit = $limit;
+        return Lists::model()->findAll($criteria);
     }
 }

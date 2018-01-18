@@ -6,7 +6,9 @@
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
             <div class="row">
                 <div class="logo-box">
-                    <img src="<?php echo Yii::app()->theme->baseUrl.'/svg/logo.jpg' ?>">
+                    <a href="<?= Yii::app()->getBaseUrl(true)?>">
+                        <img src="<?php echo Yii::app()->theme->baseUrl.'/svg/logo.jpg' ?>">
+                    </a>
                 </div>
             </div>
         </div>
@@ -18,10 +20,13 @@
                     <li><a href="<?= $this->createUrl('/lists') ?>">لیست ها</a></li>
                     <li><a href="<?= $this->createUrl('/latest') ?>">تازه ها</a></li>
                     <li><a href="<?= $this->createUrl('/new') ?>">افزودن لیست</a></li>
-                    <li><a href="<?= $this->createUrl('/suggest') ?>">پیشنهاد برای شما</a></li>
+                    <li><a href="<?= $this->createUrl('/recommended') ?>">پیشنهاد برای شما</a></li>
                     <?php if(!Yii::app()->user->isGuest && Yii::app()->user->type =='user'):?>
-                        <li><a href="<?= $this->createUrl('/dashboard')?>">حساب کاربری</a></li>
-                        <li><a href="<?= $this->createUrl('/logout')?>" class="text-danger">خروج</a></li>
+                        <li class="user-link"><a href="<?= $this->createUrl('/dashboard')?>"><i class="user-icon"></i><?= Yii::app()->user->first_name.' '.Yii::app()->user->last_name ?></a>
+                        <li><a href="<?= $this->createUrl('/dashboard')?>" class="h"><i class="home-icon"></i></a></li>
+                        <li><a href="<?= $this->createUrl('/bookmarks')?>" class="s"><i class="star-icon"></i></a></li>
+                        <li><a href="<?= $this->createUrl('/notifications')?>" class="e"><i class="envelope-icon"></i></a></li>
+                        <li><a href="<?= $this->createUrl('/logout')?>" class="l"><i class="lock-icon"></i></a></li>
                     <?php else:?>
                         <li><a href="#login-modal" data-toggle="modal">ورود</a></li>
                         <li><a href="#join-modal" data-toggle="modal">ثبت نام</a></li>
@@ -52,10 +57,13 @@
             <li><a href="<?= $this->createUrl('/lists') ?>">لیست ها</a></li>
             <li><a href="<?= $this->createUrl('/latest') ?>">تازه ها</a></li>
             <li><a href="<?= $this->createUrl('/new') ?>">افزودن لیست</a></li>
-            <li><a href="<?= $this->createUrl('/suggest') ?>">پیشنهاد برای شما</a></li>
+            <li><a href="<?= $this->createUrl('/recommended') ?>">پیشنهاد برای شما</a></li>
             <?php if(!Yii::app()->user->isGuest && Yii::app()->user->type =='user'):?>
-                <li><a href="<?= $this->createUrl('/dashboard')?>" data-toggle="modal">حساب کاربری</a></li>
-                <li><a href="<?= $this->createUrl('/logout')?>" class="text-danger" data-toggle="modal">خروج</a></li>
+                <li><a href="<?= $this->createUrl('/dashboard')?>"><i class="user-icon"></i><?= Yii::app()->user->first_name ?></a>
+                <li class="icon-link"><a href="<?= $this->createUrl('/dashboard')?>" class="h"><i class="home-icon"></i></a></li>
+                <li class="icon-link"><a href="<?= $this->createUrl('/bookmarks')?>" class="s"><i class="star-icon"></i></a></li>
+                <li class="icon-link"><a href="<?= $this->createUrl('/notifications')?>" class="e"><i class="envelope-icon"></i></a></li>
+                <li class="icon-link"><a href="<?= $this->createUrl('/logout')?>" class="l"><i class="lock-icon"></i></a></li>
             <?php else:?>
                 <li><a href="#login-modal" data-toggle="modal">ورود</a></li>
                 <li><a href="#join-modal" data-toggle="modal">ثبت نام</a></li>

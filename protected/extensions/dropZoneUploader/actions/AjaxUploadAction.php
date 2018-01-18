@@ -90,7 +90,7 @@ class AjaxUploadAction extends CAction
             $validFlag = true;
             $uploadDir = Yii::getPathOfAlias("webroot").$this->uploadDir;
             if (!is_dir($uploadDir))
-                mkdir($uploadDir);
+                mkdir($uploadDir, 0777, true);
 
             if (isset($_FILES[$this->attribute])) {
                 $file = $_FILES[$this->attribute];
@@ -189,7 +189,7 @@ class AjaxUploadAction extends CAction
                                 ) {
                                     $thumbnailPath = $uploadDir.DIRECTORY_SEPARATOR.$this->afterSaveActions['thumbnail']['width'].'x'.$this->afterSaveActions['thumbnail']['height'];
                                     if (!is_dir($thumbnailPath))
-                                        mkdir($thumbnailPath);
+                                        mkdir($thumbnailPath, 0777, true);
                                     $imager = new Imager();
                                     $imager->createThumbnail($uploadDir.DIRECTORY_SEPARATOR.$model->{$this->attribute},
                                         $this->afterSaveActions['thumbnail']['width'], $this->afterSaveActions['thumbnail']['height'], false,

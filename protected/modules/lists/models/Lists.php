@@ -17,6 +17,7 @@
  *
  * The followings are the available model relations:
  * @property Users $user
+ * @property Admins $admin
  * @property ListCategories $category
  * @property Items[] $itemObj
  * @property ListItemRel[] $itemRel
@@ -223,5 +224,10 @@ class Lists extends CActiveRecord
 					'image' => $item->image,
 				);
 			}
+	}
+
+	public function getViewUrl()
+	{
+		return Yii::app()->createUrl('/lists/'.$this->id);
 	}
 }

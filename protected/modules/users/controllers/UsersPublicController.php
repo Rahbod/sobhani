@@ -2,6 +2,8 @@
 
 class UsersPublicController extends Controller
 {
+    public $avatarPath = 'uploads/users';
+
     /**
      * @return array actions type list
      */
@@ -25,10 +27,6 @@ class UsersPublicController extends Controller
                 'viewProfile',
                 'login',
                 'captcha',
-                'upgradePlan',
-                'buyPlan',
-                'verifyPlan',
-                'dealership',
             )
         );
     }
@@ -59,17 +57,27 @@ class UsersPublicController extends Controller
             ),
             'upload' => array(
                 'class' => 'ext.dropZoneUploader.actions.AjaxUploadAction',
+                'uploadDir' => '/uploads/users/avatar',
                 'attribute' => 'avatar',
                 'rename' => 'random',
                 'validateOptions' => array(
-                    'acceptedTypes' => array('jpg', 'jpeg', 'png')
+                    'acceptedTypes' => array('jpg','jpeg','png')
+                ),
+                'insert' => true,
+                'module' => 'users',
+                'modelName' => 'UserDetails',
+                'findAttributes' => 'array("user_id" => $_POST["user_id"])',
+                'scenario' => 'upload_photo',
+                'storeMode' => 'field',
+                'afterSaveActions' => array(
+                    'resize' => array('width'=>500,'height'=>500)
                 )
             ),
             'deleteUpload' => array(
                 'class' => 'ext.dropZoneUploader.actions.AjaxDeleteUploadedAction',
                 'modelName' => 'UserDetails',
                 'attribute' => 'avatar',
-                'uploadDir' => '/uploads/users',
+                'uploadDir' => '/uploads/users/avatar',
                 'storedMode' => 'field'
             ),
         );
@@ -91,26 +99,11 @@ class UsersPublicController extends Controller
     public function actionDashboard()
     {
         Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/panel';
+        $this->layout = '//layouts/inner';
         /* @var $user Users */
         $user = Users::model()->findByPk(Yii::app()->user->id);
         $this->pageTitle = 'پروفایل من';
-        $this->pageHeader = $user->userDetails->getShowName();
-        $this->pageDescription = $user->userDetails->getShowDescription();
-        $this->pageLogo = $user->userDetails->avatar && file_exists(Yii::getPathOfAlias('webroot.uploads') . '/users/' . $user->userDetails->avatar)?Yii::app()->getBaseUrl(true) . '/uploads/users/' . $user->userDetails->avatar:false;
-
-        $criteria = new CDbCriteria();
-        $criteria->compare('user_id', $user->id);
-        $criteria->addCondition('status <> :deleted');
-        $criteria->params[':deleted'] = Cars::STATUS_DELETED;
-        $sells = Cars::model()->findAll($criteria);
-
-
-        $criteria = new CDbCriteria();
-        $criteria->compare('user_id', $user->id);
-        $alerts = CarAlerts::model()->findAll($criteria);
-        
-        $this->render('dashboard', compact('user', 'sells', 'alerts'));
+        $this->render('dashboard', compact('user'));
     }
 
     /**
@@ -119,7 +112,7 @@ class UsersPublicController extends Controller
     public function actionChangePassword()
     {
         Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/panel';
+        $this->layout = '//layouts/inner';
         $model = Users::model()->findByPk(Yii::app()->user->getId());
         $this->pageTitle = 'تغییر کلمه عبور';
         $this->pageHeader = 'تغییر کلمه عبور';
@@ -150,7 +143,7 @@ class UsersPublicController extends Controller
     public function actionProfile()
     {
         Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/panel';
+        $this->layout = '//layouts/inner';
 
         /* @var $user Users */
         $user = Users::model()->findByPk(Yii::app()->user->id);
@@ -160,10 +153,10 @@ class UsersPublicController extends Controller
 
         $tmpDIR = Yii::getPathOfAlias("webroot") . '/uploads/temp/';
         $tmpUrl = Yii::app()->createAbsoluteUrl('/uploads/temp/');
-        $avatarDIR = Yii::getPathOfAlias("webroot") . '/uploads/users/';
+        $avatarDIR = Yii::getPathOfAlias("webroot") . '/uploads/users/avatar/';
         if(!is_dir($avatarDIR))
             mkdir($avatarDIR);
-        $avatarUrl = Yii::app()->createAbsoluteUrl('/uploads/users');
+        $avatarUrl = Yii::app()->createAbsoluteUrl('/uploads/users/avatar');
 
         /* @var $model UserDetails */
         $model = UserDetails::model()->findByAttributes(array('user_id' => Yii::app()->user->getId()));
@@ -220,7 +213,7 @@ class UsersPublicController extends Controller
     public function actionViewProfile($id)
     {
         Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/public';
+        $this->layout = '//layouts/inner';
 
         $model = Users::model()->findByPk($id);
         if ($clinicID = Yii::app()->request->getQuery('clinic')) {
@@ -283,7 +276,7 @@ class UsersPublicController extends Controller
     public function actionForgetPassword()
     {
         Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/public';
+        $this->layout = '//layouts/inner';
         if (!Yii::app()->user->isGuest and Yii::app()->user->type != 'admin')
             $this->redirect($this->createAbsoluteUrl('//'));
         else if (!Yii::app()->user->isGuest and Yii::app()->user->type == 'admin')
@@ -358,7 +351,7 @@ class UsersPublicController extends Controller
     public function actionRecoverPassword()
     {
         Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/public';
+        $this->layout = '//layouts/inner';
 
         if (!Yii::app()->user->isGuest and Yii::app()->user->type != 'admin')
             $this->redirect($this->createAbsoluteUrl('//'));
@@ -368,10 +361,10 @@ class UsersPublicController extends Controller
         $token = Yii::app()->request->getQuery('token');
         $model = Users::model()->find('verification_token=:token', array(':token' => $token));
 
-        if (!$model)
-            $this->redirect($this->createAbsoluteUrl('//'));
-        elseif ($model->change_password_request_count == 0)
-            $this->redirect($this->createAbsoluteUrl('//'));
+//        if (!$model)
+//            $this->redirect($this->createAbsoluteUrl('//'));
+//        elseif ($model->change_password_request_count == 0)
+//            $this->redirect($this->createAbsoluteUrl('//'));
 
         $model->setScenario('recover_password');
 
@@ -400,26 +393,7 @@ class UsersPublicController extends Controller
         } else
             $this->redirect($this->createAbsoluteUrl('//'));
     }
-
-    /**
-     * List all transactions
-     */
-    public function actionTransactions()
-    {
-        Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/panel';
-
-        $model = new UserTransactions('search');
-        $model->unsetAttributes();
-        if (isset($_GET['UserTransactions']))
-            $model->attributes = $_GET['UserTransactions'];
-        $model->user_id = Yii::app()->user->getId();
-        //
-
-        $this->render('transactions', array(
-            'model' => $model
-        ));
-    }
+    
 
     /**
      * Performs the AJAX validation.
@@ -441,94 +415,11 @@ class UsersPublicController extends Controller
         $model = new UserLoginForm('OAuth');
         $googleAuth->login($model);
     }
-
-    public function actionIndex()
-    {
-        Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/public';
-
-        if (!Yii::app()->user->isGuest && Yii::app()->user->type == 'user')
-            $this->redirect($this->createAbsoluteUrl('//'));
-
-        $login = new UserLoginForm;
-        $register = new Users('create');
-
-        // Login codes
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form') {
-            $errors = CActiveForm::validate($login);
-            if (CJSON::decode($errors)) {
-                echo $errors;
-                Yii::app()->end();
-            }
-        }
-        // collect user input data
-        if (isset($_POST['UserLoginForm'])) {
-            $login->attributes = $_POST['UserLoginForm'];
-            if(isset($_POST['returnUrl']))
-                Yii::app()->user->returnUrl = $_POST['returnUrl'];
-            // validate user input and redirect to the previous page if valid
-            if ($login->validate() && $login->login()) {
-                if (Yii::app()->user->returnUrl != Yii::app()->request->baseUrl . '/')
-                    $redirect = Yii::app()->createUrl('/'.Yii::app()->user->returnUrl);
-                else
-                    $redirect = Yii::app()->createAbsoluteUrl('/users/public/dashboard');
-                if (isset($_POST['ajax'])) {
-                    echo CJSON::encode(array('status' => true, 'url' => $redirect, 'msg' => 'در حال انتقال ...'));
-                    Yii::app()->end();
-                } else
-                    $this->redirect($redirect);
-            } else
-                $login->password = '';
-        }
-        // End of login codes
-        
-        // Register codes
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'register-form') {
-            $errors = CActiveForm::validate($register);
-            if (CJSON::decode($errors)) {
-                echo $errors;
-                Yii::app()->end();
-            }
-        }
-        if (isset($_POST['Users'])) {
-            $register->attributes = $_POST['Users'];
-            $register->status = 'pending';
-            $register->create_date = time();
-            if ($register->save()) {
-                $token = md5($register->id . '#' . $register->password . '#' . $register->email . '#' . $register->create_date);
-                $register->updateByPk($register->id, array('verification_token' => $token));
-                $message = '<div style="color: #2d2d2d;font-size: 14px;text-align: right;">با سلام<br>برای فعال کردن حساب کاربری خود در ' . Yii::app()->name . ' بر روی لینک زیر کلیک کنید:</div>';
-                $message .= '<div style="text-align: right;font-size: 9pt;">';
-                $message .= '<a href="' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '">' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '</a>';
-                $message .= '</div>';
-                $message .= '<div style="font-size: 8pt;color: #888;text-align: right;">این لینک فقط 3 روز اعتبار دارد.</div>';
-                Mailer::mail($register->email, 'ثبت نام در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail']);
-                if (isset($_POST['ajax'])) {
-                    echo CJSON::encode(array('status' => true, 'msg' => 'ایمیل فعال سازی به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.'));
-                    Yii::app()->end();
-                }else
-                    Yii::app()->user->setFlash('register-success', 'ایمیل فعال سازی به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.');
-            } else
-            {
-                if (isset($_POST['ajax'])) {
-                    echo CJSON::encode(array('status' => false, 'msg' => 'متاسفانه در ثبت نام مشکلی بوجود آمده است. لطفا مجددا سعی کنید.'));
-                    Yii::app()->end();
-                }else
-                    Yii::app()->user->setFlash('register-failed', 'متاسفانه در ثبت نام مشکلی بوجود آمده است. لطفا مجددا سعی کنید.');
-            }
-        }
-        // End of register codes
-
-        $this->render('index', array(
-            'login' => $login,
-            'register' => $register,
-        ));
-    }
-
+    
     public function actionLogin()
     {
         Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/public';
+        $this->layout = '//layouts/inner';
 
         if (!Yii::app()->user->isGuest && Yii::app()->user->type == 'user')
             $this->redirect($this->createAbsoluteUrl('//'));
@@ -549,19 +440,6 @@ class UsersPublicController extends Controller
                 Yii::app()->user->returnUrl = $_POST['returnUrl'];
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login()) {
-                $user = Users::model()->findByPk(Yii::app()->user->getId());
-                if(!$user->activePlan){
-                    $freePlan = Plans::model()->findByPk(1);
-                    if($freePlan){
-                        $model = new UserPlans;
-                        $model->user_id = $user->id;
-                        $model->plan_id = $freePlan->id;
-                        $model->join_date = time();
-                        $model->expire_date = -1;
-                        $model->price = 0;
-                        @$model->save();
-                    }
-                }
                 if (Yii::app()->user->returnUrl != Yii::app()->request->baseUrl . '/' &&
                     Yii::app()->user->returnUrl != 'logout')
                     $redirect = Yii::app()->user->returnUrl;
@@ -585,7 +463,7 @@ class UsersPublicController extends Controller
     public function actionRegister()
     {
         Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/public';
+        $this->layout = '//layouts/inner';
 
         $model = new Users('create');
 
@@ -659,194 +537,39 @@ class UsersPublicController extends Controller
             $this->redirect(array('/site'));
     }
 
-    public function actionUpgradePlan()
+    /**
+     * List all notifications
+     */
+    public function actionNotifications()
     {
+        $this->layout = '//layouts/inner';
         Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/panel';
-        $user = Users::model()->findByPk(Yii::app()->user->getId());
-        $this->pageTitle = 'ارتقای پلن';
-        $this->pageHeader = $user->userDetails->getShowName();
-        $this->pageDescription = $user->userDetails->getShowDescription();
-        $plans = Plans::model()->findAll('status = 1');
-        $this->render('upgrade_plan',compact('plans', 'user'));
-    }
-
-    public function actionBuyPlan($id)
-    {
-        Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/panel';
-        $transaction = false;
-        $plan = Plans::model()->findByPk($id);
-        $user = Users::model()->findByPk(Yii::app()->user->getId());
-        $this->pageTitle = 'ارتقای پلن';
-        $this->pageHeader = $user->userDetails->getShowName();
-        $this->pageDescription = $user->userDetails->getShowDescription();
-        $active_gateway = $this->getActiveGateway();
-        if(!Yii::app()->user->isGuest && Yii::app()->user->type == 'admin')
-            throw new CHttpException(401,'لطفا جهت خرید نرم افزار ابتدا وارد حساب کاربری خود شوید.');
-        else{
-            if(isset($_POST['buy'])){
-                if($user->activePlan->plan_id != $plan->id){
-                    $siteName = Yii::app()->name;
-                    $transaction = new UserTransactions();
-                    $transaction->user_id = Yii::app()->user->getId();
-                    $transaction->amount = $plan->getPrice($user->role->role);
-                    $transaction->date = time();
-                    $transaction->gateway_name = $active_gateway;
-                    $transaction->model_name = Plans::class;
-                    $transaction->model_id = $plan->id;
-                    $transaction->description = "پرداخت وجه جهت ارتقای پلن کاربری به {$plan->title} در وبسایت {$siteName}";
-                    if($transaction->save()){
-                        $CallbackURL = Yii::app()->getBaseUrl(true) . '/verifyPlan/' . $id;
-                        if($active_gateway == 'mellat'){
-                            $result = Yii::app()->mellat->PayRequest($transaction->amount * 10, $transaction->id, $CallbackURL);
-                            if(!$result['error']){
-                                $ref_id = $result['responseCode'];
-                                $transaction->authority = $ref_id;
-                                $transaction->save(false);
-                                $this->render('ext.MellatPayment.views._redirect', array('ReferenceId' => $result['responseCode']));
-                            }else
-                                Yii::app()->user->setFlash('failed', Yii::app()->mellat->getResponseText($result['responseCode']));
-                        }else if($active_gateway == 'zarinpal'){
-                            $result = Yii::app()->zarinpal->PayRequest(
-                                doubleval($transaction->amount),
-                                $transaction->description,
-                                $CallbackURL
-                            );
-                            $transaction->authority = Yii::app()->zarinpal->getAuthority();
-                            $transaction->save(false);
-                            if($result->getStatus() == 100)
-                                $this->redirect(Yii::app()->zarinpal->getRedirectUrl());
-                            else
-                                Yii::app()->user->setFlash('failed', Yii::app()->zarinpal->getError());
-                        }
-                    }
-                }else
-                    Yii::app()->user->setFlash('warning', 'هم اکنون این عضویت برای شما فعال است.  <a class="btn btn-info btn-xs" href="'.$this->createUrl('/upgradePlan').'">بازگشت</a>');
-            }
-        }
-        
-        $this->render('buy_plan', compact('plan', 'transaction', 'user', 'active_gateway'));
-    }
-
-    public function actionVerifyPlan($id)
-    {
-        Yii::app()->theme = 'market';
-        $this->layout = '//layouts/panel';
-        $plan = Plans::model()->findByPk($id);
-        $user = Users::model()->findByPk(Yii::app()->user->getId());
-
-        $this->pageTitle = 'ارتقای پلن';
-        $this->pageHeader = $user->userDetails->getShowName();
-        $this->pageDescription = $user->userDetails->getShowDescription();
-        /* @var $model UserTransactions */
-        /* @var $plan Plans */
-        /* @var $user Users */
-        $transactionResult = false;
-        $result = null;
-        $active_gateway = $this->getActiveGateway();
-        
-        if($active_gateway == 'mellat'){
-            $model = UserTransactions::model()->findByAttributes(array(
-                'user_id' => Yii::app()->user->getId(),
-                'model_name' => Plans::class,
-                'model_id' => $id,
-                'status' => 'unpaid'));
-            if($_POST['ResCode'] == 0)
-                $result = Yii::app()->mellat->VerifyRequest($model->id, $_POST['SaleOrderId'], $_POST['SaleReferenceId']);
-
-            if($result != null){
-                $ResponseCode = (!is_array($result)?$result:$result['responseCode']);
-                if($ResponseCode == 0){
-                    // Settle Payment
-                    $settle = Yii::app()->mellat->SettleRequest($model->id, $_POST['SaleOrderId'], $_POST['SaleReferenceId']);
-                    $model->scenario = 'update';
-                    $model->status = 'paid';
-                    $model->token = $_POST['SaleReferenceId'];
-                    $model->save();
-                    $transactionResult = true;
-                    $up = $user->upgradePlan($plan);
-                    if($up){
-                        $model->model_name = UserPlans::class;
-                        $model->model_id = $up;
-                        @$model->save(false);
-                    }
-                    Yii::app()->user->setFlash('success', 'پرداخت شما با موفقیت انجام شد.');
-                }else
-                    Yii::app()->user->setFlash('failed', Yii::app()->mellat->getError($ResponseCode));
-            }else
-                Yii::app()->user->setFlash('failed', 'عملیات پرداخت ناموفق بوده یا توسط کاربر لغو شده است.');
-        }else if($active_gateway == 'zarinpal'){
-            if(!isset($_GET['Authority'])){
-                Yii::app()->user->setFlash('failed', 'Gateway Error: Authority Code not sent.');
-                $this->redirect(array('/buyPlan/' . $id));
-            }else{
-                $Authority = $_GET['Authority'];
-                $model = UserTransactions::model()->findByAttributes(array(
-                    'model_name' => Plans::class,
-                    'model_id' => $id,
-                    'authority' => $Authority
-                ));
-                if($model->status == 'unpaid'){
-                    $Amount = $model->amount;
-                    if($_GET['Status'] == 'OK'){
-                        Yii::app()->zarinpal->verify($Authority, $Amount);
-                        if(Yii::app()->zarinpal->getStatus() == 100){
-                            $model->scenario = 'update';
-                            $model->status = 'paid';
-                            $model->token = Yii::app()->zarinpal->getRefId();
-                            @$model->save(false);
-                            $transactionResult = true;
-                            $up = $user->upgradePlan($plan);
-                            if($up){
-                                $model->model_name = UserPlans::class;
-                                $model->model_id = $up;
-                                @$model->save(false);
-                            }
-                            Yii::app()->user->setFlash('success', 'پرداخت شما با موفقیت انجام شد.');
-                        }else
-                            Yii::app()->user->setFlash('failed', Yii::app()->zarinpal->getError());
-                    }else
-                        Yii::app()->user->setFlash('failed', 'عملیات پرداخت ناموفق بوده یا توسط کاربر لغو شده است.');
-                }
-            }
-        }
-
-        if(!$transactionResult)
-            $this->redirect(array('/buyPlan/' . $id));
-
-        $this->render('verify_plan', array(
-            'transaction' => $model,
-            'plan' => $plan,
-            'user' => $user
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('user_id=:user_id');
+        $criteria->order = 'id DESC';
+        $criteria->params = array(
+            ':user_id' => Yii::app()->user->getId()
+        );
+        $model = UserNotifications::model()->findAll($criteria);
+        UserNotifications::model()->updateAll(array('seen' => '1'), 'user_id=:user_id', array(':user_id' => Yii::app()->user->getId()));
+        $this->render('notifications', array(
+            'model' => $model
         ));
     }
 
-    public function actionDealership()
+    /**
+     * List all bookmarked
+     */
+    public function actionBookmarks()
     {
         Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/public';
+        $this->layout = '//layouts/inner';
 
-        $model = new DealershipRequestForm;
-        $request = new DealershipRequests();
-        
-        // collect user input data
-        if (isset($_POST['DealershipRequestForm'])) {
-            $model->attributes = $_POST['DealershipRequestForm'];
-            // validate user input and redirect to the previous page if valid
-            if ($model->validate()) {
-                $request->attributes = $_POST['DealershipRequestForm'];
-                if($request->save()){
-                    Yii::app()->user->setFlash('success', 'درخواست شما با موفقیت ارسال و ثبت گردید. در اسرع وقت کارشناسان با شما تماس خواهند گرفت.');
-                    $this->refresh();
-                }else
-                    Yii::app()->user->setFlash('failed', 'متاسفانه در ثبت نام مشکلی بوجود آمده است. لطفا مجددا سعی کنید.');
-            } else
-                Yii::app()->user->setFlash('failed', 'متاسفانه در ثبت نام مشکلی بوجود آمده است. لطفا مجددا سعی کنید.');
-        }
+        $user = Users::model()->findByPk(Yii::app()->user->getId());
+        /* @var $user Users */
 
-        $this->render('dealership', array(
-            'model' => $model,
+        $this->render('bookmarks', array(
+            'bookmarks' => $user->bookmarks
         ));
     }
 }

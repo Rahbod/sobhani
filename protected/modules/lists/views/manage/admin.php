@@ -68,7 +68,7 @@ $this->menu=array(
                     array(
                         'name' => 'category_id',
                         'value' => function($data){
-                            return $data->category->title;
+                            return $data->category?$data->category->title:'---';
                         }
                     ),
                     array(

@@ -14,7 +14,7 @@ class ListsCategoryController extends Controller
 	public function filters()
 	{
 		return array(
-			'checkAccess', // perform access control for CRUD operations
+			'checkAccess - view', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
@@ -26,7 +26,7 @@ class ListsCategoryController extends Controller
 	{
 		return array(
 			'backend' => array(
-				'index', 'create', 'update', 'admin', 'delete'
+				'view', 'index', 'create', 'update', 'admin', 'delete'
 			)
 		);
 	}
@@ -150,5 +150,12 @@ class ListsCategoryController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+
+	public function actionView($id){
+		Yii::app()->theme = 'frontend';
+		$this->layout = '//layouts/inner';
+		$model = $this->loadModel($id);
+		$this->render('view', compact('model'));
 	}
 }

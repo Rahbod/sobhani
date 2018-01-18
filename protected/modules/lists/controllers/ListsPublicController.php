@@ -17,7 +17,7 @@ class ListsPublicController extends Controller
 	public function filters()
 	{
 		return array(
-//			'checkAccess - view'
+			'checkAccess - view, index, rows, json'
 		);
 	}
 
@@ -28,7 +28,8 @@ class ListsPublicController extends Controller
 	{
 		return array(
 			'frontend' => array(
-				'view', 'create', 'update', 'upload', 'uploadItem', 'deleteUpload', 'deleteUploadItem'
+				'rows', 'view', 'new', 'update', 'upload', 'uploadItem', 'deleteUpload', 'deleteUploadItem',
+				'json', 'authJson'
 			)
 		);
 	}
@@ -86,13 +87,29 @@ class ListsPublicController extends Controller
 			$model->attributes = $_POST['Lists'];
 			$model->user_type = Yii::app()->user->type;
 			$model->user_id = Yii::app()->user->getId();
-			$image = $model->image?new UploadedFiles($this->tempPath, $model->image):[];
+			$image = $model->image?new UploadedFiles($this->tempPath, $model->image, array(
+				'thumbnail' => array(
+					'width' => 200,
+					'height' => 200
+				),
+				'resize' => array(
+					'width' => 600,
+					'height' => 400
+				))):[];
 			$model->status = isset($_POST['draft'])?Lists::STATUS_DRAFT:($model->user_type == 'admin'?Lists::STATUS_APPROVED:Lists::STATUS_PENDING);
 			if($model->items){
 				foreach($model->items as $key => $item){
 					$itemImages[$key] = [];
 					if(isset($item['image']))
-						$itemImages[$key] = new UploadedFiles($this->tempPath, $item['image']);
+						$itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
+							'thumbnail' => array(
+								'width' => 200,
+								'height' => 200
+							),
+							'resize' => array(
+								'width' => 600,
+								'height' => 400
+							)));
 				}
 			}
 
@@ -123,7 +140,15 @@ class ListsPublicController extends Controller
 		Yii::app()->theme = 'frontend';
 		$model = $this->loadModel($id);
 
-		$image = new UploadedFiles($this->imagePath, ($model->image && is_file(Yii::getPathOfAlias('webroot') . '/uploads/lists/' . $model->image)?$model->image:false));
+		$image = new UploadedFiles($this->imagePath, ($model->image && is_file(Yii::getPathOfAlias('webroot') . '/uploads/lists/' . $model->image)?$model->image:false), array(
+			'thumbnail' => array(
+				'width' => 200,
+				'height' => 200
+			),
+			'resize' => array(
+				'width' => 600,
+				'height' => 400
+			)));
 
 		$oldItemImages = [];
 		$itemImages = [];
@@ -140,7 +165,15 @@ class ListsPublicController extends Controller
 			if($model->items){
 				foreach($model->items as $key => $item){
 					if(isset($item['image']) && $oldItemImages[$key] != $item['image'])
-						$itemImages[$key] = new UploadedFiles($this->tempPath, $item['image']);
+						$itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
+							'thumbnail' => array(
+								'width' => 200,
+								'height' => 200
+							),
+							'resize' => array(
+								'width' => 600,
+								'height' => 400
+							)));
 					else
 						$itemImages[$key] = [];
 				}
@@ -163,7 +196,15 @@ class ListsPublicController extends Controller
 			foreach($model->itemRel as $key => $item){
 				$itemImages[$key] = [];
 				if($item->image)
-					$itemImages[$key] = new UploadedFiles($this->itemImagePath, $item->image);
+					$itemImages[$key] = new UploadedFiles($this->itemImagePath, $item->image, array(
+						'thumbnail' => array(
+							'width' => 200,
+							'height' => 200
+						),
+						'resize' => array(
+							'width' => 600,
+							'height' => 400
+						)));
 			}
 		}
 		$this->render('update', compact('model', 'itemImages', 'image'));
@@ -192,6 +233,31 @@ class ListsPublicController extends Controller
 		Yii::app()->theme = 'frontend';
 		$categories = ListCategories::model()->findAll(array('order' => 'id'));
 		$this->render('index', compact('categories'));
+	}
+
+	/**
+	 * Lists all models.
+	 */
+	public function actionRows($type)
+	{
+		Yii::app()->theme = 'frontend';
+		switch($type){
+			case 'recommended':
+				$title = 'پشنهاد ما به شما';
+				$lists = $this->getSpecialLists(-1);
+				break;
+			case 'popular':
+				$title = 'محبوب ترین ها';
+				$lists = $this->getPopularLists(-1);
+				break;
+			default:
+			case 'latest':
+				$title = 'تازه ها';
+				$lists = $this->getLatestLists(-1);
+				break;
+		}
+		$this->pageTitle = $title;
+		$this->render('list', compact('lists', 'title'));
 	}
 
 	/**
@@ -267,5 +333,52 @@ class ListsPublicController extends Controller
 			echo CJSON::encode($response);
 			Yii::app()->end();
 		}
+	}
+
+	public function actionJson()
+	{
+		if(!isset($_POST['method']))
+			$this->sendJson(['status' => false]);
+		switch($_POST['method']){
+			default:
+				$this->sendJson(['status' => false]);
+		}
+	}
+
+	public function actionAuthJson()
+	{
+		if(!isset($_POST['method']))
+			$this->sendJson(['status' => false]);
+		switch($_POST['method']){
+			case 'bookmark':
+				if(!isset($_POST['hash']))
+					$this->sendJson(['status' => false]);
+				$carID = base64_decode($_POST['hash']);
+				$userID = Yii::app()->user->getId();
+				$parked = UserBookmarks::model()->findByAttributes(['user_id' => $userID, 'list_id' => $carID]);
+				if($parked === null){
+					$parkModel = new UserBookmarks();
+					$parkModel->list_id = $carID;
+					$parkModel->user_id = $userID;
+					if($parkModel->save())
+						$this->sendJson(['status' => true, 'message' => 'لیست به علاقه مندی های شما اضافه شد.']);
+					else
+						$this->sendJson(['status' => false, 'message' => 'در انجام عملیات مشکلی بوجود آمده است! لطفا مجددا تلاش فرمایید.']);
+				}else{
+					if($parked->delete())
+						$this->sendJson(['status' => true, 'message' => 'لیست از علاقه مندی های شما خارج شد.']);
+					else
+						$this->sendJson(['status' => false, 'message' => 'در انجام عملیات مشکلی بوجود آمده است! لطفا مجددا تلاش فرمایید.']);
+				}
+				break;
+			default:
+				$this->sendJson(['status' => false, 'message' => 'خطا در مقادیر.']);
+		}
+	}
+
+	private function sendJson($response)
+	{
+		echo CJSON::encode($response);
+		Yii::app()->end();
 	}
 }

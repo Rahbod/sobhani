@@ -88,12 +88,28 @@ class ListsManageController extends Controller
 			$model->user_type = "admin";
 			$model->user_id = Yii::app()->user->getId();
 			$model->status = Lists::STATUS_APPROVED;
-			$image = $model->image?new UploadedFiles($this->tempPath, $model->image):[];
+			$image = $model->image?new UploadedFiles($this->tempPath, $model->image, array(
+				'thumbnail' => array(
+					'width' => 200,
+					'height' => 200
+				),
+				'resize' => array(
+					'width' => 600,
+					'height' => 400
+				))):[];
 			if($model->items){
 				foreach($model->items as $key => $item){
 					$itemImages[$key] = [];
 					if(isset($item['image']))
-						$itemImages[$key] = new UploadedFiles($this->tempPath, $item['image']);
+						$itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
+							'thumbnail' => array(
+								'width' => 200,
+								'height' => 200
+							),
+							'resize' => array(
+								'width' => 600,
+								'height' => 400
+							)));
 				}
 			}
 
@@ -123,7 +139,15 @@ class ListsManageController extends Controller
 	{
 		$model = $this->loadModel($id);
 
-		$image = new UploadedFiles($this->imagePath, ($model->image && is_file(Yii::getPathOfAlias('webroot').'/uploads/lists/'.$model->image)?$model->image:false));
+		$image = new UploadedFiles($this->imagePath, ($model->image && is_file(Yii::getPathOfAlias('webroot').'/uploads/lists/'.$model->image)?$model->image:false), array(
+			'thumbnail' => array(
+				'width' => 200,
+				'height' => 200
+			),
+			'resize' => array(
+				'width' => 600,
+				'height' => 400
+			)));
 
 		$oldItemImages = [];
 		$itemImages = [];
@@ -140,7 +164,15 @@ class ListsManageController extends Controller
 			if($model->items){
 				foreach($model->items as $key => $item){
 					if(isset($item['image']) && $oldItemImages[$key] != $item['image'])
-						$itemImages[$key] = new UploadedFiles($this->tempPath, $item['image']);
+						$itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
+							'thumbnail' => array(
+								'width' => 200,
+								'height' => 200
+							),
+							'resize' => array(
+								'width' => 600,
+								'height' => 400
+							)));
 					else
 						$itemImages[$key] = [];
 				}
@@ -163,7 +195,15 @@ class ListsManageController extends Controller
 			foreach($model->itemRel as $key => $item){
 				$itemImages[$key] = [];
 				if($item->image)
-					$itemImages[$key] = new UploadedFiles($this->itemImagePath, $item->image);
+					$itemImages[$key] = new UploadedFiles($this->itemImagePath, $item->image, array(
+						'thumbnail' => array(
+							'width' => 200,
+							'height' => 200
+						),
+						'resize' => array(
+							'width' => 600,
+							'height' => 400
+						)));
 			}
 		}
 		$this->render('update', compact('model', 'itemImages', 'image'));

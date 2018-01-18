@@ -48,14 +48,13 @@ class SiteController extends Controller
         Yii::app()->theme = "frontend";
         $this->layout = "public";
 
-        $cr = new CDbCriteria();
-        $cr->compare('title', 'گا', true);
-        $cr->compare('id', 2, false,"OR");
-
-
-        $slider = Tags::model()->findAll($cr);
-
-        $this->render('index', compact('slider'));
+        $criteria = new CDbCriteria();
+        $criteria->compare('status', Lists::STATUS_APPROVED);
+        $criteria->order = 'seen DESC';
+        $criteria->limit = 10;
+        $slider = Lists::model()->findAll($criteria);
+        $count = Lists::model()->count($criteria);
+        $this->render('index', compact('slider', 'count'));
     }
 
     /**
@@ -126,7 +125,7 @@ class SiteController extends Controller
     {
         Yii::import('pages.models.*');
         Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/public';
+        $this->layout = '//layouts/inner';
         $model = Pages::model()->findByPk(1);
         $this->render('//site/pages/page', array('model' => $model));
     }
@@ -136,7 +135,7 @@ class SiteController extends Controller
         Yii::import('pages.models.*');
         Yii::app()->theme = 'frontend';
         $this->layout = '//layouts/inner';
-        $model = Pages::model()->findByPk(2);
+        $model = Pages::model()->findByPk(3);
         $this->render('//site/pages/page', array('model' => $model));
     }
 
@@ -144,7 +143,7 @@ class SiteController extends Controller
     {
         Yii::import('pages.models.*');
         Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/public';
+        $this->layout = '//layouts/inner';
         $model = Pages::model()->findByPk(8);
         $this->render('//site/pages/page', array('model' => $model));
     }
@@ -153,8 +152,17 @@ class SiteController extends Controller
     {
         Yii::import('pages.models.*');
         Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/public';
-        $model = Pages::model()->findByPk(3);
+        $this->layout = '//layouts/inner';
+        $model = Pages::model()->findByPk(2);
+        $this->render('//site/pages/page', array('model' => $model));
+    }
+
+    public function actionFaq()
+    {
+        Yii::import('pages.models.*');
+        Yii::app()->theme = 'frontend';
+        $this->layout = '//layouts/inner';
+        $model = Pages::model()->findByPk(4);
         $this->render('//site/pages/page', array('model' => $model));
     }
 }

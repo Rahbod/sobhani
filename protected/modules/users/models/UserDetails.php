@@ -37,16 +37,16 @@ class UserDetails extends CActiveRecord
 		return array(
 			array('user_id', 'required'),
 			array('first_name, last_name, mobile', 'required', 'on' => 'update'),
-			array('user_id, zip_code', 'length', 'max'=>10),
-			array('first_name, last_name, dealership_name', 'length', 'max'=>50),
-			array('mobile', 'length', 'is'=>11, 'message'=>'شماره موبایل اشتباه است'),
-			array('phone', 'length', 'max'=>11),
-			array('address', 'length', 'max'=>1000),
-			array('avatar', 'length', 'max'=>255),
+			array('user_id, zip_code', 'length', 'max' => 10),
+			array('first_name, last_name, dealership_name', 'length', 'max' => 50),
+			array('mobile', 'length', 'is' => 11, 'message' => 'شماره موبایل اشتباه است'),
+			array('phone', 'length', 'max' => 11),
+			array('address', 'length', 'max' => 1000),
+			array('avatar', 'length', 'max' => 255),
 			array('phone, mobile', 'numerical', 'integerOnly' => true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('user_id, first_name, last_name, phone, zip_code, address, avatar, mobile, dealership_name', 'safe', 'on'=>'search'),
+			array('user_id, first_name, last_name, phone, zip_code, address, avatar, mobile, dealership_name', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -96,19 +96,19 @@ class UserDetails extends CActiveRecord
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
+		$criteria = new CDbCriteria;
 
-		$criteria->compare('user_id',$this->user_id,true);
-		$criteria->compare('first_name',$this->first_name,true);
-		$criteria->compare('last_name',$this->last_name,true);
-		$criteria->compare('phone',$this->phone,true);
-		$criteria->compare('zip_code',$this->zip_code,true);
-		$criteria->compare('address',$this->address,true);
-		$criteria->compare('avatar',$this->avatar,true);
-		$criteria->compare('mobile',$this->mobile,true);
+		$criteria->compare('user_id', $this->user_id, true);
+		$criteria->compare('first_name', $this->first_name, true);
+		$criteria->compare('last_name', $this->last_name, true);
+		$criteria->compare('phone', $this->phone, true);
+		$criteria->compare('zip_code', $this->zip_code, true);
+		$criteria->compare('address', $this->address, true);
+		$criteria->compare('avatar', $this->avatar, true);
+		$criteria->compare('mobile', $this->mobile, true);
 
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+			'criteria' => $criteria,
 		));
 	}
 
@@ -118,45 +118,43 @@ class UserDetails extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return UserDetails the static model class
 	 */
-	public static function model($className=__CLASS__)
+	public static function model($className = __CLASS__)
 	{
 		return parent::model($className);
 	}
 
-    /**
-     * @return array
-     */
-    public function getRoleLabels(){
-        return CHtml::listData(UserRoles::model()->findAll(), 'role', 'name');
-    }
+	/**
+	 * @return array
+	 */
+	public function getRoleLabels()
+	{
+		return CHtml::listData(UserRoles::model()->findAll(), 'role', 'name');
+	}
 
-    /**
-     * @return string if user`s name is not empty return name ,otherwise return email
-     */
-    public function getShowName()
-    {
-		$postfix = '';
-		if($this->user->role_id == 2)
-			$postfix = ' - نمایشگاه '.$this->dealership_name;
-        if ($this->first_name or $this->last_name)
-            return $this->first_name . ' ' . $this->last_name.$postfix;
-        else
-            return $this->user->email.$postfix;
-    }
-	
+	/**
+	 * @return string if user`s name is not empty return name ,otherwise return email
+	 */
+	public function getShowName()
+	{
+		if($this->first_name or $this->last_name)
+			return $this->first_name . ' ' . $this->last_name;
+		else
+			return $this->user->email;
+	}
+
 	public function getShowDescription()
-    {
-		return $this->user->activePlan->plan->title.
-			' / انقضا '.'<span class="text-danger">'.($this->user->activePlan->expire_date>0?JalaliDate::date('Y/m/d',$this->user->activePlan->expire_date):'-').'</span>'.
-			' / '. Controller::parseNumbers($this->mobile).
-			' / '.$this->user->email;
-    }
+	{
+		return $this->user->activePlan->plan->title .
+		' / انقضا ' . '<span class="text-danger">' . ($this->user->activePlan->expire_date > 0?JalaliDate::date('Y/m/d', $this->user->activePlan->expire_date):'-') . '</span>' .
+		' / ' . Controller::parseNumbers($this->mobile) .
+		' / ' . $this->user->email;
+	}
 
 	public function getAvatar()
 	{
 		if($this->avatar)
-            return Yii::app()->baseUrl.'/uploads/users/'.$this->avatar;
-        else
-            return Yii::app()->theme->baseUrl.'/svg/default-user.svg';
+			return Yii::app()->baseUrl . '/uploads/users/avatar/' . $this->avatar;
+		else
+			return Yii::app()->theme->baseUrl . '/image/user.png';
 	}
 }

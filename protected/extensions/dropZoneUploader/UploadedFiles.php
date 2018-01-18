@@ -27,11 +27,11 @@ class UploadedFiles
         $this->_path = Yii::getPathOfAlias('webroot') . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR;
         $this->_pathUrl = Yii::app()->getBaseUrl(true) . '/' . $path . '/';
 
-        if(!is_dir($this->_path)){
+        if(!is_dir($this->_path))
             mkdir($this->_path, 0777, true);
-            if($this->getOption('thumbnail'))
-                $this->createThumbPath();
-        }
+
+        if($this->getOption('thumbnail'))
+            $this->createThumbPath();
     }
 
     /**
@@ -266,11 +266,12 @@ class UploadedFiles
 
     public function createThumbPath()
     {
-        mkdir($this->getThumbPath(), 0777, true);
+        @mkdir($this->getThumbPath(), 0777, true);
     }
 
     public function createThumbnail($image, $destination)
     {
+
         $w = isset($this->getOption('thumbnail')['width']) && $this->getOption('thumbnail')['width']?$this->getOption('thumbnail')['width']:150;
         $h = isset($this->getOption('thumbnail')['height']) && $this->getOption('thumbnail')['height']?$this->getOption('thumbnail')['height']:150;
         $this->getImager()->createThumbnail($image, $w, $h, false, $destination);
