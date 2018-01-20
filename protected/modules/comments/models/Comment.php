@@ -215,7 +215,7 @@ class Comment extends CActiveRecord
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
-    public function searchBooks()
+    public function searchLists()
     {
         $criteria = new CDbCriteria;
         $criteria->compare('owner_name', $this->owner_name, true);
@@ -389,7 +389,7 @@ class Comment extends CActiveRecord
             //if User model has been configured and comment posted by registered user
             $userConfig = Yii::app()->getModule('comments')->userConfig;
             if(strpos($userConfig['emailProperty'], '.') === false)
-                $userEmail .= $this->user->$userConfig['emailProperty'];
+                $userEmail .= $this->user->email;
             else {
                 $relations = explode('.', $userConfig['emailProperty']);
                 $user = $this->user;

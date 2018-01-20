@@ -4,8 +4,9 @@
 /* @var $form CActiveForm */
 $this->breadcrumbs =[
     'داشبورد' => array('/dashboard'),
+    'لیست های من' => array('/my-lists'),
     'تغییر مشخصات' => array('/profile'),
-    'کلمه عبور' => array('/changePassword'),
+    'کلمه عبور',
 ];
 ?>
 

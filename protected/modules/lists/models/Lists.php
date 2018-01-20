@@ -150,10 +150,10 @@ class Lists extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
-		$criteria->compare('title',$this->title,true);
 		$criteria->compare('image',$this->image,true);
+		$criteria->compare('title',$this->title,true);
 		$criteria->compare('description',$this->description,true);
-        $criteria->compare('user_id',$this->user_id,true);
+        $criteria->compare('user_type',$this->user_type);
 		$criteria->compare('user_id',$this->user_id,true);
 		$criteria->compare('category_id',$this->category_id,true);
 		$criteria->compare('create_date',$this->create_date,true);

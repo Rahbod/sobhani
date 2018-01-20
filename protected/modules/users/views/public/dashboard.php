@@ -2,7 +2,8 @@
 /* @var $this UsersPublicController */
 /* @var $user Users */
 $this->breadcrumbs =[
-    'داشبورد' => array('/dashboard'),
+    'داشبورد',
+    'لیست های من' => array('/my-lists'),
     'تغییر مشخصات' => array('/profile'),
     'کلمه عبور' => array('/changePassword'),
 ];

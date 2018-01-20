@@ -554,6 +554,9 @@ body{
 .recommend .items{
     margin: 0 -15px;
 }
+.recommend .items > .empty{
+    padding: 0 15px;
+}
 .recommend .list-item{
     position: relative;
     font-size: 18px;
@@ -1248,3 +1251,13 @@ input[type="radio"]{
 }
 
 /*****************************************************/
+.list-view-image {
+    display: inline-block;
+    width: 120px;
+    float: right;
+    margin-left: 5px;
+}
+.list-view-image img{
+    width: 120px;
+    height: auto;
+}

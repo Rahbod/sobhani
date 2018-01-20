@@ -61,7 +61,7 @@ return array(
 			//the models for commenting
 			'commentableModels'=>array(
 				//model with individual settings
-				'Lists'=>array(
+				'ListItemRel'=>array(
 					'premoderate' => true,
 					'allowSubcommenting'=>true,
 					'isSuperuser'=>'!Yii::app()->user->isGuest && Yii::app()->user->type == \'admin\'',
@@ -69,13 +69,13 @@ return array(
 					//config for create link to view model page(page with comments)
 					'pageUrl'=>array(
 						'route'=>'lists/',
-						'data'=>array('id'=>'id','title'=>'title')
+						'data'=>array('id'=>'list_id')
 					),
 				),
 			),
 			'userConfig'=>array(
 				'class'=>'Users',
-				'nameProperty'=>'userDetails.fa_name',
+				'nameProperty'=>'userDetails.showName',
 				'emailProperty'=>'email',
 //				'rateProperty'=>'bookRate.rate',
 			),
@@ -111,11 +111,13 @@ return array(
 			'showScriptName'=>false,
 			'appendParams'=>true,
 			'rules'=>array(
+				'search' => 'lists/public/search',
 				'lists' => 'lists/public/index',
 				'lists/category/<id:\d+>'=>'lists/category/view',
 				'new' => 'lists/public/new',
 				'<type:(recommended|latest)>' => 'lists/public/rows',
 				'<action:(about|contact|help|terms|search|faq)>' => 'site/<action>',
+				'my-lists' => 'users/public/lists',
 				'<action:(logout|dashboard|googleLogin|login|register|changePassword|forgetPassword|profile|notifications|recoverPassword|bookmarks)>' => 'users/public/<action>',
 				'<module:\w+>/<id:\d+>'=>'<module>/public/view',
 				'<module:\w+>/<controller:\w+>'=>'<module>/<controller>/index',

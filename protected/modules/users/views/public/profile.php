@@ -6,7 +6,8 @@
 
 $this->breadcrumbs =[
     'داشبورد' => array('/dashboard'),
-    'تغییر مشخصات' => array('/profile'),
+    'لیست های من' => array('/my-lists'),
+    'تغییر مشخصات',
     'کلمه عبور' => array('/changePassword'),
 ];
 ?>

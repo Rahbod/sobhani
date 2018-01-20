@@ -27,6 +27,7 @@ class UsersPublicController extends Controller
                 'viewProfile',
                 'login',
                 'captcha',
+                'lists',
             )
         );
     }
@@ -570,6 +571,26 @@ class UsersPublicController extends Controller
 
         $this->render('bookmarks', array(
             'bookmarks' => $user->bookmarks
+        ));
+    }
+
+    public function actionLists()
+    {
+        Yii::app()->theme = 'frontend';
+        $this->layout = '//layouts/inner';
+
+        $user = Users::model()->findByPk(Yii::app()->user->getId());
+        /* @var $user Users */
+
+        $model = new Lists('search');
+        $model->unsetAttributes();
+        if(isset($_GET['Lists']))
+            $model->attributes = $_GET['Lists'];
+        $model->user_type = 'user';
+        $model->user_id = $user->id;
+
+        $this->render('lists', array(
+            'model' => $model
         ));
     }
 }

@@ -17,7 +17,7 @@ class ListsPublicController extends Controller
 	public function filters()
 	{
 		return array(
-			'checkAccess - view, index, rows, json'
+			'checkAccess - view, index, rows, json, search'
 		);
 	}
 
@@ -29,7 +29,7 @@ class ListsPublicController extends Controller
 		return array(
 			'frontend' => array(
 				'rows', 'view', 'new', 'update', 'upload', 'uploadItem', 'deleteUpload', 'deleteUploadItem',
-				'json', 'authJson'
+				'json', 'authJson', 'search'
 			)
 		);
 	}
@@ -243,7 +243,7 @@ class ListsPublicController extends Controller
 		Yii::app()->theme = 'frontend';
 		switch($type){
 			case 'recommended':
-				$title = 'پشنهاد ما به شما';
+				$title = 'پیشنهاد ما به شما';
 				$lists = $this->getSpecialLists(-1);
 				break;
 			case 'popular':
@@ -258,21 +258,6 @@ class ListsPublicController extends Controller
 		}
 		$this->pageTitle = $title;
 		$this->render('list', compact('lists', 'title'));
-	}
-
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model=new Lists('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Lists']))
-			$model->attributes=$_GET['Lists'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
 	}
 
 	/**
@@ -380,5 +365,29 @@ class ListsPublicController extends Controller
 	{
 		echo CJSON::encode($response);
 		Yii::app()->end();
+	}
+
+	public function actionSearch()
+	{
+		Yii::app()->theme = 'frontend';
+		$this->layout = '//layouts/inner';
+		$title = "همه لیست ها";
+		$criteria = new CDbCriteria();
+		$criteria->order = 'seen DESC, t.title';
+		if(isset($_GET['term']) && !empty($_GET['term'])){
+			$criteria->addCondition('t.status = :status');
+			$criteria->addCondition('t.title REGEXP :field OR t.description REGEXP :field OR
+						category.title REGEXP :field OR category.description REGEXP :field');
+			$criteria->with[]='category';
+			$criteria->params[':field'] = $_GET['term'];
+			$criteria->params[':status'] = Lists::STATUS_APPROVED;
+			/* @var Lists[] $list */
+			$lists = Lists::model()->findAll($criteria);
+			$title = "جستجوی \"{$_GET['term']}\"";
+		}else
+			$lists= Lists::model()->findAll($criteria);
+
+		$this->pageTitle = $title;
+		$this->render('list', compact('lists','title'));
 	}
 }

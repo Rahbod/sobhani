@@ -61,38 +61,35 @@ class UserIdentity extends CUserIdentity
 
     public function authenticate()
     {
-        if ($this->OAuth)
+        if($this->OAuth)
             $record = Users::model()->findByAttributes(array($this->verification_field => $this->verification_field_value));
-        else {
+        else{
             $bCrypt = new bCrypt;
-            if($this->verification_field == 'mobile')
-            {
+            if($this->verification_field == 'mobile'){
                 $record = UserDetails::model()->findByAttributes(array($this->verification_field => $this->verification_field_value));
                 $record = $record && $record->user?$record->user:null;
-            }
-            else
+            }else
                 $record = Users::model()->findByAttributes(array($this->verification_field => $this->verification_field_value));
         }
-        if ($record === null)
+        if($record === null)
             $this->errorCode = self::ERROR_USERNAME_INVALID;
-        elseif ($record->status == 'pending')
+        elseif($record->status == 'pending')
             $this->errorCode = self::ERROR_STATUS_PENDING;
-        elseif ($record->status == 'blocked')
+        elseif($record->status == 'blocked')
             $this->errorCode = self::ERROR_STATUS_BLOCKED;
-        elseif ($record->status == 'deleted')
+        elseif($record->status == 'deleted')
             $this->errorCode = self::ERROR_STATUS_DELETED;
-        elseif ($record->status == 'active') {
-            if (!$this->OAuth && !$bCrypt->verify($this->password, $record->password))
+        elseif($record->status == 'active'){
+            if(!$this->OAuth && !$bCrypt->verify($this->password, $record->password))
                 $this->errorCode = self::ERROR_PASSWORD_INVALID;
-            else {
+            else{
                 $this->_id = $record->id;
                 $this->setState('roles', $record->role->role);
                 $this->setState('type', 'user');
                 $this->setState('email', $record->email);
                 $this->setState('username', $record->username);
-                $this->setState('first_name', $record->userDetails->first_name);
-                $this->setState('last_name', $record->userDetails->last_name);
-                $this->setState('avatar', (is_null($record->userDetails->avatar) ? '' : $record->userDetails->avatar));
+                $this->setState('showName', $record->userDetails->getShowName());
+                $this->setState('avatar', (is_null($record->userDetails->avatar)?'':$record->userDetails->avatar));
                 $this->setState('auth_mode', $record->auth_mode);
                 $this->errorCode = self::ERROR_NONE;
             }

@@ -42,7 +42,7 @@
             <?php echo $form->error($newComment,'user_email'); ?>
         </div>
         <?php
-        if(!BookRatings::model()->findByAttributes(array('user_id'=>Yii::app()->user->getId(),'book_id'=>$newComment->owner_id))):
+        if(!Votes::model()->findByAttributes(array('user_id'=>Yii::app()->user->getId(),'list_item_rel_id'=>$newComment->owner_id))):
         ?>
         <div class="rating">
             <span>امتیاز</span>

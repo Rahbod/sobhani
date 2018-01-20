@@ -37,7 +37,7 @@
 <div class="add-list-form">
 	<?php echo $form->errorSummary($model)?>
 	<div class="form-row">
-		<?php echo $form->textField($model,'title',array('class'=>'transparent-input', 'placeholder' => 'افزودن عنوان لیست')); ?>
+		<?php echo $form->textField($model,'title',array('class'=>'transparent-input', 'placeholder' => 'عنوان لیست')); ?>
 		<?php echo $form->textArea($model,'description',array('placeholder'=>'توضیحات...')); ?>
 		<?php echo $form->labelEx($model,'title')?>
 		<?php $this->widget('ext.dropZoneUploader.dropZoneUploader', array(

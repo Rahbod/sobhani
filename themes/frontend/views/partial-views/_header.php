@@ -22,7 +22,7 @@
                     <li><a href="<?= $this->createUrl('/new') ?>">افزودن لیست</a></li>
                     <li><a href="<?= $this->createUrl('/recommended') ?>">پیشنهاد برای شما</a></li>
                     <?php if(!Yii::app()->user->isGuest && Yii::app()->user->type =='user'):?>
-                        <li class="user-link"><a href="<?= $this->createUrl('/dashboard')?>"><i class="user-icon"></i><?= Yii::app()->user->first_name.' '.Yii::app()->user->last_name ?></a>
+                        <li class="user-link"><a href="<?= $this->createUrl('/dashboard')?>"><i class="user-icon"></i><?= Yii::app()->user->showName ?></a>
                         <li><a href="<?= $this->createUrl('/dashboard')?>" class="h"><i class="home-icon"></i></a></li>
                         <li><a href="<?= $this->createUrl('/bookmarks')?>" class="s"><i class="star-icon"></i></a></li>
                         <li><a href="<?= $this->createUrl('/notifications')?>" class="e"><i class="envelope-icon"></i></a></li>
@@ -35,31 +35,33 @@
             </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 hidden-xs search-container">
+            <?php echo CHtml::beginForm(array('/search'),'get'); ?>
             <div class="row">
                 <div class="input-group">
-                    <input class="form-control" type="text">
+                    <?php echo CHtml::textField('term',isset($_GET['term'])?$_GET['term']:'', array('class' => 'form-control')) ?>
                     <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button"><i class="search-icon"></i></button>
-                        </span>
+                        <button class="btn btn-secondary" type="submit"><i class="search-icon"></i></button>
+                    </span>
                 </div>
             </div>
+            <?php echo CHtml::endForm(); ?>
         </div>
-        <form class="hidden-lg hidden-md hidden-sm mobile-search search-container">
+        <?php echo CHtml::beginForm(array('/search'),'get',array('class' => 'hidden-lg hidden-md hidden-sm mobile-search search-container')); ?>
             <div class="close-search-container"></div>
             <div class="input-group">
-                <input class="form-control" type="text">
+                <?php echo CHtml::textField('term',isset($_GET['term'])?$_GET['term']:'', array('class' => 'form-control')) ?>
                 <span class="input-group-btn">
-                        <button class="btn btn-secondary" type="button"><i class="search-icon"></i></button>
-                    </span>
+                    <button class="btn btn-secondary" type="submit"><i class="search-icon"></i></button>
+                </span>
             </div>
-        </form>
+        <?php echo CHtml::endForm(); ?>
         <ul class="nav navbar-nav hidden-lg hidden-md hidden-sm collapse" id="mobile-menu">
             <li><a href="<?= $this->createUrl('/lists') ?>">لیست ها</a></li>
             <li><a href="<?= $this->createUrl('/latest') ?>">تازه ها</a></li>
             <li><a href="<?= $this->createUrl('/new') ?>">افزودن لیست</a></li>
             <li><a href="<?= $this->createUrl('/recommended') ?>">پیشنهاد برای شما</a></li>
             <?php if(!Yii::app()->user->isGuest && Yii::app()->user->type =='user'):?>
-                <li><a href="<?= $this->createUrl('/dashboard')?>"><i class="user-icon"></i><?= Yii::app()->user->first_name ?></a>
+                <li><a href="<?= $this->createUrl('/dashboard')?>"><i class="user-icon"></i><?= Yii::app()->user->showName ?></a>
                 <li class="icon-link"><a href="<?= $this->createUrl('/dashboard')?>" class="h"><i class="home-icon"></i></a></li>
                 <li class="icon-link"><a href="<?= $this->createUrl('/bookmarks')?>" class="s"><i class="star-icon"></i></a></li>
                 <li class="icon-link"><a href="<?= $this->createUrl('/notifications')?>" class="e"><i class="envelope-icon"></i></a></li>
