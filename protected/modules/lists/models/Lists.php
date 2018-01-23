@@ -98,7 +98,7 @@ class Lists extends CActiveRecord
 			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
 			'admin' => array(self::BELONGS_TO, 'Admins', 'user_id'),
 			'itemObj' => array(self::MANY_MANY, 'Items', '{{list_item_rel}}(list_id, item_id)'),
-			'itemRel' => array(self::HAS_MANY, 'ListItemRel', 'list_id'),
+			'itemRel' => array(self::HAS_MANY, 'ListItemRel', 'list_id', 'order' => 'id'),
 			'bookmarks' => array(self::MANY_MANY, 'Users', '{{user_bookmarks}}(list_id, user_id)'),
 		);
 	}

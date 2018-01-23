@@ -10,6 +10,8 @@
             </div>
             <div class="modal-body">
                 <?php $this->renderPartial('//partial-views/_loading') ?>
+                <a href="<?= $this->createUrl('/googleLogin') ?>" class="btn-red text-center" id="google-login-btn"><i class="google-icon"></i>ورود یا ثبت نام با گوگل</a>
+                <div class="text-center">یا</div>
                 <?php $this->renderPartial('users.views.public._ajaxRegister', array('loading_parent' => '#join-modal')) ?>
             </div>
         </div>
@@ -27,6 +29,8 @@
             </div>
             <div class="modal-body">
                 <?php $this->renderPartial('//partial-views/_loading') ?>
+                <a href="<?= $this->createUrl('/googleLogin') ?>" class="btn-red text-center" id="google-login-btn"><i class="google-icon"></i>ورود یا ثبت نام با گوگل</a>
+                <div class="text-center">یا</div>
                 <?php $this->renderPartial('users.views.public._ajaxLogin', array('loading_parent' => '#login-modal')) ?>
             </div>
         </div>

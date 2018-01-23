@@ -175,6 +175,10 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
+		'googleWebKey' => [
+			'client_id' => "847053315039-s41olq8kabaaee4dn5sk7hk4era5a6b4.apps.googleusercontent.com",
+			'client_secret' => "nAsP8voWDtb2sm3ZC__ZlYit"
+		],
 		// @todo change webmail of emails
 		'adminEmail'=>'info@10behtarin.com',
 		'noReplyEmail' => 'noreply@10behtarin.com',

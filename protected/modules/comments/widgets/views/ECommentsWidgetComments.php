@@ -1,29 +1,11 @@
 <?php if(count($comments) > 0):?>
     <ul class="comments-list">
+        <i class="icon icon-quote-right" aria-hidden="true"></i>
         <?php foreach($comments as $key => $comment):
             ?>
             <li id="comment-<?php echo $comment->comment_id; ?>">
-                <?php
-                if($comment->avatarLink)
-                    echo '<div class="default-comment-avatar"><img src="'.$comment->avatarLink.'" ></div>';
-                else
-                    echo '<div class="default-comment-avatar"></div>';
-                ?>
                 <div class="comment-text">
                     <div class="text">
-                        <div class="stars">
-                            <?php
-                            if($comment->userRate):
-                            ?>
-                                <?= Controller::printRateStars($comment->userRate) ?>
-                            <?php
-                            else:
-                            ?>
-                                امتیاز ثبت نشده
-                            <?php
-                            endif;
-                            ?>
-                        </div>
                         <div><p dir="auto"><?php echo CHtml::encode($comment->comment_text);?></p></div>
                     </div>
                     <div class="meta">
@@ -32,9 +14,7 @@
                     </div>
                 </div>
                 <?php if($this->adminMode === true):
-                        if(Yii::app()->user->type == 'admin' ||
-                            (Yii::app()->user->roles == 'publisher' && $this->model->publisher_id == Yii::app()->user->getId())
-                        ):
+                        if(Yii::app()->user->type == 'admin' || $this->model->list->user_id == Yii::app()->user->getId()):
                     ?>
                     <div class="admin-panel">
                         <?php if($this->_config['premoderate'] === true && ($comment->status === null || $comment->status == Comment::STATUS_NOT_APPROWED)) {
@@ -46,11 +26,13 @@
                             CommentsModule::DELETE_ACTION_ROUTE, array('id'=>$comment->comment_id)
                         ), array('class'=>'text-danger delete'));?>
                     </div>
-                <?php endif;endif; ?>
+                        <?php endif;
+                endif;
+                ?>
                 <?php
                     if($this->adminMode === true && $this->allowSubcommenting === true && ($this->registeredOnly === false || Yii::app()->user->isGuest === false))
                     {
-                        if(Yii::app()->user->type == 'admin' || (Yii::app()->user->roles == 'publisher' && $this->model->publisher_id == Yii::app()->user->getId())){
+                        if(Yii::app()->user->type == 'admin' || $this->model->list->user_id == Yii::app()->user->getId()){
                             echo CHtml::link(Yii::t($this->_config['translationCategory'] ,'Reply') ,'#reply-' . $comment->comment_id ,array(
                                 'data-comment-id' => $comment->comment_id ,
                                 'class' => 'btn btn-info collapsed add-comment' ,
@@ -72,8 +54,6 @@
         endforeach;
         ?>
     </ul>
-<?php else:?>
-    <p><?php echo Yii::t($this->_config['translationCategory'], 'No '.$this->_config['moduleObjectName'].'s');?></p>
 <?php endif;
 ?>
 <script>

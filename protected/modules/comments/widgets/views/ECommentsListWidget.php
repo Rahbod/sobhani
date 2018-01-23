@@ -1,10 +1,6 @@
 <div class="comment-widget <?= Yii::app()->language != 'fa_ir'?'en':'' ?>" id="<?php echo $this->id?>">
 <?php
-    echo '<div class="comments-list-outer">';
-    $this->render('ECommentsWidgetComments', array('newComment' => $newComment ,'comments' => $comments));
-    echo '</div>';
     echo '<div class="comment-form-outer" id="comment-form" >';
-    echo "<h4>نظرتان را بگویید</h4>";
     if($this->showPopupForm === true)
     {
         if($this->registeredOnly === false || Yii::app()->user->isGuest === false)
@@ -27,5 +23,8 @@
         echo '<a target="_blank" href="'.Yii::app()->createUrl('/register').'">'.Yii::t($this->_config['translationCategory'], 'Sign Up.').'</a>';
     }
     echo "</div>";
+    echo '<div class="comments-list-outer">';
+    $this->render('ECommentsWidgetComments', array('newComment' => $newComment ,'comments' => $comments));
+    echo '</div>';
 ?>
 </div>

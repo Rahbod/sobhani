@@ -17,7 +17,8 @@ $this->menu=array(
         <a href="<?= $this->createUrl('create') ?>" class="btn btn-default btn-sm">افزودن Lists</a>
     </div>
     <div class="box-body">
-        <?php $this->renderPartial("//partial-views/_flashMessage"); ?>        <div class="table-responsive">
+        <?php $this->renderPartial("//partial-views/_flashMessage"); ?>        
+        <div class="table-responsive">
             <?php $this->widget('zii.widgets.grid.CGridView', array(
                 'id'=>'lists-grid',
                 'dataProvider'=>$model->search(),

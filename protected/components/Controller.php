@@ -254,29 +254,6 @@ class Controller extends AuthController
         return 0;
     }
 
-    public function saveInCookie($catID)
-    {
-        $cookie = Yii::app()->request->cookies->contains('VC')?Yii::app()->request->cookies['VC']:null;
-
-        if(is_null($cookie)){
-            $cats = base64_encode(CJSON::encode(array($catID)));
-            $newCookie = new CHttpCookie('VC', $cats);
-            $newCookie->domain = '';
-            $newCookie->expire = time() + (60 * 60 * 24 * 365);
-            $newCookie->path = '/';
-            $newCookie->secure = false;
-            $newCookie->httpOnly = false;
-            Yii::app()->request->cookies['VC'] = $newCookie;
-        }else{
-            $cats = CJSON::decode(base64_decode($cookie->value));
-            if(!in_array($catID, $cats)){
-                array_push($cats, $catID);
-                $cats = base64_encode(CJSON::encode($cats));
-                Yii::app()->request->cookies['VC'] = new CHttpCookie('VC', $cats);
-            }
-        }
-    }
-
     public function createLog($message, $userID)
     {
         Yii::app()->getModule('users');

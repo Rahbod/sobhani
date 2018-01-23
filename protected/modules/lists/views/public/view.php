@@ -5,7 +5,6 @@ $this->breadcrumbs = array(
 	$model->category->title => array('/lists/category/'.$model->category_id),
 	$model->title
 );
-
 $favorite = UserBookmarks::model()->findByAttributes(['user_id' => Yii::app()->user->getId(), 'list_id' => $model->id])?true:false;
 ?>
 <div class="alert alert-success view-alert hidden">
@@ -22,7 +21,7 @@ $favorite = UserBookmarks::model()->findByAttributes(['user_id' => Yii::app()->u
 		<small><?= $model->user->userDetails?$model->user->userDetails->getShowName():$model->user->email ?></small>
 	</div>
 	<?php endif; ?>
-	<p><?= $model->description ?></p>
+	<div class="text"><?= $model->description ?></div>
 
 	<h3>
 		ده برترین
@@ -55,31 +54,10 @@ $favorite = UserBookmarks::model()->findByAttributes(['user_id' => Yii::app()->u
 		endif;
 		?>
 	</h3>
-	<div class="add-list-form">
-		<?
+	<div class="add-list-form items-list">
+		<?php
 		$items = $model->itemRel;
-		$itemImagePath = Yii::getPathOfAlias('webroot').'/uploads/items/thumbs/200x200/';
-		$itemImageUrl = Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
-		$i = 1;
-		foreach($items as $item): ?>
-			<div class="form-row">
-				<?php if($item->image && is_file($itemImagePath.$item->image)):?>
-				<div class="list-view-image">
-					<img src="<?= $itemImageUrl.$item->image ?>" alt="<?= $item->item->title ?>" >
-				</div>
-				<?php endif;?>
-				<span class="num <?php
-				if($i==1) echo 'gold';
-				if($i==2) echo 'silver';
-				if($i==3) echo 'bronze';
-				?>"><?= $i?></span>
-				<h4><?= $item->item->title ?></h4>
-				
-				<?php $this->widget('comments.widgets.ECommentsListWidget', array(
-					'model' => $item,
-				)); ?>
-			</div>
-		<?php $i++; ?>
-		<?php endforeach;?>
+		$this->renderPartial('_items',compact('items', 'model'))
+		?>
 	</div>
 </div>
