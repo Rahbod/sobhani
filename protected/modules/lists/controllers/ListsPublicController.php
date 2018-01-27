@@ -346,7 +346,7 @@ class ListsPublicController extends Controller
 				$vote->create_date = time();
 				Votes::saveVoteInCookie($data['list_id']);
 				if($vote->save())
-					$this->sendJson(['status' => true, 'avgs' => Votes::VoteAverages($vote->list_id), 'message' => 'رای شما با موفقیت ثبت گردید.']);
+					$this->sendJson(['status' => true, 'avg' => Votes::VoteAverages($vote->list_id), 'message' => 'رای شما با موفقیت ثبت گردید.']);
 				else
 					$this->sendJson(['status' => false, 'message' => 'در انجام عملیات مشکلی بوجود آمده است! لطفا مجددا تلاش فرمایید.']);
 				break;

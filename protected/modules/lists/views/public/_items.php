@@ -24,26 +24,29 @@ foreach($items as $item):
             <h4><?= $item->item->title ?>
             <?php
             if(!$voted)
-            echo CHtml::ajaxLink('<i class="icon-check-sign"></i>',array('/lists/public/json'),array(
-                'type' => 'POST',
-                'dataType' => 'JSON',
-                'data' => array('method' => 'vote','hash'=>$hash),
-                'beforeSend' => 'js: function(data){
-                    $(".view-alert").addClass("hidden").removeClass("alert-success alert-warning").find("span").text("");
-                }',
-                'success' => 'js: function(data){
-                    if(data.status){
-                        
-                        $(".vote-trigger").addClass("active");
-                        $(".view-alert").addClass("alert-success").find("span").text(data.message);
-                    }
-                    else
-                        $(".view-alert").addClass("alert-warning").find("span").text(data.message);                     
-                    $(".view-alert").removeClass("hidden");
-                }'),array('class' => 'vote-trigger pull-left'));
-            else
-                echo '<span class="vote-trigger active pull-left">%'.$voteAvg[$item->item_id].'</span>';
-            ?></h4>
+                echo CHtml::ajaxLink('<i class="icon-check-sign"></i>',array('/lists/public/json'),array(
+                    'type' => 'POST',
+                    'dataType' => 'JSON',
+                    'data' => array('method' => 'vote','hash'=>$hash),
+                    'beforeSend' => 'js: function(data){
+                        $(".view-alert").addClass("hidden").removeClass("alert-success alert-warning").find("span").text("");
+                    }',
+                    'success' => 'js: function(data){
+                        if(data.status){
+                            $.each(data.avg, function( index, value ) {
+                                $(".vote-show#item-"+index).text("%"+value);
+                            });
+                            $(".vote-trigger").remove();
+                            $(".vote-show").removeClass("hidden");
+                            $(".view-alert").addClass("alert-success").find("span").text(data.message);
+                        }
+                        else
+                            $(".view-alert").addClass("alert-warning").find("span").text(data.message);                     
+                        $(".view-alert").removeClass("hidden");
+                    }'),array('class' => 'vote-trigger pull-left'));
+            ?>
+                <span class="vote-show active pull-left" id="item-<?= $item->item_id ?>"><?= !$voted?'':'%'.$voteAvg[$item->item_id] ?></span>
+            </h4>
             <div class="text"><?= $item->description ?></div>
         </div>
         <?php

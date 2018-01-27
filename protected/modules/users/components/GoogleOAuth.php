@@ -59,14 +59,15 @@ class GoogleOAuth extends CComponent
     {
         $this->scope = "https://www.googleapis.com/auth/userinfo.email";
         $this->redirect_uri = Yii::app()->createAbsoluteUrl('/googleLogin');
-        $this->client_id = "847053315039-s41olq8kabaaee4dn5sk7hk4era5a6b4.apps.googleusercontent.com";
-        $this->client_secret = "nAsP8voWDtb2sm3ZC__ZlYit";
+        $this->client_id = Yii::app()->params['googleWebKey']['client_id'];
+        $this->client_secret = Yii::app()->params['googleWebKey']['client_secret'];
         $this->login_url = "https://accounts.google.com/o/oauth2/v2/auth?scope=$this->scope&response_type=code&redirect_uri=$this->redirect_uri&client_id=$this->client_id";
         $this->image_size = 200;
     }
 
     /**
-     * @param $model UserLoginForm
+     * @param $model
+     * @throws CHttpException
      */
     public function login($model)
     {
@@ -93,10 +94,9 @@ class GoogleOAuth extends CComponent
             } else
                 Yii::app()->user->setState("gp_access_token", $result['access_token']);
         }
-
         // login start
         $loginFlag = false;
-        $model->email = $this->getInfo()->email;
+        $model->verification_field_value = $this->getInfo()->email;
         if ($model->validate() && $model->login(true) === true)
             $loginFlag = true;
         elseif ($model->validate() && $model->login(true) === UserIdentity::ERROR_USERNAME_INVALID) {
@@ -106,10 +106,11 @@ class GoogleOAuth extends CComponent
             }
         }
         if ($loginFlag) {
-            if (Yii::app()->user->returnUrl != Yii::app()->request->baseUrl.'/')
-                $redirect = Yii::app()->createUrl('/'.Yii::app()->user->returnUrl);
+            if (Yii::app()->user->returnUrl != Yii::app()->request->baseUrl . '/')
+                $redirect = Yii::app()->createUrl('/' . Yii::app()->user->returnUrl);
             else
                 $redirect = Yii::app()->createAbsoluteUrl('/users/public/dashboard');
+
             if (isset($_POST['ajax'])) {
                 echo CJSON::encode(array('status' => true, 'url' => $redirect));
                 Yii::app()->end();
@@ -119,9 +120,8 @@ class GoogleOAuth extends CComponent
             if (isset($_POST['ajax'])) {
                 echo CJSON::encode(array('status' => false, 'errors' => Yii::app()->controller->implodeErrors($model)));
                 Yii::app()->end();
-            } else
-            {
-                Yii::app()->user->setFlash('success',$model->showError());
+            } else {
+                Yii::app()->user->setFlash('success', $model->showError());
                 Yii::app()->controller->redirect(array('/login'));
             }
         }

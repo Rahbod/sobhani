@@ -103,6 +103,12 @@ class Lists extends CActiveRecord
 		);
 	}
 
+	public function getItemRel(){
+		$criteria = new CDbCriteria();
+		$criteria->select('');
+		return Items::model()->findAll($criteria);
+	}
+
     /**
      * @return Users|Admins
      */
