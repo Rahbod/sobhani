@@ -23,16 +23,12 @@ if($model->value)
             <?php echo CHtml::textField("SiteSetting[social_links][facebook]",($social_links && isset($social_links['facebook'])?$social_links['facebook']:''),array('size'=>60,'class'=>'form-control text-left ltr')); ?>
         </div>
         <div class="form-group">
-            <?php echo CHtml::label('لینک توییتر',''); ?>
-            <?php echo CHtml::textField("SiteSetting[social_links][twitter]",($social_links && isset($social_links['twitter'])?$social_links['twitter']:''),array('size'=>60,'class'=>'form-control text-left ltr')); ?>
-        </div>
-        <div class="form-group">
             <?php echo CHtml::label('لینک تلگرام',''); ?>
             <?php echo CHtml::textField("SiteSetting[social_links][telegram]",($social_links && isset($social_links['telegram'])?$social_links['telegram']:''),array('size'=>60,'class'=>'form-control text-left ltr')); ?>
         </div>
         <div class="form-group">
-            <?php echo CHtml::label('لینک یوتیوب',''); ?>
-            <?php echo CHtml::textField("SiteSetting[social_links][youtube]",($social_links && isset($social_links['youtube'])?$social_links['youtube']:''),array('size'=>60,'class'=>'form-control text-left ltr')); ?>
+            <?php echo CHtml::label('لینک گوگل',''); ?>
+            <?php echo CHtml::textField("SiteSetting[social_links][google]",($social_links && isset($social_links['google'])?$social_links['google']:''),array('size'=>60,'class'=>'form-control text-left ltr')); ?>
         </div>
         <div class="form-group">
             <?php echo CHtml::label('لینک اینستاگرام',''); ?>

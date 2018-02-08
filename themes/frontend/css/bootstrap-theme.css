@@ -26,17 +26,18 @@ body{
     left: 0;
     width: 100%;
     height: 60px;
-    background: #E9E9E9;
+    background: #e8edf3;
 }
 .header .navbar-nav > li > a{
     padding: 0 10px;
     line-height: 56px;
     color: #888485;
+    font-size: 14px;
 }
 .header .nav > li > a:focus,
 .header .nav > li > a:hover{
     background: transparent;
-    color: #9a9697;
+    color: #22264b;
 }
 .page .header .col-lg-4 .tow{
     height: 60px;
@@ -378,6 +379,14 @@ body{
     display: inline-block;
     vertical-align: middle;
 }
+.telegram-icon{
+    background: url("../svg/telegram.svg") no-repeat center;
+    background-size: 30px;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    vertical-align: middle;
+}
 .copyright p{
     width: 277px;
 }
@@ -692,6 +701,14 @@ body{
     vertical-align: middle;
     display: inline-block;
 }
+.logout-icon{
+    width: 20px;
+    height: 20px;
+    background: url("../svg/logout.svg") no-repeat center;
+    background-size: 18px;
+    vertical-align: middle;
+    display: inline-block;
+}
 .left-side .userinfo{
     padding: 0 0 0 0;
     position: relative;
@@ -727,7 +744,7 @@ body{
 }
 .userinfo strong {
     display: block;
-    font-size: 40px;
+    font-size: 30px;
     line-height: 40px;
     padding-top: 10px;
     font-weight: normal;
@@ -953,6 +970,9 @@ body{
 .add-list-form textarea{
     color: #666;
 }
+.add-list-form input.btn-success{
+    color: #fff;
+}
 .add-list-form .form-row{
     border-bottom: 1px solid #ccc;
     padding: 15px 0;
@@ -1024,7 +1044,7 @@ body{
     color: #fff;
 }
 .add-list-form .btn-blue:hover{
-    background: #93BDCE;
+    background: #2e7a9b;
     color: #fff;
 }
 .add-list-form .btn-gray{
@@ -1161,6 +1181,7 @@ input[type="radio"]{
 .list-item-view .user-image{
     display: block;
     overflow: hidden;
+    margin-bottom: 15px;
 }
 .list-item small{
     font-size: 12px;
@@ -1289,10 +1310,11 @@ input[type="radio"]{
     color: #E99A00 !important;
     font-size: 45px !important;
 }
-.vote-show{
+.vote-trigger.active{
     margin: 0;
 }
-.vote-show.active{
+.vote-trigger.active,
+.vote-trigger.active i{
     color: lightslategray !important;
     font-size: 20px !important;
 }
@@ -1344,4 +1366,72 @@ input[type="radio"]{
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.profile-left-side .form-group{
+    width: 50%;
+}
+.userinfo .uploader-message{
+    float: left;
+}
+.content .left-side strong{
+    color: #3285A7;
+    font-size: 28px;
+    line-height: 32px;
+    font-weight: normal;
+    display: block;
+    margin: 20px 0 20px 0;
+}
+.content .left-side strong a{
+    color: #3285A7;
+    text-decoration: none;
+    cursor: pointer;
+}
+.telegram-link,
+.telegram-link:hover{
+    color: #139BD0;
+    display: block;
+    margin-top: 5px;
+    line-height:17px;
+}
+.telegram-link i{
+    background: url("../svg/telegram-white.svg") no-repeat center;
+    background-size: 17px;
+    width: 17px;
+    height:17px;
+    margin-left: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.telegram-link.gray{
+    margin: 0;
+}
+.telegram-link.gray i{
+    background: url("../svg/telegram-gray.svg") no-repeat center;
+    background-size: 17px;
+    width: 17px;
+    height:40px;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.breadcrumb{
+    padding-right: 0;
+    padding-left: 0;
+    font-size: 12px;
+    background: transparent;
+    margin-bottom: 5px;
+}
+.list-item-view .image{
+    border-radius: 5px;
+    float: right;
+    margin-left: 15px;
+    height:200px;
+    margin-bottom: 30px;
+}
+.list-item-view h2{
+    overflow: hidden;
+}
+.list-item-view .image-box{
+    min-height:230px;
 }

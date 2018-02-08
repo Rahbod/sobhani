@@ -21,7 +21,7 @@ $this->breadcrumbs =[
         )); ?>
 
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="row">
                     <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <?php echo $form->labelEx($model,'oldPassword'); ?>
@@ -39,7 +39,7 @@ $this->breadcrumbs =[
                         <?php echo $form->error($model,'repeatPassword'); ?>
                     </div>
                     <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <?php echo CHtml::submitButton('تغییر کلمه عبور',array('class'=>'btn btn-success pull-left')); ?>
+                        <?php echo CHtml::submitButton('تغییر کلمه عبور',array('class'=>'btn btn-success')); ?>
                     </div>
                 </div>
             </div>

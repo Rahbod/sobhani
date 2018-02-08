@@ -221,7 +221,7 @@ class Users extends CActiveRecord
         $criteria->compare('role_id', $this->role_id);
         $criteria->addSearchCondition('userDetails.first_name', $this->first_name);
         $criteria->addSearchCondition('userDetails.last_name', $this->last_name);
-        $criteria->with = array('userDetails', 'activePlan');
+        $criteria->with = array('userDetails');
         $criteria->order = 'status ,t.id DESC';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

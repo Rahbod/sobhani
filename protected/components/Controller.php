@@ -38,6 +38,7 @@ class Controller extends AuthController
     public $keywords;
     public $siteName;
     public $pageTitle;
+    public $socialLinks;
     public $sideRender = null;
     public $categories;
     public $navbarCategories;
@@ -93,6 +94,11 @@ class Controller extends AuthController
             ->from('ym_site_setting')
             ->where('name = "default_title"')
             ->queryScalar();
+
+        Yii::app()->getModule('setting');
+        $links=SiteSetting::model()->find('name = :name', [':name'=>'social_links'])->value;
+        $this->socialLinks = CJSON::decode($links);
+
         return true;
     }
 

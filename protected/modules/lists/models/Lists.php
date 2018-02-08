@@ -54,7 +54,7 @@ class Lists extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, image', 'required'),
+			array('title', 'required'),
 			array('title', 'length', 'max'=>255),
 			array('image', 'length', 'max'=>512),
 			array('user_id, category_id, seen', 'length', 'max'=>10),
@@ -76,16 +76,16 @@ class Lists extends CActiveRecord
 	{
 		if(!$this->items)
 			$this->addError($attribute, 'آیتم ها نمی توانند خالی باشند.');
-		else if(count($this->items) < 10)
-			$this->addError($attribute, 'تمام آیتم ها را پر کنید.');
-		else
-			foreach($this->{$attribute} as $key => $item){
-				$c = $key +1;
-				if(!isset($item['title']) || empty($item['title'])){
-					$this->addError($attribute, "عنوان آیتم {$c} نمی تواند خالی باشد.");
-					break;
-				}
-			}
+		else if(count($this->items) < 3)
+			$this->addError($attribute, 'حداقل 3 آیتم را پر کنید.');
+//		else
+//			foreach($this->{$attribute} as $key => $item){
+//				$c = $key +1;
+//				if(!isset($item['title']) || empty($item['title'])){
+//					$this->addError($attribute, "عنوان آیتم {$c} نمی تواند خالی باشد.");
+//					break;
+//				}
+//			}
 	}
 
 	/**
@@ -101,12 +101,6 @@ class Lists extends CActiveRecord
 			'itemRel' => array(self::HAS_MANY, 'ListItemRel', 'list_id', 'order' => 'id'),
 			'bookmarks' => array(self::MANY_MANY, 'Users', '{{user_bookmarks}}(list_id, user_id)'),
 		);
-	}
-
-	public function getItemRel(){
-		$criteria = new CDbCriteria();
-		$criteria->select('');
-		return Items::model()->findAll($criteria);
 	}
 
     /**

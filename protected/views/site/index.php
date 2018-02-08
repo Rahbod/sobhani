@@ -53,7 +53,7 @@ $listItemUrl=Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
                 <h4>ده فهرست برتر</h4>
                 <?php foreach($this->getTopLists() as $item): ?>
                     <div class="trending">
-                        <img src="<?= $listUrl.'thumbs/200x200/'.$item->image ?>">
+                        <img src="<?= $listUrl.$item->image ?>">
                         <a href="<?=$item->getViewUrl() ?>"><?= $item->title ?></a>
                         <br>
                         4596 تعامل اخیر
@@ -85,7 +85,7 @@ $listItemUrl=Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
                         </div>
                         <i>لیست جدید</i>
                         <strong>
-                            <a href="#"><?= $list->title ?></a>
+                            <a href="<?=$this->createUrl('/lists/'.$list->id)?>"><?= $list->title ?></a>
                         </strong>
                         <ol type="1">
                             <li><?= $list->itemRel[0]->item->title ?></li>

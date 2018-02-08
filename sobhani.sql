@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2018-01-27 18:17:58
+Date: 2018-01-19 18:26:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -121,11 +121,11 @@ CREATE TABLE `ym_counter_save` (
 -- ----------------------------
 -- Records of ym_counter_save
 -- ----------------------------
-INSERT INTO `ym_counter_save` VALUES ('counter', '9');
-INSERT INTO `ym_counter_save` VALUES ('day_time', '2458146');
+INSERT INTO `ym_counter_save` VALUES ('counter', '7');
+INSERT INTO `ym_counter_save` VALUES ('day_time', '2458138');
 INSERT INTO `ym_counter_save` VALUES ('max_count', '2');
 INSERT INTO `ym_counter_save` VALUES ('max_time', '1516005000');
-INSERT INTO `ym_counter_save` VALUES ('yesterday', '0');
+INSERT INTO `ym_counter_save` VALUES ('yesterday', '1');
 
 -- ----------------------------
 -- Table structure for ym_counter_users
@@ -140,7 +140,7 @@ CREATE TABLE `ym_counter_users` (
 -- ----------------------------
 -- Records of ym_counter_users
 -- ----------------------------
-INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1517059803');
+INSERT INTO `ym_counter_users` VALUES ('837ec5754f503cfaaee0929fd48974e7', '1516369160');
 
 -- ----------------------------
 -- Table structure for ym_items
@@ -156,6 +156,25 @@ CREATE TABLE `ym_items` (
 -- ----------------------------
 -- Records of ym_items
 -- ----------------------------
+INSERT INTO `ym_items` VALUES ('13', '1', '1');
+INSERT INTO `ym_items` VALUES ('14', '2', '1');
+INSERT INTO `ym_items` VALUES ('15', '3', '1');
+INSERT INTO `ym_items` VALUES ('16', '4', '1');
+INSERT INTO `ym_items` VALUES ('17', '5', '1');
+INSERT INTO `ym_items` VALUES ('18', '6', '1');
+INSERT INTO `ym_items` VALUES ('19', '7', '1');
+INSERT INTO `ym_items` VALUES ('20', '8', '1');
+INSERT INTO `ym_items` VALUES ('21', '9', '1');
+INSERT INTO `ym_items` VALUES ('22', '10', '1');
+INSERT INTO `ym_items` VALUES ('23', 'سلام', '1');
+INSERT INTO `ym_items` VALUES ('24', 'asdf', '1');
+INSERT INTO `ym_items` VALUES ('25', 'sadga', '1');
+INSERT INTO `ym_items` VALUES ('26', 'asdg', '1');
+INSERT INTO `ym_items` VALUES ('27', 'jn', '1');
+INSERT INTO `ym_items` VALUES ('28', 'nkjnj', '1');
+INSERT INTO `ym_items` VALUES ('29', 'jnkj', '1');
+INSERT INTO `ym_items` VALUES ('30', 'jkn', '1');
+INSERT INTO `ym_items` VALUES ('31', 'nk', '1');
 
 -- ----------------------------
 -- Table structure for ym_lists
@@ -181,6 +200,8 @@ CREATE TABLE `ym_lists` (
 -- ----------------------------
 -- Records of ym_lists
 -- ----------------------------
+INSERT INTO `ym_lists` VALUES ('4', 'تست', '8Zk0A1516290315.jpg', 'طرح‌نما یا لورم ایپسوم به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود.\r\nطرح‌نما یا لورم ایپسوم به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود.طرح‌نما یا لورم ایپسوم به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود.', 'admin', '1', '1', '1516033317', '82', '1');
+INSERT INTO `ym_lists` VALUES ('5', 'تست', 'ANK8i1516212959.jpg', 'تشسید', 'user', '45', '1', '1516126146', '46', '1');
 
 -- ----------------------------
 -- Table structure for ym_list_categories
@@ -196,6 +217,12 @@ CREATE TABLE `ym_list_categories` (
 -- ----------------------------
 -- Records of ym_list_categories
 -- ----------------------------
+INSERT INTO `ym_list_categories` VALUES ('1', 'کتاب ها', 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.');
+INSERT INTO `ym_list_categories` VALUES ('2', 'غذا ها', 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.');
+INSERT INTO `ym_list_categories` VALUES ('3', 'اینترنت', 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.');
+INSERT INTO `ym_list_categories` VALUES ('4', 'حیوان ها', 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.');
+INSERT INTO `ym_list_categories` VALUES ('5', 'شرکت ها و مسولیت ها', 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.');
+INSERT INTO `ym_list_categories` VALUES ('6', 'مصرف کننده ها', 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.');
 
 -- ----------------------------
 -- Table structure for ym_list_item_rel
@@ -208,15 +235,35 @@ CREATE TABLE `ym_list_item_rel` (
   `description` text COLLATE utf8_persian_ci,
   `image` varchar(255) COLLATE utf8_persian_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `list_id` (`list_id`,`item_id`),
+  KEY `list_id` (`list_id`),
   KEY `item_id` (`item_id`),
-  CONSTRAINT `ym_list_item_rel_ibfk_1` FOREIGN KEY (`list_id`) REFERENCES `ym_lists` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `ym_list_item_rel_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `ym_items` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+  CONSTRAINT `ym_list_item_rel_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `ym_items` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `ym_list_item_rel_ibfk_1` FOREIGN KEY (`list_id`) REFERENCES `ym_lists` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=431 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 
 -- ----------------------------
 -- Records of ym_list_item_rel
 -- ----------------------------
+INSERT INTO `ym_list_item_rel` VALUES ('391', '5', '23', '', 'e9jSn1516289655.jpg');
+INSERT INTO `ym_list_item_rel` VALUES ('392', '5', '23', '', 'SzmMV1516289659.jpg');
+INSERT INTO `ym_list_item_rel` VALUES ('393', '5', '24', '', '6bnv41516289663.jpg');
+INSERT INTO `ym_list_item_rel` VALUES ('394', '5', '25', '', null);
+INSERT INTO `ym_list_item_rel` VALUES ('395', '5', '26', '', null);
+INSERT INTO `ym_list_item_rel` VALUES ('396', '5', '27', '', null);
+INSERT INTO `ym_list_item_rel` VALUES ('397', '5', '28', 'nk', null);
+INSERT INTO `ym_list_item_rel` VALUES ('398', '5', '29', 'nkn', null);
+INSERT INTO `ym_list_item_rel` VALUES ('399', '5', '30', 'n', null);
+INSERT INTO `ym_list_item_rel` VALUES ('400', '5', '31', 'n', null);
+INSERT INTO `ym_list_item_rel` VALUES ('421', '4', '13', '', null);
+INSERT INTO `ym_list_item_rel` VALUES ('422', '4', '14', '', null);
+INSERT INTO `ym_list_item_rel` VALUES ('423', '4', '15', '', null);
+INSERT INTO `ym_list_item_rel` VALUES ('424', '4', '16', '', null);
+INSERT INTO `ym_list_item_rel` VALUES ('425', '4', '17', '', null);
+INSERT INTO `ym_list_item_rel` VALUES ('426', '4', '18', '', null);
+INSERT INTO `ym_list_item_rel` VALUES ('427', '4', '19', '', null);
+INSERT INTO `ym_list_item_rel` VALUES ('428', '4', '20', '', null);
+INSERT INTO `ym_list_item_rel` VALUES ('429', '4', '21', '', null);
+INSERT INTO `ym_list_item_rel` VALUES ('430', '4', '22', '', null);
 
 -- ----------------------------
 -- Table structure for ym_pages
@@ -420,7 +467,7 @@ CREATE TABLE `ym_user_roles` (
   `name` varchar(100) COLLATE utf8_persian_ci NOT NULL,
   `role` varchar(255) COLLATE utf8_persian_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 
 -- ----------------------------
 -- Records of ym_user_roles
@@ -470,19 +517,15 @@ INSERT INTO `ym_user_role_permissions` VALUES ('228', '1', 'users', 'UsersPublic
 DROP TABLE IF EXISTS `ym_votes`;
 CREATE TABLE `ym_votes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `list_id` int(10) unsigned NOT NULL,
-  `item_id` int(10) unsigned NOT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL,
-  `ip` varchar(255) COLLATE utf8_persian_ci NOT NULL,
+  `list_item_rel_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
   `create_date` varchar(20) COLLATE utf8_persian_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
-  KEY `list_item_rel_id` (`list_id`) USING BTREE,
-  KEY `item_id` (`item_id`),
+  KEY `list_item_rel_id` (`list_item_rel_id`),
   CONSTRAINT `ym_votes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `ym_users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `ym_votes_ibfk_2` FOREIGN KEY (`list_id`) REFERENCES `ym_lists` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `ym_votes_ibfk_3` FOREIGN KEY (`item_id`) REFERENCES `ym_items` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
+  CONSTRAINT `ym_votes_ibfk_2` FOREIGN KEY (`list_item_rel_id`) REFERENCES `ym_list_item_rel` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 
 -- ----------------------------
 -- Records of ym_votes

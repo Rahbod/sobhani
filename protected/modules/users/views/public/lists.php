@@ -16,7 +16,7 @@ $this->breadcrumbs =[
         <?php $this->widget('zii.widgets.grid.CGridView', array(
             'id'=>'lists-grid',
             'dataProvider'=>$model->search(),
-            'filter'=>$model,
+            //'filter'=>$model,
             'itemsCssClass'=>'table table-striped',
             'template' => '{summary} {pager} {items} {pager}',
             'ajaxUpdate' => true,
@@ -38,7 +38,13 @@ $this->breadcrumbs =[
             ),
             'pagerCssClass' => 'blank',
             'columns'=>array(
-                'title',
+                array(
+                    'name' => 'title',
+                    'value' => function($data){
+                        return CHtml::a($data->title, array('/lists/'.$data->id));
+                    },
+                    'type' => 'raw'
+                ),
                 array(
                     'name' => 'create_date',
                     'value' => function($data){
@@ -77,15 +83,12 @@ $this->breadcrumbs =[
 //                ),
                 array(
                     'class'=>'CButtonColumn',
-                    'template' => '{view} {delete}',
+                    'template' => '{delete}',
                     'buttons' => array(
-                        'view' => array(
-                            'url' => '$data->viewUrl',
-                            'visible' => '$data->status == 1'
-                        ),
                         'update' => array(
                             'url' => '$data->viewUrl',
-                            'visible' => '$data->status == 1'
+                            'visible' => '$data->status == 1',
+                            'imageUrl' => Yii::app()->baseUrl.'/themes/frontend/svg/trash.svg'
                         )
                     )
                 ),

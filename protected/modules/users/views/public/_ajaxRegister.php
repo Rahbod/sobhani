@@ -62,6 +62,10 @@ $form = $this->beginWidget('CActiveForm', array(
     <?php echo $form->error($model,'email'); ?>
 </div>
 <div>
+    <?php echo $form->textField($model,'mobile',array('class'=>"text-field ltr text-right",'placeholder'=>$model->getAttributeLabel('mobile')));?>
+    <?php echo $form->error($model,'email'); ?>
+</div>
+<div>
     <?php echo $form->passwordField($model,'password',array('class'=>"text-field",'placeholder'=>$model->getAttributeLabel('password')));?>
     <?php echo $form->error($model,'password'); ?>
 </div>

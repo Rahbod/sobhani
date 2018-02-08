@@ -80,6 +80,8 @@ class ListsPublicController extends Controller
 	 */
 	public function actionNew()
 	{
+        //<a href="https://telegram.me/share/url?url=http://as.com" class="telegram-link pull-left"><i></i>اشتراک گذاری در تلگرام</a>
+
 		Yii::app()->theme = 'frontend';
 		$model =new Lists();
 		$itemImages = [];
@@ -114,7 +116,8 @@ class ListsPublicController extends Controller
 			}
 
 			if($model->save()){
-				$image->move($this->imagePath);
+                if($model->image)
+				    $image->move($this->imagePath);
 
 				// save item images
 				foreach($model->items as $key => $item){
@@ -122,8 +125,8 @@ class ListsPublicController extends Controller
 						$itemImages[$key]->move($this->itemImagePath);
 				}
 
-				Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
-				$this->redirect(array('admin'));
+                Yii::app()->user->setFlash('success', 'بسیار عالی! لیست شما با موفقیت ثبت شد.<br>لیست شما پس از تایید کارشناسان به صورت عمومی نمایش داده خواهد شد.');
+				$this->redirect(array('/lists/'.$model->id));
 			}else
 				Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
 		}
@@ -346,7 +349,7 @@ class ListsPublicController extends Controller
 				$vote->create_date = time();
 				Votes::saveVoteInCookie($data['list_id']);
 				if($vote->save())
-					$this->sendJson(['status' => true, 'avg' => Votes::VoteAverages($vote->list_id), 'message' => 'رای شما با موفقیت ثبت گردید.']);
+					$this->sendJson(['status' => true, 'avgs' => Votes::VoteAverages($vote->list_id), 'message' => 'رای شما با موفقیت ثبت گردید.']);
 				else
 					$this->sendJson(['status' => false, 'message' => 'در انجام عملیات مشکلی بوجود آمده است! لطفا مجددا تلاش فرمایید.']);
 				break;

@@ -13,33 +13,14 @@
 		'validateOnSubmit' => true
 	)
 )); ?>
-<h1>اضافه کردن ده فهرست برتر</h1>
+<h1>ایجاد لیست بهترین ها</h1>
 لیست خود را ایجاد کنید و آن را ذخیره کنید. لیست شما در سایت ما نشان داده خواهد شد، به محض این که فرصتی برای بررسی آن خواهیم داشت.
-<h3>پیش از اضافه کردن لیست ...</h3>
-<ol>
-	<li>
-		طرح‌نما یا لورم ایپسوم به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود
-	</li>
-	<li>
-		معمولاً طراحان گرافیک برای صفحه‌آرایی، نخست از متن‌های آزمایشی و بی‌معنی استفاده می‌کنند تا صرفاً به مشتری یا صاحب‌کار خود نشان دهند که صفحهٔ طراحی یا صفحه‌بندی شده،
-	</li>
-	<li>
-		طرح‌نما یا لورم ایپسوم به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به‌عنوان عنصری از ترکیب‌بندی برای پُر کردن صفحه و ارائهٔ اولیهٔ شکل ظاهری و کلیِ طرح سفارش‌گرفته‌شده استفاده می‌کند، تا ازنظر گرافیکی نشانگر چگونگی نوع و اندازهٔ قلم و ظاهرِ متن باشد.
-	</li>
-	<li>
-		آنها با استفاده از محتویات ساختگی، صفحهٔ گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحلهٔ طراحی و صفحه‌بندی را به پایان برند.
-	</li>
-	<li>
-		آنها با استفاده از محتویات ساختگی، صفحهٔ گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحلهٔ طراحی و صفحه‌بندی را به پایان برند.
-	</li>
-</ol>
 
 <div class="add-list-form">
 	<?php echo $form->errorSummary($model)?>
 	<div class="form-row">
 		<?php echo $form->textField($model,'title',array('class'=>'transparent-input', 'placeholder' => 'عنوان لیست')); ?>
 		<?php echo $form->textArea($model,'description',array('placeholder'=>'توضیحات...')); ?>
-		<?php echo $form->labelEx($model,'title')?>
 		<?php $this->widget('ext.dropZoneUploader.dropZoneUploader', array(
 			'id' => 'uploaderLogo',
 			'model' => $model,
@@ -114,8 +95,8 @@
 	endfor;
 	?>
 	<div class="form-row last">
-		<?php echo CHtml::submitButton('ذخیره پیشنویس',array('class' => 'btn btn-blue', 'name' => 'draft')); ?>
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'ذخیره لیست' : 'ویرایش لیست',array('class' => 'btn btn-gray', 'name' => 'publish')); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'ذخیره لیست' : 'ویرایش لیست',array('class' => 'btn btn-blue', 'name' => 'publish')); ?>
+		<?php echo CHtml::submitButton('ذخیره پیشنویس',array('class' => 'btn btn-gray', 'name' => 'draft')); ?>
 	</div>
 </div>
 <?php $this->endWidget(); ?>
