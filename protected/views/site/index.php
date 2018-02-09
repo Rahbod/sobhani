@@ -24,7 +24,7 @@ $listItemUrl=Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
         ?>
         <div class="thumbnail-container">
             <div class="thumbnail">
-                <a href="<?= $this->createUrl('/lists/'.$item->id) ?>">
+                <a href="<?= $this->createUrl('/lists/'.$item->id.'/'.str_replace(' ', '-', $item->title)) ?>">
                     <img src="<?= $listUrl.$item->image ?>">
                     <div class="overlay">
                         <h3><?= $item->title ?></h3>
@@ -47,20 +47,6 @@ $listItemUrl=Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
 </div>
 <div class="content">
     <div class="container">
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 right-side">
-            <?php $this->renderPartial('//partial-views/_right_col');?>
-            <div class="tren">
-                <h4>ده فهرست برتر</h4>
-                <?php foreach($this->getTopLists() as $item): ?>
-                    <div class="trending">
-                        <img src="<?= $listUrl.$item->image ?>">
-                        <a href="<?=$item->getViewUrl() ?>"><?= $item->title ?></a>
-                        <br>
-                        4596 تعامل اخیر
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 left-side">
             <div class="context">
                 <?php foreach($this->getLatestLists(1) as $list):?>
@@ -85,7 +71,7 @@ $listItemUrl=Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
                         </div>
                         <i>لیست جدید</i>
                         <strong>
-                            <a href="<?=$this->createUrl('/lists/'.$list->id)?>"><?= $list->title ?></a>
+                            <a href="<?=$this->createUrl('/lists/'.$list->id.'/'.str_replace(' ', '-', $list->title))?>"><?= $list->title ?></a>
                         </strong>
                         <ol type="1">
                             <li><?= $list->itemRel[0]->item->title ?></li>
@@ -95,8 +81,10 @@ $listItemUrl=Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
                         <b class="member list-item-view">
                             <?php if($list->user_type == 'user'):?>
                                 <div class="user-image">
-                                    <img class="asrc" src="<?= $list->user->userDetails->getAvatar() ?>">
-                                    <small><?= $list->user->userDetails?$list->user->userDetails->getShowName():$list->user->email ?></small>
+                                    <a href="<?= Yii::app()->createUrl('/users/public/viewProfile/'.$list->user->id.'/'.str_replace(' ', '-', $list->user->userDetails->getShowName()))?>">
+                                        <img class="asrc" src="<?= $list->user->userDetails->getAvatar() ?>">
+                                        <small><?= $list->user->userDetails?$list->user->userDetails->getShowName():$list->user->email ?></small>
+                                    </a>
                                 </div>
                             <?php endif; ?>
                         </b>
@@ -147,6 +135,20 @@ $listItemUrl=Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
 
             </div>
 
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 right-side">
+            <?php $this->renderPartial('//partial-views/_right_col');?>
+            <div class="tren">
+                <h4>ده فهرست برتر</h4>
+                <?php foreach($this->getTopLists() as $item): ?>
+                    <div class="trending">
+                        <img src="<?= $listUrl.$item->image ?>">
+                        <a href="<?=$item->getViewUrl() ?>"><?= $item->title ?></a>
+                        <br>
+                        4596 تعامل اخیر
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
 </div>

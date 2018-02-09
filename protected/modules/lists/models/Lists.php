@@ -228,6 +228,14 @@ class Lists extends CActiveRecord
 
 	public function getViewUrl()
 	{
-		return Yii::app()->createUrl('/lists/'.$this->id);
+		return Yii::app()->createUrl('/lists/'.$this->id.'/'.str_replace(' ', '-', $this->title));
+	}
+
+	public function getImage()
+	{
+		if($this->image)
+			return $this->image;
+		else
+			return 'default.jpg';
 	}
 }

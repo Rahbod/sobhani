@@ -7,9 +7,13 @@
  * @property string $id
  * @property string $title
  * @property string $description
+ * @property string $parent_id
  *
  * The followings are the available model relations:
+ * @property ListCategories $parent
+ * @property ListCategories[] $childs
  * @property Lists[] $lists
+ * @property Lists[] $approvedLists
  */
 class ListCategories extends CActiveRecord
 {
@@ -31,6 +35,7 @@ class ListCategories extends CActiveRecord
 		return array(
 			array('title', 'required'),
 			array('title, description', 'length', 'max'=>255),
+            array('parent_id', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, title, description', 'safe', 'on'=>'search'),
@@ -45,7 +50,10 @@ class ListCategories extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'parent' => array(self::BELONGS_TO, 'ListCategories', 'parent_id'),
+			'childs' => array(self::HAS_MANY, 'ListCategories', 'parent_id'),
 			'lists' => array(self::HAS_MANY, 'Lists', 'category_id'),
+			'approvedLists' => array(self::HAS_MANY, 'Lists', 'category_id', 'condition' => 'approvedLists.status = 1'),
 		);
 	}
 
@@ -58,6 +66,7 @@ class ListCategories extends CActiveRecord
 			'id' => 'ID',
 			'title' => 'عنوان',
 			'description' => 'توضیحات',
+			'parent_id' => 'والد',
 		);
 	}
 
@@ -82,6 +91,7 @@ class ListCategories extends CActiveRecord
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('description',$this->description,true);
+        $criteria->compare('parent_id',$this->parent_id,true);
 		$criteria->order = 'id DESC';
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -98,4 +108,9 @@ class ListCategories extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public static function getParents()
+    {
+        return CHtml::listData(self::model()->findAll('parent_id IS NULL'), 'id', 'title');
+    }
 }

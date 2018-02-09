@@ -91,6 +91,7 @@ body{
 .header .logo-box img{
     vertical-align: middle;
     padding: 6px 0;
+    max-width: 145px;
 }
 .header .col-lg-4:nth-of-type(2){
     margin-right: -106px;
@@ -224,6 +225,9 @@ body{
     font-size: 16px;
     font-style: normal;
     color: #888485;
+}
+.content .left-side .comments-list i{
+    float: right;
 }
 .content .left-side > strong{
     color: #3285A7;
@@ -392,6 +396,7 @@ body{
 }
 .footer img.logo{
     float: right;
+    max-width:145px;
 }
 .left-side .catod{
     background: #e9e9e9 none repeat scroll 0 0;
@@ -730,6 +735,7 @@ body{
     overflow: hidden;
     background: #e9e9e9;
     position: relative;
+    cursor: pointer;
 }
 .userinfo .user-image img{
     width: 150px;
@@ -913,6 +919,7 @@ body{
 }
 .header #mobile-menu.navbar-nav > li.icon-link{
     border-bottom: none;
+    text-align: center;
 }
 .header #mobile-menu.navbar-nav > li > a{
     padding: 0 20px;
@@ -997,7 +1004,7 @@ body{
     margin: 15px 0;
     display: block;
     resize: vertical;
-    height: 120px;
+    height: 150px;
     padding:10px;
 }
 .add-list-form .form-row .input-container{
@@ -1434,4 +1441,87 @@ input[type="radio"]{
 }
 .list-item-view .image-box{
     min-height:230px;
+}
+.uploader-container{
+    position: absolute;
+    right: 0;
+    width: 150px;
+    height:150px;
+}
+.uploader-container .dropzone.single{
+    width: 150px;
+    height:150px;
+}
+.userinfo.uploading .uploader-container{
+    position: relative;
+    float: right;
+    margin-left: 20px;
+}
+.userinfo.uploading .user-image{
+    display: none;
+}
+.captcha a{
+    display: none;
+}
+.captcha .refresh{
+    display: inline-block;
+    background: url("../svg/refresh.svg") no-repeat center;
+    background-size: 20px;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.captcha .refresh:hover{
+    opacity: 0.7;
+}
+.comment-widget{
+    margin-top: 15px;
+}
+.comment-form-outer{
+    margin-bottom: 30px;
+}
+.profile img{
+    width: 150px;
+    height:150px;
+    float: right;
+}
+.profile .text{
+    overflow: hidden;
+    padding-right: 15px;
+}
+.profile .text h1{
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+.profile .text small span{
+    display: block;
+    margin-bottom: 10px;
+}
+.profile .info{
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+.ui-menu .ui-menu-item{
+    text-align: right;
+    font-family: IRANSans;
+    font-size: 12px;
+}
+.notification-count{
+    background: #ff4942;
+    color: #fff;
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 10px;
+    line-height: 18px;
+}
+.icon-link::before{
+    content: '';
 }

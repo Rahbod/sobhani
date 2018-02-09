@@ -5,6 +5,7 @@ $this->breadcrumbs = array(
 	$model->category->title => array('/lists/category/'.$model->category_id),
 );
 $favorite = UserBookmarks::model()->findByAttributes(['user_id' => Yii::app()->user->getId(), 'list_id' => $model->id])?true:false;
+$this->pageTitle = $model->title;
 ?>
 <div class="alert alert-success view-alert hidden">
 	<p>
@@ -14,7 +15,7 @@ $favorite = UserBookmarks::model()->findByAttributes(['user_id' => Yii::app()->u
 </div>
 <div class="list-item-view">
     <div class="image-box">
-        <img src="<?= Yii::app()->baseUrl.'/uploads/lists/thumbs/200x200/'.$model->image?>" class="image">
+        <img src="<?= Yii::app()->baseUrl.'/uploads/lists/thumbs/200x200/'.$model->getImage()?>" class="image">
         <h2><?= $model->title ?></h2>
         <?php if($model->user_type == 'user'):?>
         <div class="user-image">
@@ -27,7 +28,7 @@ $favorite = UserBookmarks::model()->findByAttributes(['user_id' => Yii::app()->u
 
 	<h3>
 		ده بهترین
-        <a target="_blank" href="https://telegram.me/share/url?url=<?= Yii::app()->createAbsoluteUrl('/lists/'.$model->id)?>" class="telegram-link gray pull-left" title="اشتراک گذاری در تلگرام"><i></i></a>
+        <a target="_blank" href="https://telegram.me/share/url?url=<?= Yii::app()->createAbsoluteUrl('/lists/'.$model->id.'/'.str_replace(' ', '-', $model->title))?>" class="telegram-link gray pull-left" title="اشتراک گذاری در تلگرام"><i></i></a>
 		<?php
 		if(!Yii::app()->user->isGuest && Yii::app()->user->type == 'user'):
 			echo CHtml::ajaxLink('<i class="star-icon"></i>',array('/lists/public/authJson'),array(

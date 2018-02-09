@@ -314,6 +314,7 @@ class ListsManageController extends Controller
 				unset($_POST['Lists']['status']);
 			$model->attributes = $_POST['Lists'];
 			if($model->save()){
+				$this->createLog('لیست "'.$model->title.'" توسط مدیر سایت تایید شد.', $model->user_id);
 				Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
 				$this->redirect(array('admin'));
 			}else

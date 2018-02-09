@@ -63,8 +63,23 @@ class Controller extends AuthController
     public function beforeAction($action)
     {
         Yii::import("users.models.*");
+
         $this->userDetails = UserDetails::model()->findByPk(Yii::app()->user->getId());
-        $this->userNotifications = UserNotifications::model()->findAllByAttributes(array('user_id' => Yii::app()->user->getId(), 'seen' => '0'));
+//        var_dump(Yii::app()->user->roles);exit;
+        if(
+            !Yii::app()->user->isGuest
+            and Yii::app()->user->roles != 'admin'
+            and Yii::app()->user->roles != 'superAdmin') {
+            if (Yii::app()->request->pathInfo != 'profile'
+                and (!$this->userDetails->first_name
+                    or !$this->userDetails->last_name)
+            ) {
+                Yii::app()->user->setFlash('failed', 'لطفا اطلاعات کاربری خود را کامل کنید.');
+                $this->redirect(array('/profile'));
+            }
+        }
+
+        $this->userNotifications = UserNotifications::model()->countByAttributes(array('user_id' => Yii::app()->user->getId(), 'seen' => '0'));
         return true;
     }
 
@@ -122,6 +137,7 @@ class Controller extends AuthController
                     'items' => array(
                         array('label' => '<i class="fa fa-circle-o"></i>مدیریت', 'url' => Yii::app()->createUrl('/lists/manage/admin/')),
                         array('label' => '<i class="fa fa-circle-o"></i>افزودن لیست', 'url' => Yii::app()->createUrl('/lists/manage/create')),
+                        array('label' => '<i class="fa fa-circle-o"></i>نظرات', 'url' => Yii::app()->createUrl('/comments/comment/admin')),
                     )
                 ),
                 array(
@@ -376,5 +392,12 @@ class Controller extends AuthController
         $criteria->order = 'id DESC';
         $criteria->limit = $limit;
         return Lists::model()->findAll($criteria);
+    }
+
+    public function searchArabicAndPersian($value)
+    {
+        $patterns = array('/([.\\+*?\[^\]$(){}=!<>|:-])/', '/ی|ي|ئ/', '/ک|ك/', '/ه|ة/', '/ا|آ|إ|أ/', '/\s/');
+        $replacements = array('', '[ی|ي|ئ]', '[ک|ك]', '[ه|ة]', '[اآإأ]', ' ');
+        return preg_replace($patterns, $replacements, $value);
     }
 }

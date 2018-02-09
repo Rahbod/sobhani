@@ -1,7 +1,7 @@
 <?php
 return array(
-	'onBeginRequest'=>create_function('$event', 'return ob_start("ob_gzhandler");'),
-	'onEndRequest'=>create_function('$event', 'return ob_end_flush();'),
+//	'onBeginRequest'=>create_function('$event', 'return ob_start("ob_gzhandler");'),
+//	'onEndRequest'=>create_function('$event', 'return ob_end_flush();'),
 	'basePath' => dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'10 بهترین',
 	'timeZone' => 'Asia/Tehran',
@@ -113,7 +113,9 @@ return array(
 			'rules'=>array(
 				'search' => 'lists/public/search',
 				'lists' => 'lists/public/index',
-				'lists/category/<id:\d+>'=>'lists/category/view',
+				'lists/<id:\d+>/<title:.*>'=>'lists/public/view',
+				'users/public/viewProfile/<id:\d+>/<title:.*>'=>'users/public/viewProfile',
+				'lists/category/<id:\d+>/<title:.*>'=>'lists/category/view',
 				'new' => 'lists/public/new',
 				'<type:(recommended|latest)>' => 'lists/public/rows',
 				'<action:(about|contact|help|terms|search|faq)>' => 'site/<action>',

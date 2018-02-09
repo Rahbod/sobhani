@@ -46,6 +46,12 @@
 		)); ?>
 		<?php echo $form->error($model,'image'); ?>
 		<div class="uploader-message error"></div>
+		<div class="row">
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+				<?= $form->label($model, 'category_id')?>
+				<?= $form->dropDownList($model, 'category_id', CHtml::listData(ListCategories::model()->findAll(), 'id', 'title'), array('class'=>'form-control'))?>
+			</div>
+		</div>
 	</div>
 	<?= $form->error($model, 'items')?>
 	<?php
@@ -58,7 +64,7 @@
 			if($i==2) echo 'bronze';
 			?>"><?= $i+1?></span>
 			<div class="input-container">
-				<?= CHtml::textField("Lists[items][{$i}][title]", isset($model->items[$i]['title'])?$model->items[$i]['title']:'', array('class' => 'transparent-input', 'placeholder' => "آیتم")) ?>
+				<?= CHtml::textField("Lists[items][{$i}][title]", isset($model->items[$i]['title'])?$model->items[$i]['title']:'', array('class' => 'transparent-input item-title', 'placeholder' => "آیتم")) ?>
 			</div>
 			<div class="row">
 				<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
@@ -100,3 +106,27 @@
 	</div>
 </div>
 <?php $this->endWidget(); ?>
+<?php Yii::app()->clientScript->registerScript('autocomplete', '
+$(".item-title").autocomplete({
+    source: function (request, response) {
+        $.ajax({
+            url: "'.$this->createUrl('autoComplete').'",
+            data: { query: request.term },
+            dataType: "JSON",
+            success: function (data) {
+                console.log(data);
+                var transformed = $.map(data, function (el) {
+                    return {
+                        label: el.title,
+                        id: el.id
+                    };
+                });
+                response(transformed);
+            },
+            error: function () {
+                response([]);
+            }
+        });
+    }
+});
+');?>

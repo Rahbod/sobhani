@@ -81,6 +81,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <?php $this->widget('CCaptcha',array(
         'captchaAction' => '/users/public/captcha',
     )); ?>
+    <i class="refresh"></i>
 </div>
 <!--<p class="text-center">با کلیک کردن بر روی ادامه شما موافقت می کنید که --><?//= Yii::app()->name?><!-- اجازه ارسال یک ایمیل تأیید به آدرس ارائه شده در بالا را بدهند.</p>-->
 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -89,3 +90,8 @@ $form = $this->beginWidget('CActiveForm', array(
     </button>
 </div>
 <?php $this->endWidget(); ?>
+<?php Yii::app()->clientScript->registerScript('refreshClick', '
+$(".captcha .refresh").click(function(){
+    $(this).parent().find("a").trigger("click");
+});
+');?>

@@ -7,12 +7,12 @@
             <div class="row">
                 <div class="logo-box">
                     <a href="<?= Yii::app()->getBaseUrl(true)?>">
-                        <img src="<?php echo Yii::app()->theme->baseUrl.'/svg/logo.jpg' ?>">
+                        <img src="<?php echo Yii::app()->theme->baseUrl.'/svg/logo.svg' ?>">
                     </a>
                 </div>
             </div>
         </div>
-        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-6">
             <div class="row">
                 <div class="mobile-menu-trigger hidden-lg hidden-md hidden-sm" data-toggle="collapse" data-target="#mobile-menu"></div>
                 <div class="mobile-search-trigger hidden-lg hidden-md hidden-sm"></div>
@@ -25,7 +25,7 @@
                         <li class="user-link"><a href="<?= $this->createUrl('/dashboard')?>" title="داشبورد"><i class="user-icon"></i><?= Yii::app()->user->showName ?></a>
 <!--                        <li><a href="--><?//= $this->createUrl('/dashboard')?><!--" class="h"><i class="home-icon"></i></a></li>-->
                         <li><a href="<?= $this->createUrl('/bookmarks')?>" class="s" title="علاقه مندی ها"><i class="star-icon"></i></a></li>
-                        <li><a href="<?= $this->createUrl('/notifications')?>" class="e" title="پیام ها"><i class="envelope-icon"></i></a></li>
+                        <li><a href="<?= $this->createUrl('/notifications')?>" class="e" title="پیام ها"><i class="envelope-icon"></i><?php if($this->userNotifications != 0):?><span class="notification-count"><?= $this->userNotifications?></span><?php endif;?></a></li>
                         <li><a href="<?= $this->createUrl('/logout')?>" class="l" title="خروج"><i class="logout-icon"></i></a></li>
                     <?php else:?>
                         <li><a href="#login-modal" data-toggle="modal">ورود</a></li>
@@ -64,7 +64,7 @@
                 <li><a href="<?= $this->createUrl('/dashboard')?>"><i class="user-icon"></i><?= Yii::app()->user->showName ?></a>
                 <li class="icon-link"><a href="<?= $this->createUrl('/dashboard')?>" class="h"><i class="home-icon"></i></a></li>
                 <li class="icon-link"><a href="<?= $this->createUrl('/bookmarks')?>" class="s"><i class="star-icon"></i></a></li>
-                <li class="icon-link"><a href="<?= $this->createUrl('/notifications')?>" class="e"><i class="envelope-icon"></i></a></li>
+                <li class="icon-link"><a href="<?= $this->createUrl('/notifications')?>" class="e"><i class="envelope-icon"></i><?php if($this->userNotifications != 0):?><span class="notification-count"><?= $this->userNotifications?></span><?php endif;?></a></li>
                 <li class="icon-link"><a href="<?= $this->createUrl('/logout')?>" class="l"><i class="lock-icon"></i></a></li>
             <?php else:?>
                 <li><a href="#login-modal" data-toggle="modal">ورود</a></li>

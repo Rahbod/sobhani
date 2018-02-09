@@ -99,6 +99,8 @@ class dropZoneUploader extends CWidget
      * @var string The Javascript to be called in case of a successful upload
      */
     public $onSuccess;
+
+    public $onSending = '';
     /**
      * @var array html tag options
      */
@@ -257,6 +259,7 @@ class dropZoneUploader extends CWidget
                         '.$deleteFunc.'
                     });
                     this.on("sending", function(file, xhr, formData) {
+                        '.$this->onSending.'
                         formData.append("data", '.$data.');
                         '.(Yii::app()->request->enableCsrfValidation?'formData.append("'.Yii::app()->request->csrfTokenName.'", "'.Yii::app()->request->csrfToken.'");':'').'
                     });

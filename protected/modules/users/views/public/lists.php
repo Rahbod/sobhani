@@ -41,7 +41,7 @@ $this->breadcrumbs =[
                 array(
                     'name' => 'title',
                     'value' => function($data){
-                        return CHtml::a($data->title, array('/lists/'.$data->id));
+                        return CHtml::link($data->title, 'lists/'.$data->id.'/'.str_replace(' ', '-', $data->title));
                     },
                     'type' => 'raw'
                 ),
@@ -83,12 +83,15 @@ $this->breadcrumbs =[
 //                ),
                 array(
                     'class'=>'CButtonColumn',
-                    'template' => '{delete}',
+                    'template' => '{delete}{update}',
                     'buttons' => array(
                         'update' => array(
+                            'url' => 'Yii::app()->createUrl("lists/public/update/".$data->id)',
+                        ),
+                        'delete' => array(
                             'url' => '$data->viewUrl',
                             'visible' => '$data->status == 1',
-                            'imageUrl' => Yii::app()->baseUrl.'/themes/frontend/svg/trash.svg'
+//                            'imageUrl' => Yii::app()->baseUrl.'/themes/frontend/svg/trash.svg'
                         )
                     )
                 ),

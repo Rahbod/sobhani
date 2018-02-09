@@ -4,9 +4,15 @@
 $itemImagePath = Yii::getPathOfAlias('webroot').'/uploads/items/thumbs/200x200/';
 $itemImageUrl = Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
 $i = 1;
-$voted = Votes::checkVote($model->id);
 $voteAvg = Votes::VoteAverages($model->id);
+Yii::app()->clientScript->registerScript('target', '
+    var target = null;
+    $(".vote-trigger").click(function(){
+        target = $(this);
+    });
+');
 foreach($items as $item):
+    $voted = Votes::checkVote($model->id, $item->item_id);
     $hash = base64_encode(json_encode(['list_id' => $item->list_id, 'item_id' => $item->item_id]));
     ?>
     <div class="form-row">
@@ -32,9 +38,8 @@ foreach($items as $item):
                     $(".view-alert").addClass("hidden").removeClass("alert-success alert-warning").find("span").text("");
                 }',
                 'success' => 'js: function(data){
-                    if(data.status){
-                        
-                        $(".vote-trigger").addClass("active");
+                    if(data.status){console.log(target);
+                        target.addClass("active");
                         $(".view-alert").addClass("alert-success").find("span").text(data.message);
                     }
                     else
@@ -47,7 +52,7 @@ foreach($items as $item):
             <div class="text"><?= $item->description ?></div>
         </div>
         <?php
-        if(!Yii::app()->user->isGuest)
+        //if(!Yii::app()->user->isGuest)
             $this->widget('comments.widgets.ECommentsListWidget', array(
                 'model' => $item,
             ));

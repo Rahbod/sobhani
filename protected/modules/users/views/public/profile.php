@@ -21,33 +21,33 @@ $this->breadcrumbs =[
     )); ?>
 
     <div class="row">
-        <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-            <?php $this->widget('ext.dropZoneUploader.dropZoneUploader', array(
-                'id' => 'avatar-uploader',
-                'model' => $model,
-                'name' => 'avatar',
-                'maxFiles' => 1,
-                'maxFileSize' => 1, //MB
-                'containerClass' => 'uploader',
-                'url' => Yii::app()->createUrl('/users/public/upload'),
-                'deleteUrl' => Yii::app()->createUrl('/users/public/deleteUpload'),
-                'acceptedFiles' => '.jpg, .jpeg, .png',
-                'serverFiles' => $avatar,
-                'onSuccess' => '
-                var responseObj = JSON.parse(res);
-                if(responseObj.status){
-                    {serverName} = responseObj.fileName;
-                    $(".uploader-message").html("");
-                }
-                else{
-                    $(".uploader-message").html(responseObj.message);
-                    this.removeFile(file);
-                }
-            ',
-            )); ?>
-            <div class="uploader-message error"></div>
-            <?php echo $form->error($model,'avatar'); ?>
-        </div>
+<!--        <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">-->
+<!--            --><?php //$this->widget('ext.dropZoneUploader.dropZoneUploader', array(
+//                'id' => 'avatar-uploader',
+//                'model' => $model,
+//                'name' => 'avatar',
+//                'maxFiles' => 1,
+//                'maxFileSize' => 1, //MB
+//                'containerClass' => 'uploader',
+//                'url' => Yii::app()->createUrl('/users/public/upload'),
+//                'deleteUrl' => Yii::app()->createUrl('/users/public/deleteUpload'),
+//                'acceptedFiles' => '.jpg, .jpeg, .png',
+//                'serverFiles' => $avatar,
+//                'onSuccess' => '
+//                var responseObj = JSON.parse(res);
+//                if(responseObj.status){
+//                    {serverName} = responseObj.fileName;
+//                    $(".uploader-message").html("");
+//                }
+//                else{
+//                    $(".uploader-message").html(responseObj.message);
+//                    this.removeFile(file);
+//                }
+//            ',
+//            )); ?>
+<!--            <div class="uploader-message error"></div>-->
+<!--            --><?php //echo $form->error($model,'avatar'); ?>
+<!--        </div>-->
         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 profile-left-side">
             <div class="form-group">
                 <?php echo $form->textField($model,'first_name',array('placeholder'=>$model->getAttributeLabel('first_name').' *','class'=>'form-control','maxlength'=>50)); ?>

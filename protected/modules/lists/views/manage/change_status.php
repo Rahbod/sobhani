@@ -68,24 +68,24 @@ $this->breadcrumbs=array(
         </div>
         <div class="well">
             <?php
-            for($i = 0; $i < 10; $i++):
+            foreach($model->items as $key => $item):
                 ?>
                 <div class="form-group">
                     <div class="input-container">
-                        <b><?= "عنوان آیتم ".($i+1) ?>: </b>
-                        <?= $model->items[$i]['title'] ?>
+                        <b><?= "عنوان آیتم ".($key+1) ?>: </b>
+                        <?= $item['title'] ?>
                     </div>
                     <div class="form-group row" style="margin-top: 5px">
-                        <?php if(!empty($model->items[$i]['description'])): ?>
+                        <?php if(!empty($item['description'])): ?>
                         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                            <b>توضیحات: </b><p><?= $model->items[$i]['description'] ?></p>
+                            <b>توضیحات: </b><p><?= $item['description'] ?></p>
                         </div>
                         <?php endif; ?>
-                        <?php if(isset($model->items[$i]['image'])):?>
+                        <?php if(isset($item['image'])):?>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div style="width: 300px;height: auto;display: inline-block;margin-bottom: 15px">
-                                    <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/items/'.$model->items[$i]['image']?>" style="width: 100%;height: auto;display: inline-block">
+                                    <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/items/'.$item['image']?>" style="width: 100%;height: auto;display: inline-block">
                                 </div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@ $this->breadcrumbs=array(
                 </div>
                 <hr>
                 <?php
-            endfor;
+            endforeach;
             ?>
         </div>
         <?php $this->endWidget(); ?>
