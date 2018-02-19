@@ -54,7 +54,7 @@ class Lists extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title', 'required'),
+			array('title, category_id', 'required'),
 			array('title', 'length', 'max'=>255),
 			array('image', 'length', 'max'=>512),
 			array('user_id, category_id, seen', 'length', 'max'=>10),

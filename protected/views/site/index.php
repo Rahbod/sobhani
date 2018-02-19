@@ -25,7 +25,7 @@ $listItemUrl=Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
         <div class="thumbnail-container">
             <div class="thumbnail">
                 <a href="<?= $this->createUrl('/lists/'.$item->id.'/'.str_replace(' ', '-', $item->title)) ?>">
-                    <img src="<?= $listUrl.$item->image ?>">
+                    <img src="<?= $listUrl.$item->getImage() ?>">
                     <div class="overlay">
                         <h3><?= $item->title ?></h3>
                     </div>
@@ -58,11 +58,13 @@ $listItemUrl=Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
                             <?php
                             $i = 0;
                             $item = $itemRel[0];
-                            while($i<3 || $item == null):
-                                if($item->image && is_file($listItemPath.$item->image)):
+                            while($i<3):
+                                if($item):
+                                    if($item->image && is_file($listItemPath.$item->image)):
                                 ?>
                                     <img src="<?= $listItemUrl.$item->image ?>">
                                 <?php
+                                    endif;
                                 endif;
                                 $i++;
                                 $item = isset($itemRel[$i])?$itemRel[$i]:null;
@@ -74,9 +76,15 @@ $listItemUrl=Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
                             <a href="<?=$this->createUrl('/lists/'.$list->id.'/'.str_replace(' ', '-', $list->title))?>"><?= $list->title ?></a>
                         </strong>
                         <ol type="1">
-                            <li><?= $list->itemRel[0]->item->title ?></li>
-                            <li><?= $list->itemRel[1]->item->title ?></li>
-                            <li><?= $list->itemRel[2]->item->title ?></li>
+                            <?php if(isset($list->itemRel[0])):?>
+                                <li><?= $list->itemRel[0]->item->title ?></li>
+                            <?php endif;?>
+                            <?php if(isset($list->itemRel[1])):?>
+                                <li><?= $list->itemRel[1]->item->title ?></li>
+                            <?php endif;?>
+                            <?php if(isset($list->itemRel[2])):?>
+                                <li><?= $list->itemRel[2]->item->title ?></li>
+                            <?php endif;?>
                         </ol>
                         <b class="member list-item-view">
                             <?php if($list->user_type == 'user'):?>
@@ -123,7 +131,7 @@ $listItemUrl=Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
                 <h3>لیست های ویژه</h3>
                 <?php foreach($this->getSpecialLists(6) as $list):?>
                     <div class="feature-item">
-                        <img src="<?= $listUrl.$list->image ?>">
+                        <img src="<?= $listUrl.$list->getImage() ?>">
                         <p>
                             <b><a href="<?= $list->getViewUrl() ?>"><?= $list->title ?></a></b>
                             <?php
@@ -142,7 +150,7 @@ $listItemUrl=Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
                 <h4>ده فهرست برتر</h4>
                 <?php foreach($this->getTopLists() as $item): ?>
                     <div class="trending">
-                        <img src="<?= $listUrl.$item->image ?>">
+                        <img src="<?= $listUrl.$item->getImage() ?>">
                         <a href="<?=$item->getViewUrl() ?>"><?= $item->title ?></a>
                         <br>
                         4596 تعامل اخیر
