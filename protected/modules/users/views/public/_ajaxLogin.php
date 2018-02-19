@@ -47,7 +47,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <p id="login-error" class="errorMessage"></p>
     <p id="UserLoginForm_authenticate_field_em_" class="errorMessage"></p>
     <div>
-        <?php echo $form->textField($model, 'verification_field_value', array('class' => 'ltr text-right text-field', 'placeholder' => $model->getAttributeLabel('verification_field_value'))); ?>
+        <?php echo $form->textField($model, 'verification_field_value', array('class' => 'ltr text-right text-field', 'placeholder' => 'شماره موبایل / پست الکترونیکی')); ?>
         <?php echo $form->error($model, 'verification_field_value'); ?>
     </div>
     <?php echo $form->passwordField($model, 'password', array('class' => 'text-field', 'placeholder' => 'رمز عبور')); ?>

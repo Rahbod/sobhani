@@ -17,7 +17,7 @@ class ListsPublicController extends Controller
 	public function filters()
 	{
 		return array(
-			'checkAccess - view, index, rows, json, search'
+			'checkAccess - view, index, rows, json, search, autoComplete'
 		);
 	}
 
@@ -29,7 +29,7 @@ class ListsPublicController extends Controller
 		return array(
 			'frontend' => array(
 				'rows', 'view', 'new', 'update', 'upload', 'uploadItem', 'deleteUpload', 'deleteUploadItem',
-				'json', 'authJson', 'search'
+				'json', 'authJson', 'search', 'autoComplete'
 			)
 		);
 	}
@@ -80,6 +80,8 @@ class ListsPublicController extends Controller
 	 */
 	public function actionNew()
 	{
+        //<a href="https://telegram.me/share/url?url=http://as.com" class="telegram-link pull-left"><i></i>اشتراک گذاری در تلگرام</a>
+
 		Yii::app()->theme = 'frontend';
 		$model =new Lists();
 		$itemImages = [];
@@ -114,7 +116,8 @@ class ListsPublicController extends Controller
 			}
 
 			if($model->save()){
-				$image->move($this->imagePath);
+                if($model->image)
+				    $image->move($this->imagePath);
 
 				// save item images
 				foreach($model->items as $key => $item){
@@ -122,8 +125,8 @@ class ListsPublicController extends Controller
 						$itemImages[$key]->move($this->itemImagePath);
 				}
 
-				Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
-				$this->redirect(array('admin'));
+                Yii::app()->user->setFlash('success', 'بسیار عالی! لیست شما با موفقیت ثبت شد.<br>لیست شما پس از تایید کارشناسان به صورت عمومی نمایش داده خواهد شد.');
+				$this->redirect(array('/lists/'.$model->id.'/'.str_replace(' ', '-', $model->title)));
 			}else
 				Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
 		}
@@ -231,7 +234,7 @@ class ListsPublicController extends Controller
 	{
 		//show categories
 		Yii::app()->theme = 'frontend';
-		$categories = ListCategories::model()->findAll(array('order' => 'id'));
+		$categories = ListCategories::model()->findAll(array('condition' => 'parent_id IS NULL', 'order' => 'id'));
 		$this->render('index', compact('categories'));
 	}
 
@@ -335,7 +338,7 @@ class ListsPublicController extends Controller
 					$userID = Yii::app()->user->getId();
 					$vote->user_id = $userID;
 				}
-				if(Votes::checkVote($data['list_id'])){
+				if(Votes::checkVote($data['list_id'], $data['item_id'])){
 					if($vote->user_id)
 						Votes::model()->deleteAllByAttributes(['user_id' => $vote->user_id, 'list_id' => $data['list_id']]);
 					else
@@ -344,9 +347,15 @@ class ListsPublicController extends Controller
 				$vote->list_id = $data['list_id'];
 				$vote->item_id = $data['item_id'];
 				$vote->create_date = time();
-				Votes::saveVoteInCookie($data['list_id']);
+				Votes::saveVoteInCookie($data['list_id'].'-'.$data['item_id']);
+                $list = Lists::model()->findByPk($data['list_id']);
+                $item = Items::model()->findByPk($data['item_id']);
+                if(Yii::app()->user->isGuest)
+                    $this->createLog('"کاربر مهمان" در لیست "'.$list->title.'" به گزینه "'.$item->title.'" رای داده است.', $list->user_id);
+                else
+                    $this->createLog('"'.Yii::app()->user->showName.'" در لیست "'.$list->title.'" به گزینه "'.$item->title.'" رای داده است.', $list->user_id);
 				if($vote->save())
-					$this->sendJson(['status' => true, 'avg' => Votes::VoteAverages($vote->list_id), 'message' => 'رای شما با موفقیت ثبت گردید.']);
+					$this->sendJson(['status' => true, 'avgs' => Votes::VoteAverages($vote->list_id), 'message' => 'رای شما با موفقیت ثبت گردید.']);
 				else
 					$this->sendJson(['status' => false, 'message' => 'در انجام عملیات مشکلی بوجود آمده است! لطفا مجددا تلاش فرمایید.']);
 				break;
@@ -402,8 +411,9 @@ class ListsPublicController extends Controller
 		if(isset($_GET['term']) && !empty($_GET['term'])){
 			$criteria->addCondition('t.status = :status');
 			$criteria->addCondition('t.title REGEXP :field OR t.description REGEXP :field OR
-						category.title REGEXP :field OR category.description REGEXP :field');
+						category.title REGEXP :field OR category.description REGEXP :field OR itemObj.title REGEXP :field');
 			$criteria->with[]='category';
+			$criteria->with[]='itemObj';
 			$criteria->params[':field'] = $_GET['term'];
 			$criteria->params[':status'] = Lists::STATUS_APPROVED;
 			/* @var Lists[] $list */
@@ -414,5 +424,21 @@ class ListsPublicController extends Controller
 
 		$this->pageTitle = $title;
 		$this->render('list', compact('lists','title'));
+	}
+
+	public function actionAutoComplete()
+	{
+		$query = Yii::app()->request->getQuery('query');
+
+        $criteria = new CDbCriteria();
+        $criteria->compare('title', $query, true);
+        $items = Items::model()->findAll($criteria);
+        $out = array();
+        foreach($items as $item)
+            $out[] = array(
+                'title' => $item->title,
+                'id' => $item->id,
+            );
+        echo CJSON::encode($out);
 	}
 }

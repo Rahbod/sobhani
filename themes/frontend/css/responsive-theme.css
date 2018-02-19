@@ -1,4 +1,14 @@
 @media screen and (max-width: 767px) {
+    .list-item-view .image{
+        float: none;
+        display: block;
+        margin: 0 auto;
+    }
+    .list-item-view h2{
+        display: block;
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
     .slider h1 {
         padding: 0 15px;
         font-size: 20px;
@@ -73,9 +83,7 @@
         padding: 15px;
     }
     .left-side .newlist .multiimage{
-        position: relative;
-        left: auto;
-        margin: 0 auto 30px;
+        display: none;
     }
 
     .content .left-side .context .newlist strong {

@@ -23,16 +23,8 @@ class CommentsCommentController extends Controller
     public static function actionsType()
     {
         return array(
-            'frontend'=>array(
-                'postComment',
-                'captcha'
-            ),
-            'backend' => array(
-                //'admin',
-                'adminBooks',
-                'delete',
-                'approve'
-            )
+            'frontend' => array('postComment' ,'captcha'),
+            'backend' => array('admin' ,'delete' ,'approve')
         );
     }
 
@@ -122,6 +114,7 @@ class CommentsCommentController extends Controller
     public function actionPostComment()
     {
         if (isset($_POST['Comment']) && Yii::app()->request->isAjaxRequest) {
+            /* @var Comment $comment */
             $comment = new Comment();
             $comment->attributes = $_POST['Comment'];
             $criteria = new CDbCriteria;
@@ -139,6 +132,9 @@ class CommentsCommentController extends Controller
                 Yii::app()->end();
             $result = array();
             if ($comment->save()) {
+                /* @var ListItemRel $listItem */
+                $listItem = $comment->getOwnerModel();
+                $this->createLog('"'.Yii::app()->user->showName.'" در لیست "'.$listItem->list->title.'" نظر ثبت کرده است. این نظر پس از تایید مدیریت سایت نمایش داده خواهد شد.', $listItem->list->user_id);
                 if(!Yii::app()->user->isGuest && Yii::app()->user->type == 'user' && isset($_POST['Comment']['rate'])) {
                     $rateModel = Votes::model()->findAllByAttributes(array('user_id'=>Yii::app()->user->getId(),'list_item_rel_id'=>$comment->owner_id));
                     if($rateModel)

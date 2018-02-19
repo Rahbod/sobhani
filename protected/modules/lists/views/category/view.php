@@ -7,11 +7,19 @@ $this->breadcrumbs = array(
 );
 ?>
 <h2><?= $model->title ?></h2>
+<div class="category-row" style="margin-bottom: 50px;overflow:hidden;margin-top: 25px;">
+    <?php foreach($model->childs as $category):?>
+        <a class="catod" href="<?= $this->createUrl('/lists/category/'.$category->id.'/'.str_replace(' ', '-', $category->title)) ?>">
+            <b><?= $category->title ?></b>
+            <span><?= $category->description ?></span>
+        </a>
+    <?php endforeach; ?>
+</div>
 <div class="recommend">
 	<?php
 	$this->widget('zii.widgets.CListView', array(
 		'id' => 'book-list',
-		'dataProvider' => new CArrayDataProvider($model->lists, array('pagination' => array('pageSize' => 20))),
+		'dataProvider' => new CArrayDataProvider($model->approvedLists, array('pagination' => array('pageSize' => 20))),
 		'itemView' => 'lists.views.public._view',
 		'template' => '{items} {pager}',
 		'ajaxUpdate' => true,

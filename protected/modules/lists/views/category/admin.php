@@ -45,6 +45,11 @@ $this->menu=array(
                 'pagerCssClass' => 'blank',
                 'columns'=>array(
                     'title',
+                    array(
+                        'name' => 'parent_id',
+                        'value' => '$data->parent_id ? $data->parent->title : "-"',
+                        'filter' => false
+                    ),
                     'description',
                     array(
                         'class'=>'CButtonColumn',

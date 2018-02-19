@@ -162,13 +162,13 @@ class Votes extends CActiveRecord
 		return false;
 	}
 
-	public static function checkVote($listID)
+	public static function checkVote($listID, $itemID)
 	{
 		if(!Yii::app()->user->isGuest && Yii::app()->user->type == 'user'){
 			$userID = Yii::app()->user->getId();
-			return Votes::model()->countByAttributes(['user_id' => $userID, 'list_id' => $listID]);
+			return Votes::model()->countByAttributes(['user_id' => $userID, 'list_id' => $listID, 'item_id' => $itemID]);
 		}else
-			return Votes::checkVoteInCookie($listID);
+			return Votes::checkVoteInCookie($listID.'-'.$itemID);
 	}
 
 	public static function VoteAverages($listID)

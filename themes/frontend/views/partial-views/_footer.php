@@ -1,7 +1,7 @@
 <div class="footer">
     <div class="container">
         <a href="<?= Yii::app()->getBaseUrl(true)?>">
-            <img src="<?= Yii::app()->theme->baseUrl ?>/svg/logo.jpg" class="logo">
+            <img src="<?= Yii::app()->theme->baseUrl ?>/svg/logo.svg" class="logo">
         </a>
         <ul class="list-unstyled">
             <li>
@@ -9,17 +9,22 @@
                 | <span><a href="<?= $this->createAbsoluteUrl('/faq') ?>">سوالات متداول</a></span>
                 | <span><a href="<?= $this->createAbsoluteUrl('/about') ?>">درباره ما</a></span>
             </li>
-            <li>&copy; TheTopTens 2005-2017 &reg; کلیه حقوق محفوظ است.</li>
+            <li>کلیه حقوق برای 10 بهترین محفوظ است.</li>
         </ul>
         <ul class="navbar-social">
             <li>
-                <a href="http://facebook.com">
+                <a href="<?= $this->socialLinks['facebook']?>">
                     <i class="facebook-icon"></i>
                 </a>
             </li>
             <li>
-                <a href="http://google.com">
+                <a href="<?= $this->socialLinks['google']?>">
                     <i class="google-icon"></i>
+                </a>
+            </li>
+            <li>
+                <a href="<?= $this->socialLinks['telegram']?>">
+                    <i class="telegram-icon"></i>
                 </a>
             </li>
         </ul>

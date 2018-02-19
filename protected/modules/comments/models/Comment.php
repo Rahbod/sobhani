@@ -203,6 +203,8 @@ class Comment extends CActiveRecord
         if(isset($relations['user']))
             $criteria->with[] = 'user';
 
+        $criteria->order = 'create_time DESC';
+
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array(

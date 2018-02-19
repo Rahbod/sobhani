@@ -103,8 +103,16 @@ class UsersPublicController extends Controller
         $this->layout = '//layouts/inner';
         /* @var $user Users */
         $user = Users::model()->findByPk(Yii::app()->user->id);
+
+        $lists = new Lists('search');
+        $lists->unsetAttributes();
+        if(isset($_GET['Lists']))
+            $lists->attributes = $_GET['Lists'];
+        $lists->user_type = 'user';
+        $lists->user_id = $user->id;
+
         $this->pageTitle = 'پروفایل من';
-        $this->render('dashboard', compact('user'));
+        $this->render('dashboard', compact('user', 'lists'));
     }
 
     /**
@@ -217,17 +225,18 @@ class UsersPublicController extends Controller
         $this->layout = '//layouts/inner';
 
         $model = Users::model()->findByPk($id);
-        if ($clinicID = Yii::app()->request->getQuery('clinic')) {
-            $criteria = new CDbCriteria();
-            $criteria->addCondition('clinics.id = :id');
-            $criteria->params[':id'] = $clinicID;
-            $model->clinic = $model->clinics($criteria);
-            if ($model->clinic)
-                $model->clinic = $model->clinic[0];
-        }
+
+        $lists = new Lists('search');
+        $lists->unsetAttributes();
+        if(isset($_GET['Lists']))
+            $lists->attributes = $_GET['Lists'];
+        $lists->user_type = 'user';
+        $lists->user_id = $model->id;
+        $lists->status = Lists::STATUS_APPROVED;
 
         $this->render('view-profile', array(
             'model' => $model,
+            'lists' => $lists,
         ));
     }
 

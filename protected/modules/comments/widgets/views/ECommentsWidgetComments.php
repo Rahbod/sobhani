@@ -1,9 +1,9 @@
 <?php if(count($comments) > 0):?>
     <ul class="comments-list">
-        <i class="icon icon-quote-right" aria-hidden="true"></i>
         <?php foreach($comments as $key => $comment):
             ?>
             <li id="comment-<?php echo $comment->comment_id; ?>">
+                <i class="icon icon-quote-right" aria-hidden="true"></i>
                 <div class="comment-text">
                     <div class="text">
                         <div><p dir="auto"><?php echo CHtml::encode($comment->comment_text);?></p></div>
