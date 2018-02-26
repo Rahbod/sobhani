@@ -4,7 +4,6 @@
 /* @var $lists Lists*/
 $this->breadcrumbs =[
     'داشبورد',
-    'لیست های من' => array('/my-lists'),
     'تغییر مشخصات' => array('/profile'),
     'کلمه عبور' => array('/changePassword'),
 ];
@@ -123,15 +122,16 @@ $model = UserDetails::model()->findByPk($user->id);
 //                ),
                 array(
                     'class'=>'CButtonColumn',
-                    'template' => '{delete}{update}',
+                    'template' => '{delete}  {update}',
                     'buttons' => array(
                         'update' => array(
                             'url' => 'Yii::app()->createUrl("lists/public/update/".$data->id)',
+                            'imageUrl'=>Yii::app()->baseUrl."/themes/frontend/svg/pen_edit.svg" ,
                         ),
                         'delete' => array(
                             'url' => '$data->viewUrl',
+                            'imageUrl'=>Yii::app()->baseUrl."/themes/frontend/svg/delete_icon.svg",
                             'visible' => '$data->status == 1',
-//                            'imageUrl' => Yii::app()->baseUrl.'/themes/frontend/svg/trash.svg'
                         )
                     )
                 ),
@@ -139,14 +139,9 @@ $model = UserDetails::model()->findByPk($user->id);
         )); ?>
     </div>
 </div>
-<h3>جدیدترین نظرات</h3>
-<div class="contentmod">
-<!--    --><?php
-//    if($user->lists)
-//    ?>
-    <div class="contentmod1">کاربر هنوز هیچ نظر قابل مشاهده را اضافه نکرده است.</div>
-</div>
-<?php Yii::app()->clientScript->registerScript('clickOnUserAvatar', '
+<?php
+Yii::app()->clientScript->registerCss('iconSize', '.button-column img{width:15px;}');
+Yii::app()->clientScript->registerScript('clickOnUserAvatar', '
 $(".userinfo .user-image").click(function(){
     $(".uploader-container .dropzone.single").trigger("click");
 });

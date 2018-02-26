@@ -7,91 +7,96 @@
  */
 $cs = Yii::app()->clientScript;
 $baseUrl = Yii::app()->theme->baseUrl;
-$cs->registerCssFile($baseUrl.'/css/owl.carousel.css');
-$cs->registerCssFile($baseUrl.'/css/owl.theme.default.min.css');
-$cs->registerScriptFile($baseUrl.'/js/owl.carousel.min.js');
-$listPath=Yii::getPathOfAlias('webroot').'/uploads/lists/thumbs/200x200/';
-$listUrl=Yii::app()->getBaseUrl(true).'/uploads/lists/thumbs/200x200/';
+$cs->registerCssFile($baseUrl . '/css/owl.carousel.css');
+$cs->registerCssFile($baseUrl . '/css/owl.theme.default.min.css');
+$cs->registerScriptFile($baseUrl . '/js/owl.carousel.min.js');
+$listPath = Yii::getPathOfAlias('webroot') . '/uploads/lists/thumbs/200x200/';
+$listUrl = Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/200x200/';
 
-$listItemPath=Yii::getPathOfAlias('webroot').'/uploads/items/thumbs/200x200/';
-$listItemUrl=Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
+$listItemPath = Yii::getPathOfAlias('webroot') . '/uploads/items/thumbs/200x200/';
+$listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
 ?>
 <div class="slider">
-    <h1><?= Controller::parseNumbers(number_format($count)) ?> ده فهرست برتر برای همه چیز تحت (و از جمله) خورشید است.</h1>
-    <div class="is-carousel" data-items="7" data-item-selector="thumbnail-container" data-margin="10" data-dots="1" data-nav="0" data-mouse-drag="1" data-responsive='{"1920":{"items":"7"},"1200":{"items":"6"},"992":{"items":"5"},"768":{"items":"3"},"480":{"items":"2"},"0":{"items":"1"}}'>
+    <h1><?= Controller::parseNumbers(number_format($count)) ?> ده فهرست برتر برای همه چیز تحت (و از جمله) خورشید
+        است.</h1>
+    <div class="is-carousel" data-items="7" data-item-selector="thumbnail-container" data-margin="10" data-dots="1"
+         data-nav="0" data-mouse-drag="1"
+         data-responsive='{"1920":{"items":"7"},"1200":{"items":"6"},"992":{"items":"5"},"768":{"items":"3"},"480":{"items":"2"},"0":{"items":"1"}}'>
         <?php
         foreach ($slider as $item):
-        ?>
-        <div class="thumbnail-container">
-            <div class="thumbnail">
-                <a href="<?= $this->createUrl('/lists/'.$item->id.'/'.str_replace(' ', '-', $item->title)) ?>">
-                    <img src="<?= $listUrl.$item->getImage() ?>">
-                    <div class="overlay">
-                        <h3><?= $item->title ?></h3>
-                    </div>
-                </a>
+            ?>
+            <div class="thumbnail-container">
+                <div class="thumbnail">
+                    <a href="<?= $this->createUrl('/lists/' . $item->id . '/' . str_replace(' ', '-', $item->title)) ?>">
+                        <img src="<?= $listUrl . $item->getImage() ?>">
+                        <div class="overlay">
+                            <h3><?= $item->title ?></h3>
+                        </div>
+                    </a>
+                </div>
             </div>
-        </div>
         <?php
         endforeach;
         ?>
     </div>
     <div class="box-search">
-        <form>
-            <div class="input-group">
-                <input id="search" type="text" class="form-control" name="search" maxlength="100" placeholder="اشتیاق شما چیست؟">
-                <span class="input-group-addon"><i class="glyphicon"></i></span>
-            </div>
-        </form>
+
+        <?php echo CHtml::beginForm(array('/search'), 'get'); ?>
+        <div class="input-group">
+            <?php echo CHtml::textField('term', isset($_GET['term']) ? $_GET['term'] : '', array('class' => 'form-control', 'placeHolder' => 'اشتیاق شما چیست؟')) ?>
+            <span class="input-group-addon"><i class="glyphicon"></i></span>
+        </div>
+        <?php echo CHtml::endForm(); ?>
     </div>
 </div>
 <div class="content">
     <div class="container">
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 left-side">
             <div class="context">
-                <?php foreach($this->getLatestLists(1) as $list):?>
+                <?php foreach ($this->getLatestLists(1) as $list): ?>
                     <div class="newlist">
                         <div class="multiimage">
                             <?php
+
                             $itemRel = $list->itemRel;
                             ?>
                             <?php
                             $i = 0;
                             $item = $itemRel[0];
-                            while($i<3):
-                                if($item):
-                                    if($item->image && is_file($listItemPath.$item->image)):
-                                ?>
-                                    <img src="<?= $listItemUrl.$item->image ?>">
-                                <?php
+                            while ($i < 3):
+                                if ($item):
+                                    if ($item->image && is_file($listItemPath . $item->image)):
+                                        ?>
+                                        <img src="<?= $listItemUrl . $item->image ?>">
+                                    <?php
                                     endif;
                                 endif;
                                 $i++;
-                                $item = isset($itemRel[$i])?$itemRel[$i]:null;
+                                $item = isset($itemRel[$i]) ? $itemRel[$i] : null;
                             endwhile;
                             ?>
                         </div>
                         <i>لیست جدید</i>
                         <strong>
-                            <a href="<?=$this->createUrl('/lists/'.$list->id.'/'.str_replace(' ', '-', $list->title))?>"><?= $list->title ?></a>
+                            <a href="<?= $this->createUrl('/lists/' . $list->id . '/' . str_replace(' ', '-', $list->title)) ?>"><?= $list->title ?></a>
                         </strong>
                         <ol type="1">
-                            <?php if(isset($list->itemRel[0])):?>
+                            <?php if (isset($list->itemRel[0])): ?>
                                 <li><?= $list->itemRel[0]->item->title ?></li>
-                            <?php endif;?>
-                            <?php if(isset($list->itemRel[1])):?>
+                            <?php endif; ?>
+                            <?php if (isset($list->itemRel[1])): ?>
                                 <li><?= $list->itemRel[1]->item->title ?></li>
-                            <?php endif;?>
-                            <?php if(isset($list->itemRel[2])):?>
+                            <?php endif; ?>
+                            <?php if (isset($list->itemRel[2])): ?>
                                 <li><?= $list->itemRel[2]->item->title ?></li>
-                            <?php endif;?>
+                            <?php endif; ?>
                         </ol>
                         <b class="member list-item-view">
-                            <?php if($list->user_type == 'user'):?>
+                            <?php if ($list->user_type == 'user'): ?>
                                 <div class="user-image">
-                                    <a href="<?= Yii::app()->createUrl('/users/public/viewProfile/'.$list->user->id.'/'.str_replace(' ', '-', $list->user->userDetails->getShowName()))?>">
+                                    <a href="<?= Yii::app()->createUrl('/users/public/viewProfile/' . $list->user->id . '/' . str_replace(' ', '-', $list->user->userDetails->getShowName())) ?>">
                                         <img class="asrc" src="<?= $list->user->userDetails->getAvatar() ?>">
-                                        <small><?= $list->user->userDetails?$list->user->userDetails->getShowName():$list->user->email ?></small>
+                                        <small><?= $list->user->userDetails ? $list->user->userDetails->getShowName() : $list->user->email ?></small>
                                     </a>
                                 </div>
                             <?php endif; ?>
@@ -129,31 +134,31 @@ $listItemUrl=Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
             </div> -->
             <div class="specials">
                 <h3>لیست های ویژه</h3>
-                <?php foreach($this->getSpecialLists(6) as $list):?>
+                <?php foreach ($this->getSpecialLists(6) as $list): ?>
                     <div class="feature-item">
-                        <img src="<?= $listUrl.$list->getImage() ?>">
+                        <img src="<?= $listUrl . $list->getImage() ?>">
                         <p>
                             <b><a href="<?= $list->getViewUrl() ?>"><?= $list->title ?></a></b>
                             <?php
-                            echo mb_substr(strip_tags($list->description),0,100);
+                            echo mb_substr(strip_tags($list->description), 0, 100);
                             ?>
                         </p>
                     </div>
-                <?php endforeach;?>
+                <?php endforeach; ?>
 
             </div>
 
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 right-side">
-            <?php $this->renderPartial('//partial-views/_right_col');?>
+            <?php $this->renderPartial('//partial-views/_right_col'); ?>
             <div class="tren">
                 <h4>ده فهرست برتر</h4>
-                <?php foreach($this->getTopLists() as $item): ?>
+                <?php foreach ($this->getTopListBySeen() as $item): ?>
                     <div class="trending">
-                        <img src="<?= $listUrl.$item->getImage() ?>">
-                        <a href="<?=$item->getViewUrl() ?>"><?= $item->title ?></a>
+                        <a href="<?= $item->getViewUrl() ?>"><img src="<?= $listUrl . $item->getImage() ?>">
+                        <?= $item->title ?></a>
                         <br>
-                        4596 تعامل اخیر
+                          <?= $item->seen ?>&nbsp;بازدید
                     </div>
                 <?php endforeach; ?>
             </div>

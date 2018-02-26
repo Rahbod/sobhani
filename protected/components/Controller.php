@@ -71,6 +71,7 @@ class Controller extends AuthController
             and Yii::app()->user->roles != 'admin'
             and Yii::app()->user->roles != 'superAdmin') {
             if (Yii::app()->request->pathInfo != 'profile'
+                and Yii::app()->request->pathInfo != 'logout'
                 and (!$this->userDetails->first_name
                     or !$this->userDetails->last_name)
             ) {
@@ -390,6 +391,19 @@ class Controller extends AuthController
         $criteria = new CDbCriteria();
         $criteria->compare('status', Lists::STATUS_APPROVED);
         $criteria->order = 'id DESC';
+        $criteria->limit = $limit;
+        return Lists::model()->findAll($criteria);
+    }
+
+    /**
+     * @param int $limit
+     * @return Lists[]
+     */
+    public function getTopListBySeen($limit = 10)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('status', Lists::STATUS_APPROVED);
+        $criteria->order = 'seen DESC';
         $criteria->limit = $limit;
         return Lists::model()->findAll($criteria);
     }

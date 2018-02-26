@@ -10,7 +10,7 @@ class ListsPublicController extends Controller
 	public $tempPath = 'uploads/temp';
 	public $imagePath = 'uploads/lists';
 	public $itemImagePath = 'uploads/items';
-	
+
 	/**
 	 * @return array action filters
 	 */
@@ -70,8 +70,16 @@ class ListsPublicController extends Controller
 	{
 		Yii::app()->theme = 'frontend';
 		$model = $this->loadModel($id);
+		$criteria = new CDbCriteria();
+		$criteria->join = 'LEFT OUTER JOIN `ym_votes` `votes` ON  (`votes`.`item_id` = `itemRel`.`item_id`) LEFT OUTER JOIN `ym_items` `item` ON (`votes`.`item_id` = `item`.`id`)';
+		$criteria->condition= '`itemRel`.`list_id` = :itemID';
+		$criteria->group = 'itemRel.id';
+		$criteria->order = 'COUNT(votes.id) DESC';
+		$criteria->alias = 'itemRel';
+		$criteria->params[':itemID'] = $id;
+		$items = ListItemRel::model()->findAll($criteria);
 		Yii::app()->db->createCommand()->update('{{lists}}',array('seen' => (int)$model->seen+1),'id = :id', array(':id' => $id));
-		$this->render('view',compact('model'));
+		$this->render('view',compact('model', 'items'));
 	}
 
 	/**
@@ -81,7 +89,6 @@ class ListsPublicController extends Controller
 	public function actionNew()
 	{
         //<a href="https://telegram.me/share/url?url=http://as.com" class="telegram-link pull-left"><i></i>اشتراک گذاری در تلگرام</a>
-
 		Yii::app()->theme = 'frontend';
 		$model =new Lists();
 		$itemImages = [];
@@ -99,6 +106,7 @@ class ListsPublicController extends Controller
 					'height' => 400
 				))):[];
 			$model->status = isset($_POST['draft'])?Lists::STATUS_DRAFT:($model->user_type == 'admin'?Lists::STATUS_APPROVED:Lists::STATUS_PENDING);
+
 			if($model->items){
 				foreach($model->items as $key => $item){
 					$itemImages[$key] = [];
@@ -125,7 +133,7 @@ class ListsPublicController extends Controller
 						$itemImages[$key]->move($this->itemImagePath);
 				}
 
-                Yii::app()->user->setFlash('success', 'بسیار عالی! لیست شما با موفقیت ثبت شد.<br>لیست شما پس از تایید کارشناسان به صورت عمومی نمایش داده خواهد شد.');
+                Yii::app()->user->setFlash('success', 'لیست شما با موفقیت ثبت شد<br>این لیست پس از تایید کارشناسان بصورت عمومی نمایش داده خواهد شد.');
 				$this->redirect(array('/lists/'.$model->id.'/'.str_replace(' ', '-', $model->title)));
 			}else
 				Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
@@ -351,9 +359,9 @@ class ListsPublicController extends Controller
                 $list = Lists::model()->findByPk($data['list_id']);
                 $item = Items::model()->findByPk($data['item_id']);
                 if(Yii::app()->user->isGuest)
-                    $this->createLog('"کاربر مهمان" در لیست "'.$list->title.'" به گزینه "'.$item->title.'" رای داده است.', $list->user_id);
+                    $this->createLog('"کاربر مهمان" در لیست "'.CHtml::link($list->title,array('/lists/'.$list->id.'/'.urlencode($list->title))).'" به گزینه "'.$item->title.'" رای داده است.', $list->user_id);
                 else
-                    $this->createLog('"'.Yii::app()->user->showName.'" در لیست "'.$list->title.'" به گزینه "'.$item->title.'" رای داده است.', $list->user_id);
+                    $this->createLog('"'.CHtml::link(Yii::app()->user->showName,array('/users/public/viewProfile/'.$list->user->id.'/'.str_replace(' ', '-', $list->user->userDetails->getShowName()))).'" در لیست "'.CHtml::link($list->title,array('/lists/'.$list->id.'/'.urlencode($list->title))).'" به گزینه "'.$item->title.'" رای داده است.', $list->user_id);
 				if($vote->save())
 					$this->sendJson(['status' => true, 'avgs' => Votes::VoteAverages($vote->list_id), 'message' => 'رای شما با موفقیت ثبت گردید.']);
 				else

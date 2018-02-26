@@ -32,7 +32,7 @@ return array(
     'Log In' => 'وارد شوید',
     'To add any comment, you should sign up first.' => 'برای ارسال نظر باید عضو سایت باشید.',
     'or' => 'یا',
-    'Add Your Comment' => 'نظر خود را ثبت کنید',
+    'Add Your Comment' => 'ثبت نظر',
     'Send Comment' => 'ارسال نظر',
     'Comments List' => 'لیست نظرات',
     // translate for message moduleObjectName

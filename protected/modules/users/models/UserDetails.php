@@ -139,7 +139,7 @@ class UserDetails extends CActiveRecord
 		if($this->first_name or $this->last_name)
 			return $this->first_name . ' ' . $this->last_name;
 		else
-			return $this->user->email;
+			return '';
 	}
 
 	public function getShowDescription()

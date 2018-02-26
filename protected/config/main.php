@@ -185,11 +185,11 @@ return array(
 		'adminEmail'=>'info@10behtarin.com',
 		'noReplyEmail' => 'noreply@10behtarin.com',
 		'SMTP' => array(
-			'Host' => 'mail.10behtarin.com',
+			'Host' => 'server390.bertina.us',
 			'Secure' => 'ssl',
 			'Port' => '465',
 			'Username' => 'noreply@10behtarin.com',
-			'Password' => '@#visit1396',
+			'Password' => 'd(&u,zpGBjax',
 		)
 	),
 );

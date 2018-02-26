@@ -6,7 +6,9 @@ $(document).ready(function() {
     });
     $("body").on("click", ".mobile-search-trigger", function(){
         $(".mobile-search").show();
+        $(".logo-box").hide();
     }).on("click", ".close-search-container", function(){
+        $(".logo-box").show();
         $(".mobile-search").hide();
     });
 

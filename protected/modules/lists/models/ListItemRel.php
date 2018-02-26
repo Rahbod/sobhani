@@ -53,7 +53,7 @@ class ListItemRel extends CActiveRecord
 		return array(
 			'list' => array(self::BELONGS_TO, 'Lists', 'list_id'),
 			'item' => array(self::BELONGS_TO, 'Items', 'item_id'),
-			'votes' => array(self::HAS_MANY, 'Votes', 'list_item_rel_id'),
+			'votes' => array(self::HAS_MANY, 'Votes', 'item_id', 'on' => '`votes`.`item_id` = `itemRel`.`item_id`', 'with'=>'item', 'group' => 'itemRel.id'),
 		);
 	}
 

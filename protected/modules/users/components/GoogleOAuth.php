@@ -71,9 +71,12 @@ class GoogleOAuth extends CComponent
      */
     public function login($model)
     {
+
         $model->OAuth = self::GOOGLE_OAUTH;
         // get info from google
         if (!Yii::app()->user->getState('gp_access_token')) {
+
+
             if (!isset($_GET['code']) or Yii::app()->user->getState("gp_access_token") or Yii::app()->user->getState("gp_result")) {
                 Yii::app()->controller->redirect($this->login_url);
             }
@@ -97,15 +100,19 @@ class GoogleOAuth extends CComponent
         // login start
         $loginFlag = false;
         $model->verification_field_value = $this->getInfo()->email;
+        $model->email = $this->getInfo()->email;
+        //var_dump($model->validate());exit;
         if ($model->validate() && $model->login(true) === true)
             $loginFlag = true;
         elseif ($model->validate() && $model->login(true) === UserIdentity::ERROR_USERNAME_INVALID) {
+
             if ($this->register()) {
                 if ($model->validate() && $model->login(true) === true)
                     $loginFlag = true;
             }
         }
         if ($loginFlag) {
+
             if (Yii::app()->user->returnUrl != Yii::app()->request->baseUrl . '/')
                 $redirect = Yii::app()->createUrl('/' . Yii::app()->user->returnUrl);
             else
@@ -121,6 +128,7 @@ class GoogleOAuth extends CComponent
                 echo CJSON::encode(array('status' => false, 'errors' => Yii::app()->controller->implodeErrors($model)));
                 Yii::app()->end();
             } else {
+
                 Yii::app()->user->setFlash('success', $model->showError());
                 Yii::app()->controller->redirect(array('/login'));
             }

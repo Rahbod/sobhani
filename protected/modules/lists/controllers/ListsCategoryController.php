@@ -43,7 +43,7 @@ class ListsCategoryController extends Controller
 		{
 			$model->attributes=$_POST['ListCategories'];
 			if($model->save()){
-				Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
+				Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;لیست شما با موفقیت ثبت شد. این لیست پس از تایید کارشناسان بصورت عمومی نمایش داده خواهد شد.');
 				$this->redirect(array('admin'));
 			}else
 				Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
