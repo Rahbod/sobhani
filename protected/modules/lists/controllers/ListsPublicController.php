@@ -110,7 +110,7 @@ class ListsPublicController extends Controller
 			if($model->items){
 				foreach($model->items as $key => $item){
 					$itemImages[$key] = [];
-					if(isset($item['image']))
+					if(isset($item['image'])) 
 						$itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
 							'thumbnail' => array(
 								'width' => 200,
