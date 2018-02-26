@@ -81,7 +81,6 @@ class ListsManageController extends Controller
 	public function actionCreate()
 	{
 		$model = new Lists;
-
 		$itemImages = [];
 		if(isset($_POST['Lists'])){
 			$model->attributes = $_POST['Lists'];
@@ -312,9 +311,12 @@ class ListsManageController extends Controller
 		if(isset($_POST['Lists'])){
 			if(!key_exists($_POST['Lists']['status'], $model->statusLabels))
 				unset($_POST['Lists']['status']);
-			$model->attributes = $_POST['Lists'];
+			$model->category_id = $_POST['Lists']['category_id'];
+			if (isset($_POST['Lists']['status']))
+			    $model->status = $_POST['Lists']['status'];
+
 			if($model->save()){
-				$this->createLog('لیست "'.$model->title.'" توسط مدیر سایت تایید شد.', $model->user_id);
+				$this->createLog('لیست "'.CHtml::link($model->title,array('/lists/'.$model->id.'/'.urlencode($model->title))).'" توسط مدیر سایت تایید شد.', $model->user_id);
 				Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
 				$this->redirect(array('admin'));
 			}else

@@ -7,4 +7,4 @@ $this->breadcrumbs=array(
 	'افزودن لیست',
 );
 ?>
-<?php $this->renderPartial('_form', compact('model', 'itemImages', 'image')); ?>	</div>
+<?php $this->renderPartial('_form', compact('model', 'itemImages', 'image')); ?>

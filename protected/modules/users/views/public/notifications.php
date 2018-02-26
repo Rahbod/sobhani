@@ -12,7 +12,7 @@ $this->breadcrumbs = array(
     <?php foreach($model as $notification):?>
         <li class="<?php echo ($notification->seen==0)?'unseen':'';?>">
             <span class="date"><?php echo JalaliDate::date('d F Y - H:i', $notification->date);?></span>
-            <?php echo CHtml::encode($notification->message);?>
+            <?php echo $notification->message;?>
         </li>
     <?php endforeach;?>
 </ul>

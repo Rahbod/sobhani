@@ -9,6 +9,7 @@ $this->breadcrumbs=array(
 	'تغییر وضعیت',
 );
 ?>
+<?php //var_dump($model); exit; ?>
 <div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title">تغییر وضعیت لیست <?php echo $model->title; ?></h3>
@@ -42,13 +43,13 @@ $this->breadcrumbs=array(
             </div>
 
             <div class="form-group buttons">
-                <?php echo CHtml::submitButton('ثبت',array('class' => 'btn btn-success')); ?>
+                <?= CHtml::submitButton('ثبت',array('class' => 'btn btn-success')); ?>
             </div>
 
         </div>
 
         <div class="form-group">
-            <?php echo $form->labelEx($model,'image'); ?>
+            <?php  echo $form->labelEx($model,'image'); ?>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div style="width: 300px;height: auto;display: inline-block;margin-bottom: 15px">
                     <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/lists/'.$model->image ?>" style="width: 100%;height: auto;display: inline-block">
@@ -67,6 +68,7 @@ $this->breadcrumbs=array(
             <br>
         </div>
         <div class="well">
+
             <?php
             foreach($model->items as $key => $item):
                 ?>
@@ -85,6 +87,7 @@ $this->breadcrumbs=array(
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div style="width: 300px;height: auto;display: inline-block;margin-bottom: 15px">
+
                                     <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/items/'.$item['image']?>" style="width: 100%;height: auto;display: inline-block">
                                 </div>
                             </div>

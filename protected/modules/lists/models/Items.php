@@ -7,6 +7,10 @@
  * @property string $id
  * @property string $title
  * @property string $status
+ *
+ * * The followings are the available model relations:
+ * @property ListItemRel[] $listItemRels
+ * @property Votes[] $votes
  */
 class Items extends CActiveRecord
 {
@@ -51,6 +55,8 @@ class Items extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'listItemRels' => array(self::HAS_MANY, 'ListItemRel', 'item_id'),
+            'votes' => array(self::HAS_MANY, 'Votes', 'item_id'),
 		);
 	}
 

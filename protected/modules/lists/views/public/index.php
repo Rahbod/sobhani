@@ -9,4 +9,5 @@
         <span><?= $category->description ?></span>
     </a>
 <?php endforeach; ?>
+
 </div>

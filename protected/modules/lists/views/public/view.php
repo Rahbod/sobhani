@@ -1,12 +1,14 @@
 <?php
 /* @var $this ListsPublicController */
 /* @var $model Lists */
+/* @var $items ListItemRel[] */
 $this->breadcrumbs = array(
 	$model->category->title => array('/lists/category/'.$model->category_id),
 );
 $favorite = UserBookmarks::model()->findByAttributes(['user_id' => Yii::app()->user->getId(), 'list_id' => $model->id])?true:false;
 $this->pageTitle = $model->title;
 ?>
+<?php $this->renderPartial("//partial-views/_flashMessage"); ?>
 <div class="alert alert-success view-alert hidden">
 	<p>
 		<span></span>
@@ -20,7 +22,7 @@ $this->pageTitle = $model->title;
         <?php if($model->user_type == 'user'):?>
         <div class="user-image">
             <img src="<?= $model->user->userDetails->getAvatar() ?>">
-            <small><?= $model->user->userDetails?$model->user->userDetails->getShowName():$model->user->email ?></small>
+            <small><?= $model->user->userDetails ? CHtml::link($model->user->userDetails->getShowName(),array('/users/public/viewProfile/'.$model->user->id.'/'.str_replace(' ', '-', $model->user->userDetails->getShowName()))):$model->user->email ?></small>
         </div>
         <?php endif; ?>
         <div class="text"><?= $model->description ?></div>
@@ -60,7 +62,6 @@ $this->pageTitle = $model->title;
 	</h3>
 	<div class="add-list-form items-list">
 		<?php
-		$items = $model->itemRel;
 		$this->renderPartial('_items',compact('items', 'model'))
 		?>
 	</div>

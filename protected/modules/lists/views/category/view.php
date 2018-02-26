@@ -16,6 +16,7 @@ $this->breadcrumbs = array(
     <?php endforeach; ?>
 </div>
 <div class="recommend">
+
 	<?php
 	$this->widget('zii.widgets.CListView', array(
 		'id' => 'book-list',
@@ -44,5 +45,4 @@ $this->breadcrumbs = array(
 			});
 		}",
 	));
-	?>
-</div>
+

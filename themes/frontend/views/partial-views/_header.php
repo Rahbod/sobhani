@@ -22,8 +22,8 @@
                     <li><a href="<?= $this->createUrl('/new') ?>">افزودن لیست</a></li>
                     <li><a href="<?= $this->createUrl('/recommended') ?>">پیشنهاد برای شما</a></li>
                     <?php if(!Yii::app()->user->isGuest && Yii::app()->user->type =='user'):?>
-                        <li class="user-link"><a href="<?= $this->createUrl('/dashboard')?>" title="داشبورد"><i class="user-icon"></i><?= Yii::app()->user->showName ?></a>
-<!--                        <li><a href="--><?//= $this->createUrl('/dashboard')?><!--" class="h"><i class="home-icon"></i></a></li>-->
+                        <li  class="user-link"><a id="dashboard" href="<?= $this->createUrl('/dashboard')?>" title="داشبورد"><i class="user-icon"></i><?= Yii::app()->user->showName ?></a>
+                        <li><a href="<?= $this->createUrl('/dashboard')?>" class="h"><i class="home-icon"></i></a></li>
                         <li><a href="<?= $this->createUrl('/bookmarks')?>" class="s" title="علاقه مندی ها"><i class="star-icon"></i></a></li>
                         <li><a href="<?= $this->createUrl('/notifications')?>" class="e" title="پیام ها"><i class="envelope-icon"></i><?php if($this->userNotifications != 0):?><span class="notification-count"><?= $this->userNotifications?></span><?php endif;?></a></li>
                         <li><a href="<?= $this->createUrl('/logout')?>" class="l" title="خروج"><i class="logout-icon"></i></a></li>
