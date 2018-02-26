@@ -91,6 +91,7 @@
                 $form.html(data.form);
                 if(data.code == "success")
                 {
+                    alert(data.msg);
                     var list = $form.parents('.comment-widget');
                     list.html($(data.list).html());
                 }

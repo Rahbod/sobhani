@@ -168,6 +168,7 @@ class CommentsCommentController extends Controller
                 $this->endClip();
             }
             $result['form'] = $this->clips['form'];
+            $result['msg'] = 'با تشکر. نظر شما پس از تایید منتشر خواهد شد.';
             echo CJSON::encode($result);
         }
     }
