@@ -74,9 +74,10 @@ class Lists extends CActiveRecord
 
     public function checkItems($attribute)
 	{
-		if(!$this->items)
+	    $items = array_filter($this->items, function ($v){ return isset($v['title']) && !empty($v['title']); });
+		if(!$items)
 			$this->addError($attribute, 'آیتم ها نمی توانند خالی باشند.');
-		else if(count($this->items) < 3)
+		else if(count($items) < 3)
 			$this->addError($attribute, 'حداقل 3 آیتم را پر کنید.');
 //		else
 //			foreach($this->{$attribute} as $key => $item){
