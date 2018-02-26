@@ -113,7 +113,7 @@ class ListsPublicController extends Controller
 					if(isset($item['image']))
 						$itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
 							'thumbnail' => array(
-								'width' => 200, 
+								'width' => 200,
 								'height' => 200
 							),
 							'resize' => array(
