@@ -129,9 +129,8 @@ $model = UserDetails::model()->findByPk($user->id);
                             'imageUrl'=>Yii::app()->baseUrl."/themes/frontend/svg/pen_edit.svg" ,
                         ),
                         'delete' => array(
-                            'url' => '$data->viewUrl',
+                            'url' => 'Yii::app()->createUrl("lists/public/delete/".$data->id)',
                             'imageUrl'=>Yii::app()->baseUrl."/themes/frontend/svg/delete_icon.svg",
-                            'visible' => '$data->status == 1',
                         )
                     )
                 ),

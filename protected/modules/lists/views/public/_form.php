@@ -16,7 +16,10 @@
 	)
 )); ?>
     <h1>ایجاد لیست بهترین ها</h1>
-    لیست خود را ایجاد کنید و آن را ذخیره کنید. لیست شما در سایت ما نشان داده خواهد شد، به محض این که فرصتی برای بررسی آن خواهیم داشت.
+<h5>- هر لیست باید  حداقل ۳ و حداکثر ۱۰ گزینه داشته باشد.</h5>
+<h5>- لیست ایجاد شده توسط شما پس از تایید کارشناسان به صورت عمومی نمایش داده خواهد شد.</h5>
+
+
 
     <div class="add-list-form">
         <?php echo $form->errorSummary($model)?>
@@ -66,7 +69,7 @@
                 if($i==2) echo 'bronze';
                 ?>"><?= $i+1?></span>
                 <div class="input-container">
-                    <?= CHtml::textField("Lists[items][{$i}][title]", isset($model->items[$i]['title'])?$model->items[$i]['title']:'', array('class' => 'transparent-input item-title', 'placeholder' => "آیتم")) ?>
+                    <?= CHtml::textField("Lists[items][{$i}][title]", isset($model->items[$i]['title'])?$model->items[$i]['title']:'', array('class' => 'transparent-input item-title', 'placeholder' => "گزینه")) ?>
                 </div>
                 <div class="row">
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
