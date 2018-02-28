@@ -99,11 +99,11 @@ class GoogleOAuth extends CComponent
         }
         // login start
         $loginFlag = false;
-        $model->verification_field_value = $this->getInfo()->email;
+        $model->email= $this->getInfo()->email;
+        $model->verification_field_value= $this->getInfo()->email;
         if ($model->validate() && $model->login(true) === true)
             $loginFlag = true;
         elseif ($model->validate() && $model->login(true) === UserIdentity::ERROR_USERNAME_INVALID) {
-
             if ($this->register()) {
                 if ($model->validate() && $model->login(true) === true)
                     $loginFlag = true;
@@ -140,7 +140,6 @@ class GoogleOAuth extends CComponent
     {
         $user = new Users('OAuthInsert');
         $user->email = $this->getInfo()->email;
-        var_dump($user);exit;
         $user->status = "active";
         $user->auth_mode = self::GOOGLE_OAUTH;
         $user->role_id = 1;

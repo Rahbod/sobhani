@@ -25,7 +25,7 @@ class UserLoginForm extends CFormModel
 	 * and password needs to be authenticated.
 	 */
 	public function rules()
-	{
+    {
 		return array(
 			// username and password are required
 			array('verification_field_value, password', 'required' ,'except' => 'OAuth'),
