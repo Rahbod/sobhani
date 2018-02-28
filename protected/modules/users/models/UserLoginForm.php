@@ -120,9 +120,9 @@ class UserLoginForm extends CFormModel
             $this->_identity=null;
 		if($this->_identity===null) {
 			if ($this->OAuth)
-				$this->_identity = new UserIdentity($this->email, null, $this->OAuth);
+				$this->_identity = new UserIdentity($this->verification_field_value, null, $this->OAuth);
 			else
-				$this->_identity = new UserIdentity($this->email, $this->password);
+				$this->_identity = new UserIdentity($this->verification_field_value, $this->password);
 			$this->_identity->authenticate();
 		}
 		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)

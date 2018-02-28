@@ -140,6 +140,7 @@ class GoogleOAuth extends CComponent
     {
         $user = new Users('OAuthInsert');
         $user->email = $this->getInfo()->email;
+        var_dump($user);exit;
         $user->status = "active";
         $user->auth_mode = self::GOOGLE_OAUTH;
         $user->role_id = 1;
