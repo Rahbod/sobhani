@@ -1,3 +1,12 @@
+@media screen and (min-width: 992px) {
+    .item-title.with-pic{
+        padding-right: 130px;
+    }
+
+    .add-list-form.items-list .list-view-image{
+        margin-top: -50px;
+    }
+}
 @media screen and (max-width: 767px) {
     .list-item-view .image{
         float: none;
@@ -142,9 +151,6 @@
         margin-top: 20px;
         margin-bottom: 20px;
     }
-    .page.inner{
-        padding-top: 30px;
-    }
     .inner .content .left-side .i em{
         display: none;
     }
@@ -187,11 +193,26 @@
     }
 }
 @media (min-width: 768px) and (max-width: 991px) {
-
+    #mobile-menu{
+        width: 300px;
+        float: left;
+    }
+    #mobile-menu li{
+        width: 100%;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
-
+    .menu{
+        width: 100%;
+    }
+    .menu .user-link{
+        width: 25%;
+    }
+    .header .logo-box img{
+        padding: 14px 0 !important;
+        max-width: 85px !important;
+    }
 }
 
 @media (min-width: 1200px){}

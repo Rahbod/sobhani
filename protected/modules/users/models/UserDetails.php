@@ -142,14 +142,6 @@ class UserDetails extends CActiveRecord
 			return '';
 	}
 
-	public function getShowDescription()
-	{
-		return $this->user->activePlan->plan->title .
-		' / انقضا ' . '<span class="text-danger">' . ($this->user->activePlan->expire_date > 0?JalaliDate::date('Y/m/d', $this->user->activePlan->expire_date):'-') . '</span>' .
-		' / ' . Controller::parseNumbers($this->mobile) .
-		' / ' . $this->user->email;
-	}
-
 	public function getAvatar()
 	{
 		if($this->avatar)

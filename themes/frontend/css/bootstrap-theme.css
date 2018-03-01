@@ -14,11 +14,6 @@ body{
     text-decoration: none !important;
 }
 
-#dashboard
-{
-    margin-left: 30px;
-    padding-left: 120px;
-}
 .page{
     position: absolute;
     width: 100%;
@@ -1183,7 +1178,7 @@ input[type="radio"]{
     font-size: 11px;
 }
 .user-link a{
-    width: 90px;
+    width: 100%;
     overflow: hidden;
     display: inline-block;
     white-space: nowrap;
@@ -1533,4 +1528,8 @@ input[type="radio"]{
 }
 .icon-link::before{
     content: '';
+}
+
+.item-title{
+    height: 50px;
 }
