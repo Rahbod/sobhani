@@ -17,7 +17,7 @@ foreach($items as $item):
     ?>
     <div class="form-row">
         <?php if($item->image && is_file($itemImagePath.$item->image)):?>
-            <div class="list-view-image">
+            <div class="list-view-image hidden-xs">
                 <img src="<?= $itemImageUrl.$item->image ?>" alt="<?= $item->item->title ?>" >
             </div>
         <?php endif;?>
@@ -49,6 +49,11 @@ foreach($items as $item):
             else
                 echo '<span class="vote-trigger active pull-left">%'.$voteAvg[$item->item_id].'</span>';
             ?></h4>
+            <?php if($item->image && is_file($itemImagePath.$item->image)):?>
+                <div class="list-view-image mobile visible-xs">
+                    <img src="<?= $itemImageUrl.$item->image ?>" alt="<?= $item->item->title ?>" >
+                </div>
+            <?php endif;?>
             <div class="text"><?= $item->description ?></div>
         </div>
         <?php

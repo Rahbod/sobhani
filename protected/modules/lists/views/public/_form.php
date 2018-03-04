@@ -2,19 +2,36 @@
 /* @var $this ListsPublicController */
 /* @var $model Lists */
 /* @var $form CActiveForm */
+
+$parents = ListCategories::getParents();
+$sortedCategories = [];
+foreach ($parents as $parentID => $parent){
+    $sortedCategories[$parentID] = $parent;
+    foreach (ListCategories::model()->findAll() as $category){
+        if($category->parent_id == $parentID)
+            $sortedCategories[$category->id] = $category->fullTitle;
+    }
+}
 ?>
 
-
-<?php $this->renderPartial("//partial-views/_flashMessage"); ?>
-
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'lists-form',
-	'enableAjaxValidation'=>false,
-	'enableClientValidation'=>true,
-	'clientOptions' => array(
-		'validateOnSubmit' => true
-	)
+    'id'=>'lists-form',
+    'enableAjaxValidation'=>false,
+    'enableClientValidation'=>true,
+    'clientOptions' => array(
+        'validateOnSubmit' => true
+    )
 )); ?>
+
+<?php if(Yii::app()->user->hasFlash('failed')):?>
+    <div class="alert alert-danger">
+        <?php echo $form->errorSummary($model)?>
+    </div>
+    <?php Yii::app()->user->getFlash('failed');?>
+<?php else:?>
+    <?php $this->renderPartial("//partial-views/_flashMessage"); ?>
+<?php endif;?>
+
     <h1>ایجاد لیست بهترین ها</h1>
 <h5>- هر لیست باید  حداقل ۳ و حداکثر ۱۰ گزینه داشته باشد.</h5>
 <h5>- لیست ایجاد شده توسط شما پس از تایید کارشناسان به صورت عمومی نمایش داده خواهد شد.</h5>
@@ -22,7 +39,6 @@
 
 
     <div class="add-list-form">
-        <?php echo $form->errorSummary($model)?>
         <div class="form-row">
             <?php echo $form->textField($model,'title',array('class'=>'transparent-input', 'placeholder' => 'عنوان لیست')); ?>
             <?php echo $form->textArea($model,'description',array('placeholder'=>'توضیحات...')); ?>
@@ -54,7 +70,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <?= $form->label($model, 'category_id')?>
-                    <?= $form->dropDownList($model, 'category_id', CHtml::listData(ListCategories::model()->findAll(), 'id', 'fullTitle'), array('class'=>'form-control'))?>
+                    <?= $form->dropDownList($model, 'category_id', $sortedCategories, array('class'=>'form-control'))?>
                 </div>
             </div>
         </div>

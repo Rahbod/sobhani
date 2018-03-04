@@ -18,7 +18,6 @@ $this->breadcrumbs = array(
         $this->renderPartial('//partial-views/_flashMessage');
         $this->renderPartial('//partial-views/_flashMessage', array('prefix' => 'login-'));
         ?>
-        <p>عضو سایت هستید؟<br>
             برای ثبت آگهی خود لطفا وارد شوید
         </p>
         <?php

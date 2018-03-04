@@ -1,9 +1,11 @@
 <div class="center-block">
     <?php
+
     /**
      * @var $newComment Comment
      * @var $form CActiveForm
      */
+
     if(Yii::app()->user->type == 'admin' || $this->model->list->user_id == Yii::app()->user->getId()){
         echo CHtml::link(Yii::t($this->_config['translationCategory'] ,'Add Your Comment') ,'#form-' . $newComment->owner_id ,array(
             'class' => 'collapsed add-comment',

@@ -178,7 +178,7 @@ body{
     margin-right: 40px;
 }
 .content .left-side{
-    margin: 50px 0 0 0;
+    margin:  0 0 0;
 }
 .left-side .newlist{
     background: #F5F5F5;
@@ -490,7 +490,7 @@ body{
     color: #3285A7
 }
 .i:not(.j) > b a, .hublink {
-    text-decoration: underline;
+    text-decoration: none;
     cursor: pointer;
 }
 .content .left-side .member2 a{
@@ -589,13 +589,13 @@ body{
 }
 .recommend .list-item > a{
     color: #3285A7;
-    text-decoration: none;
+    text-decoration: none !important;
     cursor: pointer;
 }
-.recommend .list-item:hover > a{
-    color: lightslategray;
-    text-decoration: underline !important;
-}
+/*.recommend .list-item:hover > a{*/
+    /*color: lightslategray;*/
+    /*text-decoration: none !important;*/
+/*}*/
 .recommend .list-item a img{
     float: right;
     margin-left: 12px;
@@ -616,9 +616,6 @@ body{
     transition: all 0.2s cubic-bezier(.25,.8,.25,1);
 }
 .recommend .list-item:hover a img{
-    -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 #join-modal .modal-dialog, #login-modal .modal-dialog {
     width: 350px;

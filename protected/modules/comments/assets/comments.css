@@ -11,9 +11,9 @@ root {
     max-width: 100%;
 }
 .comments-list{
-    background: #fdfdfd;
+    background: #f5f5f5;
     list-style-type: none;
-    padding: 0;
+    padding: 15px;
     margin: 0 -5px;
 }
 .comments-list h3{
@@ -25,7 +25,7 @@ root {
 }
 
 .comments-list .admin-panel a:hover {
-    text-decoration: underline !important;
+    text-decoration: none !important;
 }
 
 .comments-list .comments-list{
@@ -33,11 +33,9 @@ root {
 }
 .comments-list li{
     border-bottom: 1px solid #dadada !important;
-    padding-bottom: 5px !important;
 }
 .comments-list li:last-of-type{
     border-bottom: none !important;
-    padding-bottom: 0 !important;
 }
 
 .en .comments-list .comments-list{
@@ -52,8 +50,8 @@ root {
 .comments-list li{
     overflow: hidden;
     border-bottom: none;
-    padding:0 15px;
-    padding-top:15px;
+    padding:15px;
+    background: #f5f5f5;
 }
 .comments-list .col{
     display: block;

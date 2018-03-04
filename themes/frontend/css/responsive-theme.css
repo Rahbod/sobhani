@@ -1,3 +1,12 @@
+@media screen and (min-width: 992px) {
+    .item-title.with-pic{
+        padding-right: 130px;
+    }
+
+    .add-list-form.items-list .list-view-image{
+        margin-top: -50px;
+    }
+}
 @media screen and (max-width: 767px) {
     .list-item-view .image{
         float: none;
