@@ -16,12 +16,7 @@ foreach($items as $item):
     $hash = base64_encode(json_encode(['list_id' => $item->list_id, 'item_id' => $item->item_id]));
     ?>
     <div class="form-row">
-        <?php if($item->image && is_file($itemImagePath.$item->image)):?>
-            <div class="list-view-image hidden-xs">
-                <img src="<?= $itemImageUrl.$item->image ?>" alt="<?= $item->item->title ?>" >
-            </div>
-        <?php endif;?>
-        <div>
+        <div class="item-title <?php if($item->image && is_file($itemImagePath.$item->image)) echo 'with-pic' ?>">
             <span class="num <?php
             if($i==1) echo 'gold';
             if($i==2) echo 'silver';
@@ -38,8 +33,9 @@ foreach($items as $item):
                     $(".view-alert").addClass("hidden").removeClass("alert-success alert-warning").find("span").text("");
                 }',
                 'success' => 'js: function(data){
-                    if(data.status){console.log(target);
-                        target.addClass("active");
+                    if(data.status){
+                        target.parent().append("<span class=\'vote-trigger active pull-left\'>%"+data.newAvg+"</span>");
+                        target.remove();
                         $(".view-alert").addClass("alert-success").find("span").text(data.message);
                     }
                     else
@@ -49,13 +45,13 @@ foreach($items as $item):
             else
                 echo '<span class="vote-trigger active pull-left">%'.$voteAvg[$item->item_id].'</span>';
             ?></h4>
-            <?php if($item->image && is_file($itemImagePath.$item->image)):?>
-                <div class="list-view-image mobile visible-xs">
-                    <img src="<?= $itemImageUrl.$item->image ?>" alt="<?= $item->item->title ?>" >
-                </div>
-            <?php endif;?>
-            <div class="text"><?= $item->description ?></div>
         </div>
+        <?php if($item->image && is_file($itemImagePath.$item->image)):?>
+            <div class="list-view-image">
+                <img src="<?= $itemImageUrl.$item->image ?>" alt="<?= $item->item->title ?>" >
+            </div>
+        <?php endif;?>
+        <div class="text"><?= $item->description ?></div>
         <?php
         //if(!Yii::app()->user->isGuest)
             $this->widget('comments.widgets.ECommentsListWidget', array(

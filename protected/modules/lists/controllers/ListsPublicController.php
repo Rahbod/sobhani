@@ -361,7 +361,7 @@ class ListsPublicController extends Controller
                 else
                     $this->createLog('"' . CHtml::link(Yii::app()->user->showName, array('/users/public/viewProfile/' . $list->user->id . '/' . str_replace(' ', '-', $list->user->userDetails->getShowName()))) . '" در لیست "' . CHtml::link($list->title, array('/lists/' . $list->id . '/' . urlencode($list->title))) . '" به گزینه "' . $item->title . '" رای داد.', $list->user_id);
                 if ($vote->save())
-                    $this->sendJson(['status' => true, 'avgs' => Votes::VoteAverages($vote->list_id), 'message' => 'رای شما با موفقیت ثبت گردید.']);
+                    $this->sendJson(['status' => true, 'avgs' => Votes::VoteAverages($vote->list_id), 'newAvg' => Votes::VoteAverages($vote->list_id, $vote->item_id), 'message' => 'رای شما با موفقیت ثبت گردید.']);
                 else
                     $this->sendJson(['status' => false, 'message' => 'در انجام عملیات مشکلی بوجود آمده است! لطفا مجددا تلاش فرمایید.']);
                 break;

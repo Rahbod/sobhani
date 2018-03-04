@@ -99,13 +99,11 @@ class GoogleOAuth extends CComponent
         }
         // login start
         $loginFlag = false;
-        $model->verification_field_value = $this->getInfo()->email;
-        $model->email = $this->getInfo()->email;
-        //var_dump($model->validate());exit;
+        $model->email= $this->getInfo()->email;
+        $model->verification_field_value= $this->getInfo()->email;
         if ($model->validate() && $model->login(true) === true)
             $loginFlag = true;
         elseif ($model->validate() && $model->login(true) === UserIdentity::ERROR_USERNAME_INVALID) {
-
             if ($this->register()) {
                 if ($model->validate() && $model->login(true) === true)
                     $loginFlag = true;
@@ -146,13 +144,10 @@ class GoogleOAuth extends CComponent
         $user->auth_mode = self::GOOGLE_OAUTH;
         $user->role_id = 1;
         $user->create_date = time();
-        if ($user->save()) {
-            $userDetails = UserDetails::model()->findByPk($user->userDetails->user_id);
-            $userDetails->fa_name = $this->first_name.' '.$this->last_name;
-            $userDetails->avatar = $this->profile_image_link;
-            return $userDetails->save();
-        }
-        return false;
+        $user->first_name = $this->first_name;
+        $user->last_name = $this->last_name;
+        $user->avatar = $this->profile_image_link;
+        return $user->save();
     }
 
     public function getInfo()

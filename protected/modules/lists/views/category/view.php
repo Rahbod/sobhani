@@ -1,7 +1,7 @@
 <?php
 /* @var $this ListsCategoryController */
 /* @var $model ListCategories */
-//var_dump($model);exit;
+
 if ($model->parent) {
     $this->breadcrumbs = array(
         'همه لیست ها' => array('/lists'),
@@ -27,7 +27,8 @@ if ($model->parent) {
         <?php endforeach; ?>
     </div>
     <div class="recommend">
-        <?php $this->widget('zii.widgets.CListView', array(
+        <?php
+        $this->widget('zii.widgets.CListView', array(
             'id' => 'book-list',
             'dataProvider' => new CArrayDataProvider($model->approvedLists, array('pagination' => array('pageSize' => 20))),
             'itemView' => 'lists.views.public._view',
@@ -53,5 +54,6 @@ if ($model->parent) {
                         'loader': 'در حال دریافت ...'
                     });
                 }",
-        ));?>
+        ));
+        ?>
     </div>

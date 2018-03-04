@@ -279,6 +279,8 @@ class Controller extends AuthController
 
     public function createLog($message, $userID)
     {
+        if(Yii::app()->user->getId() == $userID)
+            return;
         Yii::app()->getModule('users');
         $model = new UserNotifications();
         $model->user_id = $userID;

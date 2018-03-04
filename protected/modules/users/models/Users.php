@@ -104,10 +104,13 @@ class Users extends CActiveRecord
             array('address', 'length', 'max' => 1000),
             array('avatar', 'length', 'max' => 255),
             array('type, first_name, last_name, phone, mobile, address, avatar', 'safe'),
-            array('mobile','checkUnique'),
+            array('mobile','checkUnique', 'except' => 'OAuthInsert'),
             // Register rules
             array('email, password, repeatPassword', 'required', 'on' => 'create'),
             array('repeatPassword', 'compare', 'compareAttribute' => 'password', 'on' => 'create', 'message' => 'کلمه های عبور همخوانی ندارند'),
+            // OAUTH
+            array('email', 'required', 'on' => 'OAuthInsert'),
+            array('email', 'unique', 'on' => 'OAuthInsert'),
 
             // change password rules
             array('oldPassword ,newPassword ,repeatPassword', 'required', 'on' => 'change_password'),

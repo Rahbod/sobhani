@@ -171,13 +171,15 @@ class Votes extends CActiveRecord
 			return Votes::checkVoteInCookie($listID.'-'.$itemID);
 	}
 
-	public static function VoteAverages($listID)
+	public static function VoteAverages($listID, $itemID = false)
 	{
 		$total = Votes::model()->countByAttributes(['list_id' => $listID]);
 		$percents = [];
 		foreach(ListItemRel::model()->findAllByAttributes(['list_id' => $listID], array('order' => 'item_id')) as $item){
 			$c = Votes::model()->countByAttributes(['list_id' => $listID, 'item_id' => $item->item_id]);
 			$percents[$item->item_id] = $c == 0?0:(int)($c / $total * 100);
+            if($itemID && $itemID == $item->item_id)
+                return $percents[$item->item_id];
 		}
 		return $percents;
 	}
