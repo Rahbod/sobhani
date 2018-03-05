@@ -561,10 +561,13 @@ class Comment extends CActiveRecord
         if(isset($config['pageUrl']) === true && is_array($config['pageUrl']) === true) {
             $ownerModel = $this->getOwnerModel();
             $routeData = array();
-            foreach($config['pageUrl']['data'] as $routeVar => $modelProperty)
-                $routeData[$routeVar] = $ownerModel->$modelProperty;
-            $routeData = implode('/',$routeData);
-            return Yii::app()->createUrl($config['pageUrl']['route'].$routeData)."/#comment-$this->comment_id";
+            if($ownerModel) {
+                foreach ($config['pageUrl']['data'] as $routeVar => $modelProperty)
+                    $routeData[$routeVar] = $ownerModel->$modelProperty;
+                $routeData = implode('/', $routeData);
+                return Yii::app()->createUrl($config['pageUrl']['route'] . $routeData) . "/#comment-$this->comment_id";
+            } else
+                return '';
         }
         return null;
     }

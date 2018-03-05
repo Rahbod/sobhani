@@ -16,6 +16,7 @@ class SiteController extends Controller
                 'terms',
                 'contactUs',
                 'help',
+                'testMail'
             )
         );
     }
@@ -164,5 +165,12 @@ class SiteController extends Controller
         $this->layout = '//layouts/inner';
         $model = Pages::model()->findByPk(4);
         $this->render('//site/pages/page', array('model' => $model));
+    }
+
+    public function actionTestMail()
+    {
+        Yii::app()->theme = 'frontend';
+        $this->layout ='xxx';
+        $this->render('//layouts/_mail_theme');
     }
 }

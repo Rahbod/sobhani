@@ -16,7 +16,7 @@ if ($model->parent) {
 }
 
 ?>
-    <h2><?= $model->title ?></h2>
+    <h2><?=  $model->title ?></h2>
     <div class="category-row" style="margin-bottom: 50px;overflow:hidden;margin-top: 25px;">
         <?php foreach ($model->childs as $category): ?>
             <a class="catod"

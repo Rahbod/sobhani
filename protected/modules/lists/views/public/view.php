@@ -3,7 +3,9 @@
 /* @var $model Lists */
 /* @var $items ListItemRel[] */
 $this->breadcrumbs = array(
+    'همه لیست ها' => array('/lists'),
 	$model->category->title => array('/lists/category/'.$model->category_id),
+    $model->title
 );
 $favorite = UserBookmarks::model()->findByAttributes(['user_id' => Yii::app()->user->getId(), 'list_id' => $model->id])?true:false;
 $this->pageTitle = $model->title;
@@ -27,7 +29,6 @@ $this->pageTitle = $model->title;
         <?php endif; ?>
         <div class="text"><?= $model->description ?></div>
     </div>
-
 	<h3>
 		ده بهترین
         <a target="_blank" href="https://telegram.me/share/url?url=<?= Yii::app()->createAbsoluteUrl('/lists/'.$model->id.'/'.str_replace(' ', '-', $model->title))?>" class="telegram-link gray pull-left" title="اشتراک گذاری در تلگرام"><i></i></a>
