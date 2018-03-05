@@ -90,7 +90,7 @@ class Users extends CActiveRecord
             array('email', 'required', 'on' => 'update'),
             array('role_id', 'default', 'value' => 1),
             array('email', 'required', 'on' => 'email, OAuthInsert'),
-//            array('email', 'unique', 'on' => 'insert, create, OAuthInsert, update'),
+            array('email', 'unique', 'on' => 'insert, create, OAuthInsert, update'),
             array('change_password_request_count', 'numerical', 'integerOnly' => true),
             array('email', 'email'),
             array('email', 'filter', 'filter' => 'trim', 'on' => 'create, update'),
@@ -132,7 +132,7 @@ class Users extends CActiveRecord
         $code = Yii::app()->controller->createAction('captcha')->verifyCode;
         if(empty($code))
             $this->addError('verifyCode', 'کد امنیتی نمی تواند خالی باشد.');
-        elseif($code != $this->verifyCode)
+        elseif(strtolower($code) != strtolower($this->verifyCode))
             $this->addError('verifyCode', 'کد امنیتی نامعتبر است.');
     }
 

@@ -52,6 +52,7 @@ $model = UserDetails::model()->findByPk($user->id);
 <h3>لیست های من</h3>
 <div class="contentmod">
     <div class="contentmod1">
+        <div class="table-responsive">
         <?php $this->widget('zii.widgets.grid.CGridView', array(
             'id'=>'lists-grid',
             'dataProvider'=>$lists->search(),
@@ -136,6 +137,7 @@ $model = UserDetails::model()->findByPk($user->id);
                 ),
             ),
         )); ?>
+        </div>
     </div>
 </div>
 <?php

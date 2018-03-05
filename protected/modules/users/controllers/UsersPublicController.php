@@ -221,6 +221,9 @@ class UsersPublicController extends Controller
      */
     public function actionViewProfile($id)
     {
+        if(Yii::app()->user->getId() == $id)
+            $this->redirect(['/dashboard']);
+
         Yii::app()->theme = 'frontend';
         $this->layout = '//layouts/inner';
 

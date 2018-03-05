@@ -359,7 +359,7 @@ class ListsPublicController extends Controller
                 if (Yii::app()->user->isGuest)
                     $this->createLog('"کاربر مهمان" در لیست "' . CHtml::link($list->title, array('/lists/' . $list->id . '/' . urlencode($list->title))) . '" به گزینه "' . $item->title . '" رای داد', $list->user_id);
                 else
-                    $this->createLog('"' . CHtml::link(Yii::app()->user->showName, array('/users/public/viewProfile/' . $list->user->id . '/' . str_replace(' ', '-', $list->user->userDetails->getShowName()))) . '" در لیست "' . CHtml::link($list->title, array('/lists/' . $list->id . '/' . urlencode($list->title))) . '" به گزینه "' . $item->title . '" رای داد.', $list->user_id);
+                    $this->createLog('"' . CHtml::link(Yii::app()->user->showName, array('/users/public/viewProfile/' . Yii::app()->user->id . '/' . str_replace(' ', '-',Yii::app()->user->showName))) . '" در لیست "' . CHtml::link($list->title, array('/lists/' . $list->id . '/' . urlencode($list->title))) . '" به گزینه "' . $item->title . '" رای داد.', $list->user_id);
                 if ($vote->save())
                     $this->sendJson(['status' => true, 'avgs' => Votes::VoteAverages($vote->list_id), 'newAvg' => Votes::VoteAverages($vote->list_id, $vote->item_id), 'message' => 'رای شما با موفقیت ثبت گردید.']);
                 else

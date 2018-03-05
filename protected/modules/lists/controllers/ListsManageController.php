@@ -303,7 +303,6 @@ class ListsManageController extends Controller
 			Yii::app()->end();
 		}
 	}
-
 	public function actionChangeStatus($id)
 	{
 		$model = $this->loadModel($id);
@@ -314,16 +313,18 @@ class ListsManageController extends Controller
 			$model->category_id = $_POST['Lists']['category_id'];
 			if (isset($_POST['Lists']['status']))
 			    $model->status = $_POST['Lists']['status'];
-
 			if($model->save()){
-				$this->createLog('لیست "'.CHtml::link($model->title,array('/lists/'.$model->id.'/'.urlencode($model->title))).'" توسط مدیر سایت تایید شد.', $model->user_id);
+                if($model->status == Lists::STATUS_PENDING)
+                    $this->createLog('لیست "'.CHtml::link($model->title,array('/lists/'.$model->id.'/'.urlencode($model->title))).'"لیست شما در حالت بررسی قرار گرفت.', $model->user_id);
+			    else if($model->status == Lists::STATUS_APPROVED)
+                    $this->createLog('لیست "'.CHtml::link($model->title,array('/lists/'.$model->id.'/'.urlencode($model->title))).'" توسط مدیر سایت تایید شد.', $model->user_id);
+			    else if($model->status == Lists::STATUS_REFUSED)
+                    $this->createLog('لیست "'.CHtml::link($model->title,array('/lists/'.$model->id.'/'.urlencode($model->title))).'" توسط مدیر سایت رد شد.', $model->user_id);
 				Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
 				$this->redirect(array('admin'));
 			}else
 				Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده است! لطفا مجددا تلاش کنید.');
 		}
-
 		$this->render('change_status', compact('model'));
 	}
 }
-

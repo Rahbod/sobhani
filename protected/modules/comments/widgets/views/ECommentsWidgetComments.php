@@ -15,17 +15,17 @@
                 </div>
                 <?php if($this->adminMode === true):
                         if(Yii::app()->user->type == 'admin' || $this->model->list->user_id == Yii::app()->user->getId()):
-                    ?>
-                    <div class="admin-panel">
-                        <?php if($this->_config['premoderate'] === true && ($comment->status === null || $comment->status == Comment::STATUS_NOT_APPROWED)) {
-                            echo CHtml::link(Yii::t($this->_config['translationCategory'], 'approve'), Yii::app()->urlManager->createUrl(
-                                CommentsModule::APPROVE_ACTION_ROUTE, array('id'=>$comment->comment_id)
-                            ), array('class'=>'text-success approve'));
-                        }?>
-                        <?php echo CHtml::link(Yii::t($this->_config['translationCategory'], 'delete'), Yii::app()->urlManager->createUrl(
-                            CommentsModule::DELETE_ACTION_ROUTE, array('id'=>$comment->comment_id)
-                        ), array('class'=>'text-danger delete'));?>
-                    </div>
+                            ?>
+                            <div class="admin-panel">
+                                <?php if($this->_config['premoderate'] === true && ($comment->status === null || $comment->status == Comment::STATUS_NOT_APPROWED)) {
+                                    echo CHtml::link(Yii::t($this->_config['translationCategory'], 'approve'), Yii::app()->urlManager->createUrl(
+                                        CommentsModule::APPROVE_ACTION_ROUTE, array('id'=>$comment->comment_id)
+                                    ), array('class'=>'text-success approve'));
+                                }?>
+                                <?php echo CHtml::link(Yii::t($this->_config['translationCategory'], 'delete'), Yii::app()->urlManager->createUrl(
+                                    CommentsModule::DELETE_ACTION_ROUTE, array('id'=>$comment->comment_id)
+                                ), array('class'=>'text-danger delete'));?>
+                            </div>
                         <?php endif;
                 endif;
                 ?>
