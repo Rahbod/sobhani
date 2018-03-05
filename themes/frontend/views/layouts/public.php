@@ -27,11 +27,11 @@
     $cs->registerCssFile($baseUrl.'/css/bootstrap-rtl.min.css');
     $cs->registerCssFile($baseUrl.'/css/fontiran.css');
     $cs->registerCssFile($baseUrl.'/css/font-awesome.css');
-    $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.css');
-    $cs->registerCssFile($baseUrl.'/css/responsive-theme.css');
+    $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.css?3.4');
+    $cs->registerCssFile($baseUrl.'/css/responsive-theme.css?3.4');
 
     $cs->registerScriptFile($baseUrl.'/js/bootstrap.min.js', CClientScript::POS_END);
-    $cs->registerScriptFile($baseUrl.'/js/jquery.script.js', CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl.'/js/jquery.script.js?3.4', CClientScript::POS_END);
     ?>
 </head>
 <body>
