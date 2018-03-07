@@ -144,6 +144,9 @@ class UserDetails extends CActiveRecord
 
 	public function getAvatar()
 	{
+		if(strpos($this->avatar, 'https://') === 0)
+			return $this->avatar;
+
 		if($this->avatar)
 			return Yii::app()->baseUrl . '/uploads/users/avatar/' . $this->avatar;
 		else

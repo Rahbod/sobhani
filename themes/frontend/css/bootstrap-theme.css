@@ -965,7 +965,8 @@ body{
 .content .left-side .context{
     text-align: justify;
     display: block;
-    min-height: 400px;
+    min-height: 300px;
+    margin-top: 50px;
 }
 .add-list-form{
     background: #F5F5F5;
@@ -983,6 +984,9 @@ body{
 .add-list-form .form-row{
     border-bottom: 1px solid #ccc;
     padding: 15px 0;
+}
+.add-list-form .form-row:last-child{
+    border-bottom: none;
 }
 .add-list-form .form-row.last{
     border-bottom: none;
@@ -1317,6 +1321,11 @@ input[type="radio"]{
     color: #E99A00 !important;
     font-size: 45px !important;
 }
+.gray.vote-trigger,
+.gray.vote-trigger i{
+    color: #ccc !important;
+    font-size: 45px !important;
+}
 .vote-trigger.active{
     margin: 0;
 }
@@ -1532,4 +1541,11 @@ input[type="radio"]{
 
 .box-search .btn-secondary{
     padding: 10px 12px;
+}
+.header .col-lg-7{
+    padding: 0;
+}
+.content .left-side .events i.icon-check-sign{
+    font-size: 45px;
+    color: #ccc;
 }

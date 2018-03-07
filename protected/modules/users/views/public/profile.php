@@ -10,7 +10,7 @@ $this->breadcrumbs =[
     'کلمه عبور' => array('/changePassword'),
 ];
 ?>
-<h2>تغییر مشخصات کاربری</h2>
+<!--<h2>تغییر مشخصات کاربری</h2>-->
 <div class="recommend">
     <?php $this->renderPartial('//partial-views/_flashMessage');?>
     <?php $form=$this->beginWidget('CActiveForm', array(

@@ -24,25 +24,28 @@ foreach($items as $item):
             ?>"><?= $i?></span>
             <h4><?= $item->item->title ?>
             <?php
-            if(!$voted)
-            echo CHtml::ajaxLink('<i class="icon-check-sign"></i>',array('/lists/public/json'),array(
-                'type' => 'POST',
-                'dataType' => 'JSON',
-                'data' => array('method' => 'vote','hash'=>$hash),
-                'beforeSend' => 'js: function(data){
+            if(!$voted) {
+                echo CHtml::ajaxLink('<i class="icon-check-sign"></i>', array('/lists/public/json'), array(
+                    'type' => 'POST',
+                    'dataType' => 'JSON',
+                    'data' => array('method' => 'vote', 'hash' => $hash),
+                    'beforeSend' => 'js: function(data){
                     $(".view-alert").addClass("hidden").removeClass("alert-success alert-warning").find("span").text("");
+                    if(target.hasClass("gray"))
+                        return false;
                 }',
-                'success' => 'js: function(data){
+                    'success' => 'js: function(data){
                     if(data.status){
-                        target.parent().append("<span class=\'vote-trigger active pull-left\'>%"+data.newAvg+"</span>");
-                        target.remove();
+                        target.parent().find(".vote-trigger.active.pull-left").text("%"+data.newAvg);
+                        target.addClass("gray");
                         $(".view-alert").addClass("alert-success").find("span").text(data.message);
                     }
                     else
                         $(".view-alert").addClass("alert-warning").find("span").text(data.message);                     
                     $(".view-alert").removeClass("hidden");
-                }'),array('class' => 'vote-trigger pull-left'));
-            else
+                }'), array('class' => 'vote-trigger pull-left'));
+                echo '<span class="vote-trigger active pull-left" style="margin-left: 15px;line-height: 46px;">%' . $voteAvg[$item->item_id] . '</span>';
+            } else
                 echo '<span class="vote-trigger active pull-left">%'.$voteAvg[$item->item_id].'</span>';
             ?></h4>
         </div>

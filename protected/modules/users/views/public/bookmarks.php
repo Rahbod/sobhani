@@ -6,7 +6,7 @@ $path = Yii::getPathOfAlias('webroot').'/uploads/lists/';
 $url = Yii::app()->getBaseUrl(true).'/uploads/lists/thumbs/200x200/';
 $this->breadcrumbs = array(
     'داشبورد' => array('/dashboard'),
-    'اطلاعیه ها'
+    'علاقه مندی ها'
 );
 ?>
 <h2>علاقه مندی ها</h2>

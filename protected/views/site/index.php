@@ -4,6 +4,7 @@
  * @var $cs CClientScript
  * @var $baseUrl string
  * @var $slider Lists[]
+ * @var $lastEvents UserNotifications[]
  */
 $cs = Yii::app()->clientScript;
 $baseUrl = Yii::app()->theme->baseUrl;
@@ -43,7 +44,7 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
 
         <?php echo CHtml::beginForm(array('/search'), 'get'); ?>
         <div class="input-group">
-            <?php echo CHtml::textField('term2', isset($_GET['term']) ? $_GET['term'] : '', array('class' => 'form-control', 'placeHolder' => 'اشتیاق شما چیست؟')) ?>
+            <?php echo CHtml::textField('term', isset($_GET['term']) ? $_GET['term'] : '', array('class' => 'form-control', 'placeHolder' => 'اشتیاق شما چیست؟')) ?>
             <span class="input-group-btn">
                 <button class="btn btn-secondary" type="submit">
                     <i class="glyphicon"></i>
@@ -108,34 +109,20 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
                     </div>
                 <?php endforeach; ?>
             </div>
-            <!-- <div class="events">
+            <div class="events">
                 <h3>در حال رخ دادن</h3>
+                <input type="hidden" id="last-id" value="<?= $lastEvents[0]->id?>">
                 <table id="feed" itemscope="5">
                     <tbody>
-                    <tr feedid="36974454" style="display: table-row; opacity: 1;">
-                        <td><img src="image/51XZ2KNKZWL._SL160_.jpg"></td>
-                        <td> رای دادن به <b>هریما</b>در لیستی از<a>قویترین مبارز</a></td>
-                    </tr>
-                    <tr feedid="36974455" style="display: table-row; opacity: 1;">
-                        <td><i class="g"></i></td>
-                        <td> نظر جدید در مورد  <b> بهمن</b> در فهرست <a> بهترین برندهای سیگار </a>
-                            <br>&quot من بهمن دوودووال را دوست دارم چون کوچک است.</td>
-                    </tr>
-                    <tr feedid="36974456" style="display: table-row; opacity: 1;">
-                        <td><img src="image/702.jpg"></td>
-                        <td> رای دادن به <b>گورو ناناک</b>در فهرست <a href="#">بزرگترین افراد تمام وقت</a></td>
-                    </tr>
-                    <tr feedid="36974457" style="display: table-row; opacity: 1;">
-                        <td><img src="image/994.jpg"></td>
-                        <td>  رای دادن به <b>لورنس</b>در لیست <a href="#">بهترین رقصنده های هندی</a></td>
-                    </tr>
-                    <tr feedid="36974458" style="display: table-row; opacity: 1;">
-                        <td><i class="g"></i></td>
-                        <td>  رای دادن به <b> اش</b> در لیستی از <a href="#">ده شخصیت خنده دار محبوب</a></td>
-                    </tr>
+                    <?php foreach($lastEvents as $event):?>
+                        <tr>
+                            <td><i class="icon-check-sign"></i></td>
+                            <td><?= $event->message?></td>
+                        </tr>
+                    <?php endforeach;?>
                     </tbody>
                 </table>
-            </div> -->
+            </div>
             <div class="specials">
                 <h3>لیست های ویژه</h3>
                 <?php foreach ($this->getSpecialLists(6) as $list): ?>
@@ -169,3 +156,22 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
         </div>
     </div>
 </div>
+<?php Yii::app()->clientScript->registerScript("events", "
+setInterval(function(){
+    $.ajax({
+        url: '".$this->createUrl('getLastEvents')."',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {lastID: $('.events #last-id').val()},
+        success: function(data){
+            if(data.status){
+                for(i=0;i < data.items.length;i++){
+                    $('.events table tr:last-child').remove();
+                    $('.events table tbody').prepend('<tr><td><i class=\"icon-check-sign\"></i></td><td>'+data.items[i]+'</td></tr>');
+                    $('.events #last-id').val(data.lastID);
+                }
+            }
+        }
+    });
+}, 60000);
+");?>

@@ -55,7 +55,40 @@ class SiteController extends Controller
         $criteria->limit = 10;
         $slider = Lists::model()->findAll($criteria);
         $count = Lists::model()->count($criteria);
-        $this->render('index', compact('slider', 'count'));
+
+        $lastEvents = UserNotifications::model()->findAll(['limit' => 5, 'order' => 'id DESC']);
+
+        $this->render('index', compact('slider', 'count', 'lastEvents'));
+    }
+
+    public function actionGetLastEvents()
+    {
+        if (isset($_POST['lastID'])) {
+            $lastID = $_POST['lastID'];
+            /* @var UserNotifications[] $events */
+            $criteria = new CDbCriteria();
+            $criteria->limit = 5;
+            $criteria->order = 'id DESC';
+            $criteria->addCondition('id > :lastID');
+            $criteria->params[':lastID'] = $lastID;
+            $events = UserNotifications::model()->findAll($criteria);
+            if ($events) {
+                $items = [];
+                foreach ($events as $event)
+                    $items[] = $event->message;
+                echo CJSON::encode([
+                    'status' => true,
+                    'items' => $items,
+                    'lastID' => $events[0]->id,
+                ]);
+                Yii::app()->end();
+            }
+            echo CJSON::encode([
+                'status' => false
+            ]);
+            Yii::app()->end();
+        }
+        return null;
     }
 
     /**

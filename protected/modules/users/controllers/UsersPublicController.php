@@ -177,7 +177,7 @@ class UsersPublicController extends Controller
             $avatar = array(
                 'name' => $model->avatar,
                 'src' => $avatarUrl . '/' . $model->avatar,
-                'size' => filesize($avatarDIR . $model->avatar),
+                'size' => strpos($model->avatar, 'https://') === 0 ? null : filesize($avatarDIR . $model->avatar),
                 'serverName' => $model->avatar
             );
 
