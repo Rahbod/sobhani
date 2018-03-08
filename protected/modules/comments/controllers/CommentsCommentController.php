@@ -134,7 +134,7 @@ class CommentsCommentController extends Controller
             if ($comment->save()) {
                 /* @var ListItemRel $listItem */
                 $listItem = $comment->getOwnerModel();
-                $this->createLog('"'.Yii::app()->user->showName.'" در لیست "'.$listItem->list->title.'" نظری ثبت کرد. این نظر پس از تایید مدیریت سایت نمایش داده خواهد شد.', $listItem->list->user_id);
+                $this->createLog('"<a href="'.Yii::app()->createUrl('/users/public/viewProfile/'.Yii::app()->user->getId().'/'.str_replace(' ', '-', Yii::app()->user->showName)).'">'.Yii::app()->user->showName.'</a>" در لیست "<a href="'.Yii::app()->createUrl('/lists/'.$listItem->list->id.'/'.str_replace(' ', '-', $listItem->list->title)).'">'.$listItem->list->title.'</a>" نظری ثبت کرد. این نظر پس از تایید مدیریت سایت نمایش داده خواهد شد.', $listItem->list->user_id);
                 if(!Yii::app()->user->isGuest && Yii::app()->user->type == 'user' && isset($_POST['Comment']['rate'])) {
                     $rateModel = Votes::model()->findAllByAttributes(array('user_id'=>Yii::app()->user->getId(),'list_item_rel_id'=>$comment->owner_id));
                     if($rateModel)

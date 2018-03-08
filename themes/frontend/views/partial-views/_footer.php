@@ -1,14 +1,14 @@
 <div class="footer">
     <div class="container">
         <a href="<?= Yii::app()->getBaseUrl(true)?>">
-            <img src="<?= Yii::app()->theme->baseUrl ?>/svg/logo.svg" class="logo">
+            <img src="<?= Yii::app()->theme->baseUrl ?>/svg/logo-gray.svg" class="logo">
         </a>
         <ul class="list-unstyled">
             <li>
                 <span><a href="<?= $this->createAbsoluteUrl('/terms') ?>">شرایط</a></span>
                 | <span><a href="<?= $this->createAbsoluteUrl('/faq') ?>">سوالات متداول</a></span>
-                | <span><a href="<?= $this->createAbsoluteUrl('/about') ?>">درباره ما</a></span>
-                | <span><a href="<?= $this->createAbsoluteUrl('/contactUs') ?>">تماس ما</a></span>
+                | <span><a href="<?= $this->createAbsoluteUrl('/about') ?>">درباره</a></span>
+                | <span><a href="<?= $this->createAbsoluteUrl('/contactUs') ?>">تماس</a></span>
             </li>
             <li>کلیه حقوق برای 10 بهترین محفوظ است.</li>
         </ul>
@@ -18,11 +18,11 @@
                     <i class="facebook-icon"></i>
                 </a>
             </li>
-            <li>
-                <a href="<?= $this->socialLinks['google']?>">
-                    <i class="google-icon"></i>
-                </a>
-            </li>
+<!--            <li>-->
+<!--                <a href="--><?//= $this->socialLinks['google']?><!--">-->
+<!--                    <i class="google-icon"></i>-->
+<!--                </a>-->
+<!--            </li>-->
             <li>
                 <a href="<?= $this->socialLinks['telegram']?>">
                     <i class="telegram-icon"></i>

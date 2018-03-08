@@ -44,7 +44,7 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
 
         <?php echo CHtml::beginForm(array('/search'), 'get'); ?>
         <div class="input-group">
-            <?php echo CHtml::textField('term', isset($_GET['term']) ? $_GET['term'] : '', array('class' => 'form-control', 'placeHolder' => 'اشتیاق شما چیست؟')) ?>
+            <?php echo CHtml::textField('term', isset($_GET['term']) ? $_GET['term'] : '', array('class' => 'form-control', 'placeHolder' => 'جستجوی بهترین ...')) ?>
             <span class="input-group-btn">
                 <button class="btn btn-secondary" type="submit">
                     <i class="glyphicon"></i>

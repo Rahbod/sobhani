@@ -116,13 +116,13 @@ class Votes extends CActiveRecord
 
 	public static function getRealIp()
 	{
-		if(!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
+		if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
 		{
 			$ip = $_SERVER['HTTP_CLIENT_IP'];
-		}elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))   //to check ip is pass from proxy
+		} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))   //to check ip is pass from proxy
 		{
 			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-		}else{
+		} else {
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
 		return $ip;
@@ -130,9 +130,9 @@ class Votes extends CActiveRecord
 
 	public static function saveVoteInCookie($hash)
 	{
-		$cookie = Yii::app()->request->cookies->contains('VT')?Yii::app()->request->cookies['VT']:null;
+		$cookie = Yii::app()->request->cookies->contains('VT') ? Yii::app()->request->cookies['VT'] : null;
 
-		if(is_null($cookie)){
+		if (is_null($cookie)) {
 			$votes = base64_encode(CJSON::encode(array($hash)));
 			$newCookie = new CHttpCookie('VT', $votes);
 			$newCookie->domain = '';
@@ -141,9 +141,9 @@ class Votes extends CActiveRecord
 			$newCookie->secure = false;
 			$newCookie->httpOnly = false;
 			Yii::app()->request->cookies['VT'] = $newCookie;
-		}else{
+		} else {
 			$votes = CJSON::decode(base64_decode($cookie->value));
-			if(!in_array($hash, $votes)){
+			if (!in_array($hash, $votes)) {
 				array_push($votes, $hash);
 				$votes = base64_encode(CJSON::encode($votes));
 				Yii::app()->request->cookies['VT'] = new CHttpCookie('VT', $votes);
@@ -153,10 +153,10 @@ class Votes extends CActiveRecord
 
 	public static function checkVoteInCookie($hash)
 	{
-		$cookie = Yii::app()->request->cookies->contains('VT')?Yii::app()->request->cookies['VT']:null;
-		if(!is_null($cookie)){
+		$cookie = Yii::app()->request->cookies->contains('VT') ? Yii::app()->request->cookies['VT'] : null;
+		if (!is_null($cookie)) {
 			$votes = CJSON::decode(base64_decode($cookie->value));
-			if(in_array($hash, $votes))
+			if (in_array($hash, $votes))
 				return true;
 		}
 		return false;
@@ -164,22 +164,22 @@ class Votes extends CActiveRecord
 
 	public static function checkVote($listID, $itemID)
 	{
-		if(!Yii::app()->user->isGuest && Yii::app()->user->type == 'user'){
+		if (!Yii::app()->user->isGuest && Yii::app()->user->type == 'user') {
 			$userID = Yii::app()->user->getId();
 			return Votes::model()->countByAttributes(['user_id' => $userID, 'list_id' => $listID, 'item_id' => $itemID]);
-		}else
-			return Votes::checkVoteInCookie($listID.'-'.$itemID);
+		} else
+			return Votes::checkVoteInCookie($listID . '-' . $itemID);
 	}
 
 	public static function VoteAverages($listID, $itemID = false)
 	{
 		$total = Votes::model()->countByAttributes(['list_id' => $listID]);
 		$percents = [];
-		foreach(ListItemRel::model()->findAllByAttributes(['list_id' => $listID], array('order' => 'item_id')) as $item){
+		foreach (ListItemRel::model()->findAllByAttributes(['list_id' => $listID], array('order' => 'item_id')) as $item) {
 			$c = Votes::model()->countByAttributes(['list_id' => $listID, 'item_id' => $item->item_id]);
-			$percents[$item->item_id] = $c == 0?0:(int)($c / $total * 100);
-            if($itemID && $itemID == $item->item_id)
-                return $percents[$item->item_id];
+			$percents[$item->item_id] = $c == 0 ? 0 : (int)($c / $total * 100);
+			if ($itemID && $itemID == $item->item_id)
+				return $percents[$item->item_id];
 		}
 		return $percents;
 	}

@@ -4,8 +4,7 @@
 /* @var $items ListItemRel[] */
 $this->breadcrumbs = array(
     'همه لیست ها' => array('/lists'),
-	$model->category->title => array('/lists/category/'.$model->category_id.'/'.str_replace(' ', '-', $model->category->title)),
-    $model->title
+	$model->category->title => array('/lists/category/'.$model->category_id.'/'.str_replace(' ', '-', $model->category->title))
 );
 $favorite = UserBookmarks::model()->findByAttributes(['user_id' => Yii::app()->user->getId(), 'list_id' => $model->id])?true:false;
 $this->pageTitle = $model->title;

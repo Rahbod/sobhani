@@ -25,7 +25,7 @@
                         <li  class="user-link"><a title="<?= Yii::app()->user->showName ?>" href="<?= $this->createUrl('/dashboard')?>"><i class="user-icon"></i><?= Yii::app()->user->showName ?></a>
                         <li><a href="<?= $this->createUrl('/dashboard')?>" class="h"><i class="home-icon"></i></a></li>
                         <li><a href="<?= $this->createUrl('/bookmarks')?>" class="s" title="علاقه مندی ها"><i class="star-icon"></i></a></li>
-                        <li><a href="<?= $this->createUrl('/notifications')?>" class="e" title="پیام ها"><i class="envelope-icon"></i><?php if($this->userNotifications != 0):?><span class="notification-count"><?= $this->userNotifications?></span><?php endif;?></a></li>
+                        <li><a href="<?= $this->createUrl('/notifications')?>" class="e" title="پیام ها"><i class="envelope-icon"></i><?php if($this->userNotifications != 0 and Yii::app()->request->pathInfo != 'notifications'):?><span class="notification-count"><?= $this->userNotifications?></span><?php endif;?></a></li>
                         <li><a href="<?= $this->createUrl('/logout')?>" class="l" title="خروج"><i class="logout-icon"></i></a></li>
                     <?php else:?>
                         <li><a href="#login-modal" data-toggle="modal">ورود</a></li>

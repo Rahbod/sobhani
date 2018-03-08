@@ -47,7 +47,7 @@ $this->breadcrumbs =[
 <!--            <div class="uploader-message error"></div>-->
 <!--            --><?php //echo $form->error($model,'avatar'); ?>
 <!--        </div>-->
-        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 profile-left-side">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 profile-left-side">
             <div class="form-group">
                 <?php echo $form->textField($model,'first_name',array('placeholder'=>$model->getAttributeLabel('first_name').' *','class'=>'form-control','maxlength'=>50)); ?>
                 <?php echo $form->error($model,'first_name'); ?>
