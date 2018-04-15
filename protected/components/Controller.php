@@ -345,6 +345,30 @@ class Controller extends AuthController
     }
 
     /**
+     * @return Lists[]
+     */
+    public function getRecommendedLists()
+    {
+        $userID = Yii::app()->user->getId();
+        $criteria = new CDbCriteria();
+
+        $criteria->select = 'category_id';
+        $criteria->addCondition('user_id = :userID');
+        $criteria->addCondition("user_type = 'user'");
+        $criteria->params[':userID'] = $userID;
+        $categoriesID = [];
+        foreach(Lists::model()->findAll($criteria) as $item)
+            $categoriesID[] = $item->category_id;
+        $criteria = new CDbCriteria();
+        $criteria->compare('status', Lists::STATUS_APPROVED);
+        $criteria->addCondition('user_id != :userID');
+        $criteria->addInCondition('category_id', $categoriesID);
+        $criteria->order = 'id DESC';
+        $criteria->params[':userID'] = $userID;
+        return Lists::model()->findAll($criteria);
+    }
+
+    /**
      * @param int $limit
      * @return Lists[]
      */

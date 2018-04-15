@@ -20,8 +20,8 @@
                     <li><a href="<?= $this->createUrl('/lists') ?>">لیست ها</a></li>
                     <li><a href="<?= $this->createUrl('/latest') ?>">تازه ها</a></li>
                     <li><a href="<?= $this->createUrl('/new') ?>">افزودن لیست</a></li>
-                    <li><a href="<?= $this->createUrl('/recommended') ?>">پیشنهاد برای شما</a></li>
                     <?php if(!Yii::app()->user->isGuest && Yii::app()->user->type =='user'):?>
+                        <li><a href="<?= $this->createUrl('/recommended') ?>">پیشنهاد برای شما</a></li>
                         <li  class="user-link"><a title="<?= Yii::app()->user->showName ?>" href="<?= $this->createUrl('/dashboard')?>"><i class="user-icon"></i><?= Yii::app()->user->showName ?></a>
                         <li><a href="<?= $this->createUrl('/dashboard')?>" class="h"><i class="home-icon"></i></a></li>
                         <li><a href="<?= $this->createUrl('/bookmarks')?>" class="s" title="علاقه مندی ها"><i class="star-icon"></i></a></li>

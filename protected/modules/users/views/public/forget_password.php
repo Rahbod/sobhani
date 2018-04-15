@@ -16,7 +16,7 @@ $this->breadcrumbs = array(
         لطفا پست الکترونیک خود را وارد کنید.
     </p>
     <div class="form-group">
-        <?php echo CHtml::textField('email', '',array('placeholder'=>'پست الکترونیکی', 'class' => 'form-control')); ?>
+        <?php echo CHtml::textField('UsersForgetPassword[email]', '',array('placeholder'=>'پست الکترونیکی', 'class' => 'form-control')); ?>
     </div>
     <div class="form-group">
         <?php echo CHtml::submitButton('ارسال', array('class'=>'btn btn-info pull-left'));?>

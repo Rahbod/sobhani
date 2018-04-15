@@ -254,7 +254,7 @@ class ListsPublicController extends Controller
         switch ($type) {
             case 'recommended':
                 $title = 'پیشنهاد ما به شما';
-                $lists = $this->getSpecialLists(-1);
+                $lists = $this->getRecommendedLists();
                 break;
             case 'popular':
                 $title = 'محبوب ترین ها';

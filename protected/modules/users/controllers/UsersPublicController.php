@@ -384,10 +384,10 @@ class UsersPublicController extends Controller
         $this->performAjaxValidation($model);
 
         if ($model->status == 'active') {
-
             if (isset($_POST['Users'])) {
                 $model->password = $_POST['Users']['password'];
                 $model->repeatPassword = $_POST['Users']['repeatPassword'];
+                $model->setScenario('recover-password');
                 if($model->validate()){
                     $model->verification_token = null;
                     $model->change_password_request_count = 0;

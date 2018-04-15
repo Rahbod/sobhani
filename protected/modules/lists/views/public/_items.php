@@ -9,6 +9,7 @@ Yii::app()->clientScript->registerScript('target', '
     var target = null;
     $(".vote-trigger").click(function(){
         target = $(this);
+        $(this).addClass("loading");
     });
 ');
 foreach($items as $item):
@@ -34,7 +35,8 @@ foreach($items as $item):
                     if(target.hasClass("gray"))
                         return false;
                 }',
-                    'success' => 'js: function(data){
+                'success' => 'js: function(data){
+                    target.removeClass("loading");
                     if(data.status){
                         target.parent().find(".vote-trigger.active.pull-left").text("%"+data.newAvg);
                         target.addClass("gray");

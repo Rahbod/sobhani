@@ -1328,6 +1328,15 @@ input[type="radio"]{
     font-size: 45px !important;
     margin-top: -10px;
 }
+.vote-trigger.loading .icon-check-sign::before{
+    content: '';
+    background: #E99A00 url("../svg/loading.svg") no-repeat center;
+    background-size: 30px;
+    width: 38px;
+    height:38px;
+    display: inline-block;
+    border-radius: 7px;
+}
 .gray.vote-trigger,
 .gray.vote-trigger i{
     color: #ccc !important;
@@ -1559,4 +1568,45 @@ input[type="radio"]{
 }
 .button-block{
     overflow: hidden;
+}
+.owl-carousel .owl-controls .owl-nav .owl-prev,
+.owl-carousel .owl-controls .owl-nav .owl-next,
+.owl-carousel .owl-controls .owl-nav .owl-prev:hover,
+.owl-carousel .owl-controls .owl-nav .owl-next:hover{
+    background: url("../svg/left-arrow-white.svg") no-repeat center;
+    background-size: 40px;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    position: absolute;
+    left: 8px;
+}
+.owl-carousel .owl-controls .owl-nav .owl-prev{
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+    right: 8px;
+    left: auto;
+}
+.owl-carousel{
+    position: relative;
+}
+.owl-carousel .owl-controls .owl-nav{
+    position: absolute;
+    height:40px;
+    top: 50%;
+    margin-top: -20px;
+    left: 0;
+    right: 0;
+}
+.rahbod img{
+    width: 70px;
+}
+.rahbod-container{
+    float: left;
+    clear: both;
+    margin-top: -10px;
+    height: 20px;
 }

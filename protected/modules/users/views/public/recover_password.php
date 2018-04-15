@@ -11,6 +11,7 @@ $this->breadcrumbs =[
 ?>
 <h2>تغییر کلمه عبور</h2>
 <p>لطفا کلمه عبور جدید را وارد کنید.</p>
+<?php $this->renderPartial('//partial-views/_flashMessage');?>
 <div class="recommend">
     <?php $form=$this->beginWidget('CActiveForm', array(
         'id'=>'users-form',
@@ -19,14 +20,14 @@ $this->breadcrumbs =[
         'enableClientValidation'=>true,
         'clientOptions'=>array(
             'validateOnSubmit'=>true,
-            'beforeValidate' => "js:function(form) {
-                $('.loading-container').fadeIn();
-                return true;
-            }",
-            'afterValidate' => "js:function(form) {
-                $('.loading-container').stop().hide();
-                return true;
-            }",
+//            'beforeValidate' => "js:function(form) {
+//                $('.loading-container').fadeIn();
+//                return true;
+//            }",
+//            'afterValidate' => "js:function(form) {
+//                $('.loading-container').stop().hide();
+//                return true;
+//            }",
         ),
     )); ?>
 

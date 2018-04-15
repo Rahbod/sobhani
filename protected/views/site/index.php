@@ -18,10 +18,10 @@ $listItemPath = Yii::getPathOfAlias('webroot') . '/uploads/items/thumbs/200x200/
 $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
 ?>
 <div class="slider">
-    <h1><?= Controller::parseNumbers(number_format($count)) ?>&nbsp;لیست از بهترین ها در هر زمینه ای
+    <h1><?= Controller::parseNumbers(number_format($count)) ?>&nbsp;لیست از بهترین ها براساس رای شما
         </h1>
     <div class="is-carousel" data-items="7" data-item-selector="thumbnail-container" data-margin="10" data-dots="1"
-         data-nav="0" data-mouse-drag="1"
+         data-nav="1" data-mouse-drag="1"
          data-responsive='{"1920":{"items":"7"},"1200":{"items":"6"},"992":{"items":"5"},"768":{"items":"3"},"480":{"items":"2"},"0":{"items":"1"}}'>
         <?php
         foreach ($slider as $item):
