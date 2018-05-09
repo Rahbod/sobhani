@@ -72,13 +72,44 @@ class ListsPublicController extends Controller
         $model = $this->loadModel($id);
         $criteria = new CDbCriteria();
         $criteria->join = 'LEFT OUTER JOIN `ym_votes` `votes` ON  (`votes`.`item_id` = `itemRel`.`item_id`) LEFT OUTER JOIN `ym_items` `item` ON (`votes`.`item_id` = `item`.`id`)';
-        $criteria->condition = '`itemRel`.`list_id` = :itemID';
+        $criteria->condition = '`itemRel`.`list_id` = :itemID AND itemRel.status = :status';
         $criteria->group = 'itemRel.id';
         $criteria->order = 'COUNT(votes.id) DESC';
         $criteria->alias = 'itemRel';
         $criteria->params[':itemID'] = $id;
+        $criteria->params[':status'] = ListItemRel::STATUS_ACCEPTED;
         $items = ListItemRel::model()->findAll($criteria);
         Yii::app()->db->createCommand()->update('{{lists}}', array('seen' => (int)$model->seen + 1), 'id = :id', array(':id' => $id));
+
+        if (isset($_POST['title'])) {
+            if (!isset($_POST['title']))
+                Yii::app()->user->setFlash('failed', 'عنوان نمی تواند خالی باشد.');
+            else {
+                $tempPath = Yii::getPathOfAlias('webroot') . '/uploads/temp/';
+                /* @var Items $item */
+                $item = Items::model()->findByAttributes(array('title' => $_POST['title']));
+                if ($item === null) {
+                    $item = new Items();
+                    $item->title = $_POST['title'];
+                    $item->status = Items::STATUS_PENDING;
+                    @$item->save();
+                }
+                if ($item) {
+                    $rel = new ListItemRel();
+                    $rel->item_id = $item->id;
+                    $rel->list_id = $model->id;
+                    $rel->image = isset($_POST['image']) && is_file($tempPath . $_POST['image']) ? $_POST['image'] : null;
+                    $rel->description = isset($_POST['description']) ? $_POST['description'] : null;
+                    $rel->user_id = Yii::app()->user->getId();
+                    $rel->status = ListItemRel::STATUS_PENDING;
+                    if ($rel->save())
+                        Yii::app()->user->setFlash('success', 'گزینه جدید با موفقیت ثبت شد. این گزینه پس از تایید مدیریت نمایش داده خواهد شد.');
+                    else
+                        Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داد! لطفا مجددا تلاش کنید.');
+                }
+            }
+        }
+
         $this->render('view', compact('model', 'items'));
     }
 

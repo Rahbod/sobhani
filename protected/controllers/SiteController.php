@@ -106,55 +106,6 @@ class SiteController extends Controller
         }
     }
 
-    /**
-     * Displays the contact page
-     */
-    public function actionContact()
-    {
-        Yii::app()->getModule('contact');
-        Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/inner';
-        $model = new ContactForm();
-        if(isset($_POST['ContactForm'])){
-            $model->attributes = $_POST['ContactForm'];
-            $contactModel = new ContactMessages();
-            $contactModel->attributes = $_POST['ContactForm'];
-            $dep = ContactDepartment::model()->findByPk($contactModel->department_id);
-            if($model->validate() && $contactModel->save()){
-                $siteName = Yii::app()->name;
-                $subject = 'وبسايت مستر کیتچنز - پیغام در بخش ' . $dep->title . ($model->subject && !empty($model->subject)?' - ' . $model->subject:'');
-                $body = "<div style='padding:15px;white-space: pre-line'>"
-                    . "<p>متن پیام:</p>"
-                    . "<p>" . $model->body . "</p>"
-                    . "<p>"
-                    . "<strong>نام فرستنده : </strong>" . $model->name . "<br>"
-                    . "<strong>شماره تماس : </strong>" . $model->tel
-                    . "</p><br><br>
-                    <p>"
-                    . "<strong>برای ارسال پاسخ روی لینک زیر کلیک کنید: </strong><br>" .
-                    CHtml::link(Yii::app()->createAbsoluteUrl('/contact/messages/view?id=' . $contactModel->id),
-                        Yii::app()->createAbsoluteUrl('/contact/messages/view?id=' . $contactModel->id), array(
-                            'style' => 'color:#1aa4de;font-size:12px'
-                        ))
-                    . "</p>
-                    <hr>
-                    <span style='font-size:10px'>
-                    ارسال شده توسط وبسايت {$siteName}
-                    </span>
-                    </div>                  
-                    ";
-                $receivers = [];
-                $receivers[] = SiteSetting::getOption('master_email');
-                foreach($contactModel->department->receivers as $receiver)
-                    $receivers[] = $receiver->email;
-                Mailer::mail($receivers, $subject, $body, $model->email);
-                Yii::app()->user->setFlash('success', 'باتشکر. پیغام شما با موفقیت ارسال شد.');
-                $this->refresh();
-            }
-        }
-        $this->render('contact', array('model' => $model));
-    }
-
     public function actionAbout()
     {
         Yii::import('pages.models.*');

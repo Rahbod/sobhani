@@ -9,14 +9,27 @@
  * @property string $item_id
  * @property string $description
  * @property string $image
+ * @property string $user_id
+ * @property integer $status
  *
  * The followings are the available model relations:
  * @property Lists $list
  * @property Items $item
  * @property Votes[] $votes
+ * @property Users $user
  */
 class ListItemRel extends CActiveRecord
 {
+    const STATUS_PENDING = 0;
+    const STATUS_ACCEPTED = 1;
+    const STATUS_DELETED = 2;
+
+	public $statusLabels = [
+		self::STATUS_PENDING => 'در انتظار تایید',
+		self::STATUS_ACCEPTED => 'تایید شده',
+		self::STATUS_DELETED => 'حذف شده',
+	];
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -34,12 +47,13 @@ class ListItemRel extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('list_id, item_id', 'required'),
-			array('list_id, item_id', 'length', 'max'=>10),
+            array('status', 'numerical', 'integerOnly'=>true),
+			array('list_id, item_id, user_id', 'length', 'max'=>10),
 			array('image', 'length', 'max'=>255),
 			array('description', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, list_id, item_id, description, image', 'safe', 'on'=>'search'),
+			array('id, list_id, item_id, description, image, user_id, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,6 +68,7 @@ class ListItemRel extends CActiveRecord
 			'list' => array(self::BELONGS_TO, 'Lists', 'list_id'),
 			'item' => array(self::BELONGS_TO, 'Items', 'item_id'),
 			'votes' => array(self::HAS_MANY, 'Votes', 'item_id', 'on' => '`votes`.`item_id` = `itemRel`.`item_id`', 'with'=>'item', 'group' => 'itemRel.id'),
+			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
 		);
 	}
 
@@ -64,10 +79,12 @@ class ListItemRel extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'list_id' => 'List',
-			'item_id' => 'Item',
+			'list_id' => 'لیست',
+			'item_id' => 'گزینه',
 			'description' => 'Description',
 			'image' => 'Image',
+            'user_id' => 'User',
+            'status' => 'Status',
 		);
 	}
 
@@ -94,6 +111,8 @@ class ListItemRel extends CActiveRecord
 		$criteria->compare('item_id',$this->item_id,true);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('image',$this->image,true);
+        $criteria->compare('user_id',$this->user_id,true);
+        $criteria->compare('status',$this->status);
 		$criteria->order = 'id DESC';
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

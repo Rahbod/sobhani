@@ -27,8 +27,14 @@ class AdminsDashboardController extends Controller
     public function actionIndex()
     {
         Yii::app()->getModule('contact');
-        $statistics = [
-        ];
-        $this->render('index', compact('statistics'));
+        Yii::app()->getModule('lists');
+        $statistics = [];
+
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('status = :status');
+        $criteria->params[':status'] = ListItemRel::STATUS_PENDING;
+        $newItemsProvider = new CActiveDataProvider('ListItemRel', ['criteria' => $criteria]);
+
+        $this->render('index', compact('statistics', 'newItemsProvider'));
     }
 }

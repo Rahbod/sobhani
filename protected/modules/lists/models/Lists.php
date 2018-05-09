@@ -196,6 +196,8 @@ class Lists extends CActiveRecord
                     $rel->list_id = $this->id;
                     $rel->image = isset($item['image']) && is_file($tempPath . $item['image'])?$item['image']:null;
                     $rel->description = isset($item['description'])?$item['description']:null;
+					$rel->user_id = $this->user_id;
+					$rel->status = ListItemRel::STATUS_ACCEPTED;
                     @$rel->save();
                 }
             }

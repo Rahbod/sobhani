@@ -310,7 +310,7 @@ class UsersPublicController extends Controller
                         $message .= '<a href="' . Yii::app()->getBaseUrl(true) . '/users/public/recoverPassword/token/' . $token . '">' . Yii::app()->getBaseUrl(true) . '/users/public/recoverPassword/token/' . $token . '</a>';
                         $message .= '</div>';
                         $message .= '<div style="font-size: 8pt;color: #888;text-align: right;">اگر شخص دیگری غیر از شما این درخواست را صادر نموده است، یا شما کلمه عبور خود را به یاد آورده‌اید و دیگر نیازی به تغییر آن ندارید، کلمه عبور قبلی/موجود شما همچنان فعال می‌باشد و می توانید از طریق <a href="' . ((strpos($_SERVER['SERVER_PROTOCOL'], 'https')) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . '/login">این صفحه</a> وارد حساب کاربری خود شوید.</div>';
-                        $result = Mailer::mail($model->email, 'درخواست تغییر کلمه عبور در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail']);
+                        $result = Mailer::mail($model->email, 'درخواست تغییر کلمه عبور در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail'], Yii::app()->params['SMTP']);
                         if ($result) {
                             if (isset($_GET['ajax'])) {
                                 echo CJSON::encode(array('state' => 1, 'url' => Yii::app()->baseUrl,  'msg' => 'ایمیل بازیابی رمز عبور به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.'));
@@ -502,7 +502,7 @@ class UsersPublicController extends Controller
                 $message .= '<a href="' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '">' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '</a>';
                 $message .= '</div>';
                 $message .= '<div style="font-size: 8pt;color: #888;text-align: right;">این لینک فقط 3 روز اعتبار دارد.</div>';
-                Mailer::mail($model->email, 'ثبت نام در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail']);
+                Mailer::mail($model->email, 'ثبت نام در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail'],Yii::app()->params['SMTP']);
                 // Send Sms
                 $siteName = Yii::app()->name;
                 $message = "ثبت نام شما در سایت {$siteName} با موفقیت انجام شد.
@@ -525,10 +525,10 @@ class UsersPublicController extends Controller
             }
         }
 
-        if (!isset($_GET['ajax']))
-            $this->render('register', array(
-                'model' => $model,
-            ));
+//        if (!isset($_GET['ajax']))
+//            $this->render('register', array(
+//                'model' => $model,
+//            ));
     }
 
     public function actionResendVerification()
@@ -543,7 +543,7 @@ class UsersPublicController extends Controller
             $message .= '<a href="' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '">' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '</a>';
             $message .= '</div>';
             $message .= '<div style="font-size: 8pt;color: #888;text-align: right;">این لینک فقط 3 روز اعتبار دارد.</div>';
-            Mailer::mail($model->email, 'ثبت نام در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail']);
+            Mailer::mail($model->email, 'ثبت نام در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail'],Yii::app()->params['SMTP']);
             Yii::app()->user->setFlash('success', 'ایمیل فعال سازی به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.');
             $this->redirect(array('/login'));
         } else

@@ -61,8 +61,56 @@ $this->pageTitle = $model->title;
 		?>
 	</h3>
 	<div class="add-list-form items-list">
-		<?php
-		$this->renderPartial('_items',compact('items', 'model'))
-		?>
+        <div>
+		    <?php $this->renderPartial('_items',compact('items', 'model')); ?>
+        </div>
+        <?php if(!Yii::app()->user->isGuest):?>
+            <button type="button" class="btn btn-blue add-new-item" data-toggle="collapse" data-target="#add-new-item-form"><i class="glyphicon glyphicon-plus"></i>افزودن گزینه جدید</button>
+            <div class="collapse" id="add-new-item-form">
+                <?= CHtml::beginForm('', 'post', array('class' => 'add-list-form'));?>
+                    <div class="form-row">
+                        <div class="container-fluid">
+                            <span class="num"><?= count($items) + 1?></span>
+                            <div class="input-container">
+                                <?= CHtml::textField('title', null, array('class' => 'transparent-input item-title', 'placeholder' => 'عنوان'));?>
+                            </div>
+                        </div>
+                        <div class="fix-overflow">
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                <?= CHtml::textArea("description", null, array('class' => 'form-control', 'placeholder' => "نظر...")) ?>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <?php $this->widget('ext.dropZoneUploader.dropZoneUploader', array(
+                                    'id' => "uploaderImage",
+                                    'name' => "Lists[items][0][image]",
+                                    'maxFiles' => 1,
+                                    'maxFileSize' => 0.5, //MB
+                                    'url' => $this->createUrl('uploadItem'),
+                                    'deleteUrl' => $this->createUrl('deleteUploadItem'),
+                                    'acceptedFiles' => '.jpg, .jpeg, .png',
+                                    'containerClass' => 'uploader',
+                                    'serverFiles' => [],
+                                    'onSuccess' => "
+                                        var responseObj = JSON.parse(res);
+                                        if(responseObj.status){
+                                            {serverName} = responseObj.fileName;
+                                            $(\".uploader-message\").html(\"\");
+                                        }
+                                        else{
+                                            $(\".uploader-message\").html(responseObj.message);
+                                            this.removeFile(file);
+                                        }
+                                    ",
+                                )); ?>
+                                <div class="uploader-message error"></div>
+                            </div>
+                        </div>
+                        <div class="container-fluid">
+                            <?= CHtml::submitButton('ثبت' ,array('class' => 'btn btn-blue', 'name' => 'publish')); ?>
+                        </div>
+                    </div>
+                <?= CHtml::endForm();?>
+            </div>
+        <?php endif;?>
 	</div>
 </div>

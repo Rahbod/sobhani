@@ -1610,3 +1610,18 @@ input[type="radio"]{
     margin-top: -10px;
     height: 20px;
 }
+.content .left-side .add-new-item i{
+    font-size: 23px;
+    line-height:23px;
+    color: #fff;
+    font-weight: bolder;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+.content .left-side .add-new-item{
+    line-height:23px;
+    padding: 10px 25px;
+}
+.fix-overflow{
+    overflow: hidden;
+}
