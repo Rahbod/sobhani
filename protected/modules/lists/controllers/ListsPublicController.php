@@ -98,13 +98,25 @@ class ListsPublicController extends Controller
                     $rel = new ListItemRel();
                     $rel->item_id = $item->id;
                     $rel->list_id = $model->id;
-                    $rel->image = isset($_POST['image']) && is_file($tempPath . $_POST['image']) ? $_POST['image'] : null;
+                    $rel->image = isset($_POST['Lists']['items'][0]['image']) && is_file($tempPath . $_POST['Lists']['items'][0]['image']) ? $_POST['Lists']['items'][0]['image'] : null;
                     $rel->description = isset($_POST['description']) ? $_POST['description'] : null;
                     $rel->user_id = Yii::app()->user->getId();
                     $rel->status = ListItemRel::STATUS_PENDING;
-                    if ($rel->save())
+
+                    $image = new UploadedFiles($this->tempPath, $rel->image, array(
+                        'thumbnail' => array(
+                            'width' => 200,
+                            'height' => 200
+                        ),
+                        'resize' => array(
+                            'width' => 600,
+                            'height' => 400
+                        )));
+
+                    if ($rel->save()) {
                         Yii::app()->user->setFlash('success', 'گزینه جدید با موفقیت ثبت شد. این گزینه پس از تایید مدیریت نمایش داده خواهد شد.');
-                    else
+                        $image->move($this->itemImagePath);
+                    }else
                         Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داد! لطفا مجددا تلاش کنید.');
                 }
             }
@@ -249,6 +261,14 @@ class ListsPublicController extends Controller
                         )));
             }
         }
+
+        $items = [];
+        foreach($model->items as $item) {
+            if ($item['status'] == ListItemRel::STATUS_ACCEPTED)
+                $items[] = $item;
+        }
+        $model->items = $items;
+
         $this->render('update', compact('model', 'itemImages', 'image'));
     }
 

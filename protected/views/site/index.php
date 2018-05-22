@@ -86,15 +86,20 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
                             <a href="<?= $this->createUrl('/lists/' . $list->id . '/' . str_replace(' ', '-', $list->title)) ?>"><?= $list->title ?></a>
                         </strong>
                         <ol type="1">
-                            <?php if (isset($list->itemRel[0])): ?>
-                                <li><?= $list->itemRel[0]->item->title ?></li>
-                            <?php endif; ?>
-                            <?php if (isset($list->itemRel[1])): ?>
-                                <li><?= $list->itemRel[1]->item->title ?></li>
-                            <?php endif; ?>
-                            <?php if (isset($list->itemRel[2])): ?>
-                                <li><?= $list->itemRel[2]->item->title ?></li>
-                            <?php endif; ?>
+                            <?php
+                            $voteAvg = Votes::VoteAverages($list->id);
+                            arsort($voteAvg);
+                            ?>
+                            <?php $i = 0;foreach($voteAvg as $key => $value):?>
+                                <?php if($i < 3):?>
+                                    <?php foreach($list->itemRel as $item):?>
+                                        <?php if($item->item_id == $key):?>
+                                            <li><?= $item->item->title ?></li>
+                                        <?php endif;?>
+                                    <?php endforeach;?>
+                                <?php endif;?>
+                                <?php $i++?>
+                            <?php endforeach;?>
                         </ol>
                         <b class="member list-item-view">
                             <?php if ($list->user_type == 'user'): ?>

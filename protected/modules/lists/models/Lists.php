@@ -225,6 +225,7 @@ class Lists extends CActiveRecord
 					'title' => $item->item->title,
 					'description' => $item->description,
 					'image' => $item->image,
+					'status' => $item->status,
 				);
 			}
 	}

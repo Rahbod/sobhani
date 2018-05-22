@@ -68,7 +68,7 @@
 	<div class="well">
 		<?= $form->error($model, 'items')?>
 		<?php
-		for($i = 0; $i < 10; $i++):
+		for($i = 0; $i < (count($model->items) < 10 ? 10 : count($model->items)); $i++):
 		?>
 			<div class="form-group">
 				<span class="num bronze">آیتم <?= $i+1?></span>

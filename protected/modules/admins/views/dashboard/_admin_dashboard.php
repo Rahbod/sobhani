@@ -73,8 +73,9 @@ if(Yii::app()->user->roles == 'admin'){
                             'header'=>'عملیات',
                             'value' => function($data){
                                 $confirmLink = Yii::app()->controller->createUrl('/lists/manage/confirmItem').'/'.$data->id;
+                                $updateLink = Yii::app()->controller->createUrl('/lists/manage/update').'?id='.$data->list_id;
                                 $deleteLink = Yii::app()->controller->createUrl('/lists/manage/deleteItem').'/'.$data->id;
-                                return '<a href="'.$confirmLink.'" class="btn btn-xs btn-success">تایید</a> <a href="'.$deleteLink.'" class="btn btn-xs btn-danger">حذف</a>';
+                                return '<a href="'.$confirmLink.'" class="btn btn-xs btn-success">تایید</a> <a href="'.$updateLink.'" class="btn btn-xs btn-success">ویرایش</a> <a href="'.$deleteLink.'" class="btn btn-xs btn-danger">حذف</a>';
                             },
                             'type' => 'raw'
                         ),

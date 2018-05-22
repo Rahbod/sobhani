@@ -218,6 +218,7 @@ class ListsManageController extends Controller
                         )));
             }
         }
+
         $this->render('update', compact('model', 'itemImages', 'image'));
     }
 
@@ -351,8 +352,8 @@ class ListsManageController extends Controller
             $item->status = ListItemRel::STATUS_ACCEPTED;
             if ($item->save()) {
                 Yii::app()->user->setFlash('success', 'گزینه "' . $item->item->title . '" در لیست "' . $item->list->title . '" تایید شد.');
-                $this->createLog('گزینه "' . $item->item->title . '" در لیست "' . $item->list->title . '" توسط مدیر سایت تایید شد.', $item->user_id);
-                $this->createLog('گزینه "' . $item->item->title . '" به لیست "' . $item->list->title . '" توسط "'.$item->user->userDetails->getShowName().'" اضافه شد.', $item->user_id);
+                $this->createLog('گزینه "' . $item->item->title . '" در لیست "' . CHtml::link($item->list->title, array('/lists/' . $item->list->id . '/' . urlencode($item->list->title))) . '" توسط مدیر سایت تایید شد.', $item->user_id);
+                $this->createLog('گزینه "' . $item->item->title . '" به لیست "' . CHtml::link($item->list->title, array('/lists/' . $item->list->id . '/' . urlencode($item->list->title))) . '" توسط "'.CHtml::link($item->user->userDetails->getShowName(), array('/users/public/viewProfile/' . $item->user_id . '/' . str_replace(' ', '-',$item->user->userDetails->getShowName()))).'" اضافه شد.', $item->user_id);
             }else
                 Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده! لطفا مجددا تلاش کنید.');
         }
@@ -368,8 +369,8 @@ class ListsManageController extends Controller
         if ($item) {
             $item->status = ListItemRel::STATUS_DELETED;
             if ($item->save()) {
-                Yii::app()->user->setFlash('success', 'گزینه "' . $item->item->title . '" از لیست "' . $item->list->title . '" حذف شد.');
-                $this->createLog('گزینه "' . $item->item->title . '" از لیست "' . $item->list->title . '" توسط مدیر سایت حذف شد.', $item->user_id);
+                Yii::app()->user->setFlash('success', 'گزینه "' . $item->item->title . '" از لیست "' . CHtml::link($item->list->title, array('/lists/' . $item->list->id . '/' . urlencode($item->list->title))) . '" حذف شد.');
+                //$this->createLog('گزینه "' . $item->item->title . '" از لیست "' . $item->list->title . '" توسط مدیر سایت حذف شد.', $item->user_id);
             } else
                 Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده! لطفا مجددا تلاش کنید.');
         }

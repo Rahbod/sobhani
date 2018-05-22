@@ -111,6 +111,8 @@ $this->pageTitle = $model->title;
                     </div>
                 <?= CHtml::endForm();?>
             </div>
+        <?php else:?>
+            <a class="btn btn-blue add-new-item" data-toggle="modal" href="#login-modal"><i class="glyphicon glyphicon-plus"></i>افزودن گزینه جدید</a>
         <?php endif;?>
 	</div>
 </div>
