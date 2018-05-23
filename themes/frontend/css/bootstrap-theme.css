@@ -1595,11 +1595,12 @@ input[type="radio"]{
 }
 .owl-carousel .owl-controls .owl-nav{
     position: absolute;
-    height:40px;
+    height:0;
     top: 50%;
     margin-top: -20px;
     left: 0;
     right: 0;
+    display: none;
 }
 .rahbod img{
     width: 70px;

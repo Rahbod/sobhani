@@ -168,7 +168,6 @@ class ListsManageController extends Controller
                 $oldItemImages[] = $item->image;
             }
         }
-
         if (isset($_POST['Lists'])) {
             //
             $oldImage = $model->image;
@@ -185,8 +184,20 @@ class ListsManageController extends Controller
                                 'width' => 600,
                                 'height' => 400
                             )));
-                    else
-                        $itemImages[$key] = [];
+                    else {
+                        if (isset($item['image']))
+                            $itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
+                                'thumbnail' => array(
+                                    'width' => 200,
+                                    'height' => 200
+                                ),
+                                'resize' => array(
+                                    'width' => 600,
+                                    'height' => 400
+                                )));
+                        else
+                            $itemImages[$key] = [];
+                    }
                 }
             }
             $model->status = Lists::STATUS_APPROVED;
@@ -353,7 +364,7 @@ class ListsManageController extends Controller
             if ($item->save()) {
                 Yii::app()->user->setFlash('success', 'گزینه "' . $item->item->title . '" در لیست "' . $item->list->title . '" تایید شد.');
                 $this->createLog('گزینه "' . $item->item->title . '" در لیست "' . CHtml::link($item->list->title, array('/lists/' . $item->list->id . '/' . urlencode($item->list->title))) . '" توسط مدیر سایت تایید شد.', $item->user_id);
-                $this->createLog('گزینه "' . $item->item->title . '" به لیست "' . CHtml::link($item->list->title, array('/lists/' . $item->list->id . '/' . urlencode($item->list->title))) . '" توسط "'.CHtml::link($item->user->userDetails->getShowName(), array('/users/public/viewProfile/' . $item->user_id . '/' . str_replace(' ', '-',$item->user->userDetails->getShowName()))).'" اضافه شد.', $item->user_id);
+                //$this->createLog('گزینه "' . $item->item->title . '" به لیست "' . CHtml::link($item->list->title, array('/lists/' . $item->list->id . '/' . urlencode($item->list->title))) . '" توسط "'.CHtml::link($item->user->userDetails->getShowName(), array('/users/public/viewProfile/' . $item->user_id . '/' . str_replace(' ', '-',$item->user->userDetails->getShowName()))).'" اضافه شد.', $item->user_id);
             }else
                 Yii::app()->user->setFlash('failed', 'در ثبت اطلاعات خطایی رخ داده! لطفا مجددا تلاش کنید.');
         }
