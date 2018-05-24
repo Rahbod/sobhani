@@ -180,6 +180,7 @@ class Lists extends CActiveRecord
     protected function afterSave()
     {
         $tempPath = Yii::getPathOfAlias('webroot').'/uploads/temp/';
+        $itemImagesPath = Yii::getPathOfAlias('webroot').'/uploads/items/';
         if($this->scenario != 'change_status' && $this->items){
 			ListItemRel::model()->deleteAllByAttributes(array('list_id' => $this->id));
             foreach($this->items as $item){
@@ -194,7 +195,7 @@ class Lists extends CActiveRecord
                     $rel = new ListItemRel();
                     $rel->item_id = $model->id;
                     $rel->list_id = $this->id;
-                    $rel->image = isset($item['image']) && is_file($tempPath . $item['image'])?$item['image']:null;
+					$rel->image = isset($item['image']) && (is_file($tempPath . $item['image']) or is_file($itemImagesPath . $item['image']))?$item['image']:null;
                     $rel->description = isset($item['description'])?$item['description']:null;
 					$rel->user_id = $this->user_id;
 					$rel->status = ListItemRel::STATUS_ACCEPTED;

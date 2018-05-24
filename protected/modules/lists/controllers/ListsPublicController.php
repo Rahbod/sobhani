@@ -65,11 +65,14 @@ class ListsPublicController extends Controller
     /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
+     * @throws CHttpException if list not exists
      */
     public function actionView($id)
     {
         Yii::app()->theme = 'frontend';
-        $model = $this->loadModel($id);
+        $model = Lists::model()->findByPk($id, 'status = :status', [':status' => Lists::STATUS_APPROVED]);
+        if ($model === null)
+            throw new CHttpException(404, 'The requested page does not exist.');
         $criteria = new CDbCriteria();
         $criteria->join = 'LEFT OUTER JOIN `ym_votes` `votes` ON  (`votes`.`item_id` = `itemRel`.`item_id`) LEFT OUTER JOIN `ym_items` `item` ON (`votes`.`item_id` = `item`.`id`)';
         $criteria->condition = '`itemRel`.`list_id` = :itemID AND itemRel.status = :status';
@@ -228,8 +231,20 @@ class ListsPublicController extends Controller
                                 'width' => 600,
                                 'height' => 400
                             )));
-                    else
-                        $itemImages[$key] = [];
+                    else {
+                        if (isset($item['image']))
+                            $itemImages[$key] = new UploadedFiles($this->itemImagePath, $item['image'], array(
+                                'thumbnail' => array(
+                                    'width' => 200,
+                                    'height' => 200
+                                ),
+                                'resize' => array(
+                                    'width' => 600,
+                                    'height' => 400
+                                )));
+                        else
+                            $itemImages[$key] = [];
+                    }
                 }
             }
             $model->status = isset($_POST['draft']) ? Lists::STATUS_DRAFT : ($model->user_type == 'admin' ? Lists::STATUS_APPROVED : Lists::STATUS_PENDING);
