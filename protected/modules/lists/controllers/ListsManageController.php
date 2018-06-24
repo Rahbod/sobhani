@@ -174,7 +174,7 @@ class ListsManageController extends Controller
             $model->attributes = $_POST['Lists'];
             if ($model->items) {
                 foreach ($model->items as $key => $item) {
-                    if (isset($item['image']) && $oldItemImages[$key] != $item['image'])
+                    if (isset($item['image']) && isset($oldItemImages[$key]) && $oldItemImages[$key] != $item['image'])
                         $itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
                             'thumbnail' => array(
                                 'width' => 200,

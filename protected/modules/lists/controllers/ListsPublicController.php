@@ -221,7 +221,7 @@ class ListsPublicController extends Controller
             $model->attributes = $_POST['Lists'];
             if ($model->items) {
                 foreach ($model->items as $key => $item) {
-                    if (isset($item['image']) && $oldItemImages[$key] != $item['image'])
+                    if (isset($item['image']) && isset($oldItemImages[$key]) && $oldItemImages[$key] != $item['image'])
                         $itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
                             'thumbnail' => array(
                                 'width' => 200,
@@ -233,7 +233,7 @@ class ListsPublicController extends Controller
                             )));
                     else {
                         if (isset($item['image']))
-                            $itemImages[$key] = new UploadedFiles($this->itemImagePath, $item['image'], array(
+                            $itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
                                 'thumbnail' => array(
                                     'width' => 200,
                                     'height' => 200
@@ -247,6 +247,7 @@ class ListsPublicController extends Controller
                     }
                 }
             }
+
             $model->status = isset($_POST['draft']) ? Lists::STATUS_DRAFT : ($model->user_type == 'admin' ? Lists::STATUS_APPROVED : Lists::STATUS_PENDING);
             if ($model->save()) {
                 $image->update($oldImage, $model->image, $this->tempPath);
