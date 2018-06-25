@@ -1,6 +1,6 @@
 <?php
 /* @var $this UsersPublicController */
-/* @var $bookmarks UserBookmarks */
+/* @var $bookmarks UserBookmarks[] */
 
 $path = Yii::getPathOfAlias('webroot').'/uploads/lists/';
 $url = Yii::app()->getBaseUrl(true).'/uploads/lists/thumbs/200x200/';
@@ -45,6 +45,7 @@ $this->breadcrumbs = array(
                     }'
                 ),array('class' => 'remove-bookmark text-danger'));
                 ?>
+            </div>
         </div>
     <?php endforeach;?>
 </div>

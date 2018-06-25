@@ -1626,3 +1626,8 @@ input[type="radio"]{
 .fix-overflow{
     overflow: hidden;
 }
+.comments-list {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+}

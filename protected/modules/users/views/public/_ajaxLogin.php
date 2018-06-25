@@ -57,6 +57,9 @@ $form = $this->beginWidget('CActiveForm', array(
 <!--        --><?//= $form->checkBox($model,'rememberMe',array('id'=>'remember-me', 'class' => 'form-control')); ?>
 <!--        --><?//= CHtml::label('مرا به خاطر بسپار','remember-me',array('class'=>'text-gray')) ?>
 <!--    </div>-->
+    <div class="form-group text-right">
+        <a href="<?= $this->createUrl('/forgetPassword') ?>" class="gray-link text-left">رمز عبور خود را فراموش کرده ام!</a>
+    </div>
     <button type="submit" class="btn btn-warning" id="login-submit-btn">ورود به حساب کاربری</button>
     <button class="btn btn-link" data-dismiss="modal" data-toggle="modal" data-target="#join-modal">ایجاد حساب کاربری</button>
 <?php $this->endWidget(); ?>
