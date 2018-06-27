@@ -183,24 +183,27 @@ class Lists extends CActiveRecord
         $itemImagesPath = Yii::getPathOfAlias('webroot').'/uploads/items/';
         if($this->scenario != 'change_status' && $this->items){
 			ListItemRel::model()->deleteAllByAttributes(array('list_id' => $this->id));
+			echo '<meta charset="utf-8"><pre>';
             foreach($this->items as $item){
-                $model = Items::model()->findByAttributes(array('title' => $item['title']));
-                if($model === null){
-                    $model = new Items();
-                    $model->title = $item['title'];
-                    $model->status = $this->user_type=='admin'?Items::STATUS_APPROVED:Items::STATUS_PENDING;
-                    @$model->save();
-                }
-                if($model){
-                    $rel = new ListItemRel();
-                    $rel->item_id = $model->id;
-                    $rel->list_id = $this->id;
-					$rel->image = isset($item['image']) && (is_file($tempPath . $item['image']) or is_file($itemImagesPath . $item['image']))?$item['image']:null;
-                    $rel->description = isset($item['description'])?$item['description']:null;
-					$rel->user_id = $this->user_id;
-					$rel->status = ListItemRel::STATUS_ACCEPTED;
-                    @$rel->save();
-                }
+				if(!empty($item['title'])) {
+					$model = Items::model()->findByAttributes(array('title' => $item['title']));
+					if ($model === null) {
+						$model = new Items();
+						$model->title = $item['title'];
+						$model->status = $this->user_type == 'admin' ? Items::STATUS_APPROVED : Items::STATUS_PENDING;
+						@$model->save();
+					}
+					if($model){
+						$rel = new ListItemRel();
+                        $rel->item_id = $model->id;
+                        $rel->list_id = $this->id;
+                        $rel->image = isset($item['image']) && (is_file($tempPath . $item['image']) or is_file($itemImagesPath . $item['image']))?$item['image']:null;
+                        $rel->description = isset($item['description'])?$item['description']:null;
+                        $rel->user_id = Yii::app()->user->roles == 'admin' ? null : $this->user_id;
+                        $rel->status = ListItemRel::STATUS_ACCEPTED;
+                        @$rel->save();
+                    }
+				}
             }
         }
 		
