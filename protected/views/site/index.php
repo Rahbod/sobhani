@@ -136,7 +136,8 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
                         <p>
                             <b><a href="<?= $list->getViewUrl() ?>"><?= $list->title ?></a></b>
                             <?php
-                            echo mb_substr(strip_tags($list->description), 0, 100);
+                            $txt = strip_tags($list->description);
+                            echo mb_substr($txt, 0, 80, "UTF-8").(mb_strlen($txt)>80?"...":"");
                             ?>
                         </p>
                     </div>

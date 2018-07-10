@@ -21,7 +21,6 @@ $this->breadcrumbs = array(
             ?>
             <?php
             $model = new UserLoginForm();
-            Yii::app()->user->returnUrl = Yii::app()->request->url;
             $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'users-login-form',
                 'action' => Yii::app()->createUrl('/login'),
@@ -65,9 +64,10 @@ $this->breadcrumbs = array(
             <p id="login-error" class="errorMessage"></p>
             <p id="UserLoginForm_authenticate_field_em_" class="errorMessage"></p>
 
-            <a href="<?= $this->createUrl('/googleLogin') ?>" class="btn-red text-center" id="google-login-btn"><i class="google-icon"></i>ورود یا ثبت نام با گوگل</a>
+            <a href="<?= $this->createUrl('/googleLogin?return-url='.Yii::app()->user->returnUrl) ?>" class="btn-red text-center" id="google-login-btn"><i class="google-icon"></i>ورود یا ثبت نام با گوگل</a>
             <div class="text-center">یا</div>
 
+            <?php echo CHtml::hiddenField('returnUrl', Yii::app()->user->returnUrl) ?>
             <div class="form-group">
                 <?php echo $form->textField($model, 'verification_field_value', array('class' => 'ltr text-right form-control', 'placeholder' => 'شماره موبایل / پست الکترونیکی')); ?>
                 <?php echo $form->error($model, 'verification_field_value'); ?>

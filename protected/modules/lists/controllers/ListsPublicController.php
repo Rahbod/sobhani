@@ -70,8 +70,10 @@ class ListsPublicController extends Controller
     public function actionView($id)
     {
         Yii::app()->theme = 'frontend';
-        $model = Lists::model()->findByPk($id, 'status = :status', [':status' => Lists::STATUS_APPROVED]);
+        $model = $this->loadModel($id);
         if ($model === null)
+            throw new CHttpException(404, 'The requested page does not exist.');
+        if ($model->status != Lists::STATUS_APPROVED && $model->user_id != Yii::app()->user->getId())
             throw new CHttpException(404, 'The requested page does not exist.');
         $criteria = new CDbCriteria();
         $criteria->join = 'LEFT OUTER JOIN `ym_votes` `votes` ON  (`votes`.`item_id` = `itemRel`.`item_id`) LEFT OUTER JOIN `ym_items` `item` ON (`votes`.`item_id` = `item`.`id`)';
