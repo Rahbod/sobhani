@@ -35,6 +35,12 @@ class AdminsDashboardController extends Controller
         $criteria->params[':status'] = ListItemRel::STATUS_PENDING;
         $newItemsProvider = new CActiveDataProvider('ListItemRel', ['criteria' => $criteria]);
 
-        $this->render('index', compact('statistics', 'newItemsProvider'));
+
+        $lists = new Lists('search');
+        $lists->unsetAttributes();  // clear any default values
+        if (isset($_GET['Lists']))
+            $lists->attributes = $_GET['Lists'];
+
+        $this->render('index', compact('statistics', 'newItemsProvider', 'lists'));
     }
 }

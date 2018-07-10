@@ -484,6 +484,7 @@ class ListsPublicController extends Controller
         $criteria = new CDbCriteria();
         $criteria->order = 'seen DESC, t.title';
         if (isset($_GET['term']) && !empty($_GET['term'])) {
+            $_GET['term'] = trim($_GET['term']);
             $criteria->addCondition('t.status = :status');
             $criteria->addCondition('t.title REGEXP :field OR t.description REGEXP :field OR
 						category.title REGEXP :field OR category.description REGEXP :field OR itemObj.title REGEXP :field');

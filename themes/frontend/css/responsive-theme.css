@@ -8,6 +8,31 @@
     }
 }
 @media screen and (max-width: 767px) {
+    .uploader-container,
+    .uploader-container .dropzone.single,
+    .userinfo .user-image{
+        width: 100px;
+        height: 100px;
+        min-height:100px;
+        overflow: hidden;
+    }
+    .content .left-side strong{
+        font-size: 16px;
+    }
+    .content{
+        margin-top: 0;
+    }
+    .content .left-side strong a{
+        font-size: 14px;
+    }
+    .content .left-side .context ol{
+        padding-left: 10px;
+        margin-bottom: 30px;
+    }
+    .content .left-side .context ol li{
+        margin-bottom: 10px;
+        font-size: 13px;
+    }
     .owl-carousel .owl-controls .owl-nav{
         display: block;
     }
@@ -181,9 +206,6 @@
     }
     .content .left-side .context ol{
         padding-left: 15px;
-    }
-    .content .left-side .context ol li{
-        margin-bottom: 30px;
     }
     .pishdiv{
         margin-right: 0;
