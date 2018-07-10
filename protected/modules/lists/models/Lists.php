@@ -132,39 +132,40 @@ class Lists extends CActiveRecord
 		);
 	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
+    /**
+     * @param bool $pendings
+     * @param bool $limis
+     * @return CActiveDataProvider
+     */
+	public function search($pendings = false, $limis = false)
+    {
+        // @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('image',$this->image,true);
-		$criteria->compare('title',$this->title,true);
-		$criteria->compare('description',$this->description,true);
-        $criteria->compare('user_type',$this->user_type);
-		$criteria->compare('user_id',$this->user_id,true);
-		$criteria->compare('category_id',$this->category_id,true);
-		$criteria->compare('create_date',$this->create_date,true);
-		$criteria->compare('seen',$this->seen,true);
-		$criteria->compare('status',$this->status,true);
-		$criteria->order = 'id DESC';
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+        $criteria->compare('id', $this->id, true);
+        $criteria->compare('image', $this->image, true);
+        $criteria->compare('title', $this->title, true);
+        $criteria->compare('description', $this->description, true);
+        $criteria->compare('user_type', $this->user_type);
+        $criteria->compare('user_id', $this->user_id, true);
+        $criteria->compare('category_id', $this->category_id, true);
+        $criteria->compare('create_date', $this->create_date, true);
+        $criteria->compare('seen', $this->seen, true);
+        $criteria->compare('status', $this->status, true);
+
+        if ($limis)
+            $criteria->limit = $limis;
+        if ($pendings) {
+            $criteria->addCondition('status = :status');
+            $criteria->params[":status"] = Lists::STATUS_PENDING;
+        }
+
+        $criteria->order = 'id DESC';
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
 
 	/**
 	 * Returns the static model of the specified AR class.

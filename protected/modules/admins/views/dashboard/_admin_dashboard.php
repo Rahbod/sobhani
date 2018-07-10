@@ -20,8 +20,19 @@ if(Yii::app()->user->roles == 'admin'){
 }
 ?>
 <div class="row boxed-statistics">
-    <!--Cars Statistics-->
-    
+    <div class="col-md-4 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-blue">
+            <div class="inner">
+                <h3><?php echo $statistics['comments'];?></h3>
+                <p>نظرات (خوانده نشده)</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-android-chat"></i>
+            </div>
+            <a href="<?php echo $this->createUrl('/comments/comment/admin');?>" class="small-box-footer">مشاهده نظرات <i class="fa fa-arrow-circle-left"></i></a>
+        </div>
+    </div>
 </div>
 <div class="row">
     <section class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -32,7 +43,7 @@ if(Yii::app()->user->roles == 'admin'){
             <div class="box-body">
                 <?php $this->widget('zii.widgets.grid.CGridView', array(
                     'id'=>'admins-grid',
-                    'dataProvider'=>$lists->search(),
+                    'dataProvider'=>$lists->search(true),
                     'itemsCssClass'=>'table table-striped',
                     'columns'=>array(
                         'title',

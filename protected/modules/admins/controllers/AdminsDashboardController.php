@@ -28,7 +28,11 @@ class AdminsDashboardController extends Controller
     {
         Yii::app()->getModule('contact');
         Yii::app()->getModule('lists');
-        $statistics = [];
+        Yii::app()->getModule('comments');
+
+        $commentCriteria = new CDbCriteria();
+        $commentCriteria->compare('t.status', Comment::STATUS_NOT_APPROWED);
+        $statistics = ['comments' => Comment::model()->count($commentCriteria)];
 
         $criteria = new CDbCriteria();
         $criteria->addCondition('status = :status');
