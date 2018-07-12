@@ -42,6 +42,7 @@ class ListsCategoryController extends Controller
 		if(isset($_POST['ListCategories']))
 		{
 			$model->attributes=$_POST['ListCategories'];
+			$model->parent_id = empty($model->parent_id)?null:$model->parent_id;
 			if($model->save()){
 				Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;لیست شما با موفقیت ثبت شد. این لیست پس از تایید کارشناسان بصورت عمومی نمایش داده خواهد شد.');
 				$this->redirect(array('admin'));
@@ -66,8 +67,7 @@ class ListsCategoryController extends Controller
 		if(isset($_POST['ListCategories']))
 		{
 			$model->attributes=$_POST['ListCategories'];
-            if($_POST['ListCategories']['parent_id'] == '')
-                $model->parent_id = null;
+            $model->parent_id = empty($model->parent_id)?null:$model->parent_id;
 			if($model->save()){
 				Yii::app()->user->setFlash('success', '<span class="icon-check"></span>&nbsp;&nbsp;اطلاعات با موفقیت ذخیره شد.');
 				$this->redirect(array('admin'));

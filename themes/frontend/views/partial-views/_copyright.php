@@ -1,1 +1,1 @@
-&copy; <?php echo date('Y');?> <strong>CarCadeh</strong>. All rights reserved.
+&copy; <?php echo date('Y');?> <strong>10 BEHTARIN</strong>. All rights reserved.

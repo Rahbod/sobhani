@@ -28,13 +28,23 @@ class AdminsDashboardController extends Controller
     {
         Yii::app()->getModule('contact');
         Yii::app()->getModule('lists');
-        $statistics = [];
+        Yii::app()->getModule('comments');
+
+        $commentCriteria = new CDbCriteria();
+        $commentCriteria->compare('t.status', Comment::STATUS_NOT_APPROWED);
+        $statistics = ['comments' => Comment::model()->count($commentCriteria)];
 
         $criteria = new CDbCriteria();
         $criteria->addCondition('status = :status');
         $criteria->params[':status'] = ListItemRel::STATUS_PENDING;
         $newItemsProvider = new CActiveDataProvider('ListItemRel', ['criteria' => $criteria]);
 
-        $this->render('index', compact('statistics', 'newItemsProvider'));
+
+        $lists = new Lists('search');
+        $lists->unsetAttributes();  // clear any default values
+        if (isset($_GET['Lists']))
+            $lists->attributes = $_GET['Lists'];
+
+        $this->render('index', compact('statistics', 'newItemsProvider', 'lists'));
     }
 }

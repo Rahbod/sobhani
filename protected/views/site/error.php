@@ -28,7 +28,7 @@
             <?php $this->renderPartial('//partial-views/_copyright');?>
         </div>
         <div>
-            <a href="<?php echo $this->createUrl('/help')?>">راهنما</a> / <a href="#">تماس با ما</a>
+            <a href="<?php echo $this->createUrl('/help')?>">راهنما</a> / <a href="<?php echo $this->createUrl('/contactUs')?>">تماس با ما</a>
         </div>
     </div>
     <!-- ./Copyright -->

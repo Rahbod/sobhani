@@ -70,8 +70,10 @@ class ListsPublicController extends Controller
     public function actionView($id)
     {
         Yii::app()->theme = 'frontend';
-        $model = Lists::model()->findByPk($id, 'status = :status', [':status' => Lists::STATUS_APPROVED]);
+        $model = $this->loadModel($id);
         if ($model === null)
+            throw new CHttpException(404, 'The requested page does not exist.');
+        if ($model->status != Lists::STATUS_APPROVED && $model->user_id != Yii::app()->user->getId())
             throw new CHttpException(404, 'The requested page does not exist.');
         $criteria = new CDbCriteria();
         $criteria->join = 'LEFT OUTER JOIN `ym_votes` `votes` ON  (`votes`.`item_id` = `itemRel`.`item_id`) LEFT OUTER JOIN `ym_items` `item` ON (`votes`.`item_id` = `item`.`id`)';
@@ -81,6 +83,7 @@ class ListsPublicController extends Controller
         $criteria->alias = 'itemRel';
         $criteria->params[':itemID'] = $id;
         $criteria->params[':status'] = ListItemRel::STATUS_ACCEPTED;
+        $criteria->index = 'item_id';
         $items = ListItemRel::model()->findAll($criteria);
         Yii::app()->db->createCommand()->update('{{lists}}', array('seen' => (int)$model->seen + 1), 'id = :id', array(':id' => $id));
 
@@ -482,6 +485,7 @@ class ListsPublicController extends Controller
         $criteria = new CDbCriteria();
         $criteria->order = 'seen DESC, t.title';
         if (isset($_GET['term']) && !empty($_GET['term'])) {
+            $_GET['term'] = trim($_GET['term']);
             $criteria->addCondition('t.status = :status');
             $criteria->addCondition('t.title REGEXP :field OR t.description REGEXP :field OR
 						category.title REGEXP :field OR category.description REGEXP :field OR itemObj.title REGEXP :field');

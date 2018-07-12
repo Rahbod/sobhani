@@ -85,7 +85,7 @@ foreach ($parents as $parentID => $parent){
                 if($i==2) echo 'bronze';
                 ?>"><?= $i+1?></span>
                 <div class="input-container">
-                    <?= CHtml::textField("Lists[items][{$i}][title]", isset($model->items[$i]['title'])?$model->items[$i]['title']:'', array('class' => 'transparent-input item-title', 'placeholder' => "گزینه")) ?>
+                    <?= CHtml::textField("Lists[items][{$i}][title]", isset($model->items[$i]['title'])?$model->items[$i]['title']:'', array('class' => 'transparent-input item-title', 'placeholder' => "عنوان گزینه")) ?>
                 </div>
                 <div class="row">
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
