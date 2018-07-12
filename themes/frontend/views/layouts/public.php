@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#158BFF" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<?= Yii::app()->request->csrfToken ?>" />
-    <meta name="keywords" content="<?= $this->keywords ?>">
+    <meta name="keywords" content="<?= implode(',', json_decode($this->keywords, true)) ?>">
     <meta name="description" content="<?= $this->description?> ">
     <link rel="alternate" href="10behtarin.com" hreflang="fa" />
     <title><?= (!empty($this->pageTitle)?$this->pageTitle.' | ':'').$this->siteName ?></title>
