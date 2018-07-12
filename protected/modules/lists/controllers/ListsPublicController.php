@@ -83,6 +83,7 @@ class ListsPublicController extends Controller
         $criteria->alias = 'itemRel';
         $criteria->params[':itemID'] = $id;
         $criteria->params[':status'] = ListItemRel::STATUS_ACCEPTED;
+        $criteria->index = 'item_id';
         $items = ListItemRel::model()->findAll($criteria);
         Yii::app()->db->createCommand()->update('{{lists}}', array('seen' => (int)$model->seen + 1), 'id = :id', array(':id' => $id));
 

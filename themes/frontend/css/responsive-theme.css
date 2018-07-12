@@ -19,7 +19,7 @@
     .content .left-side strong{
         font-size: 16px;
     }
-    .content{
+    .slider + .content{
         margin-top: 0;
     }
     .content .left-side strong a{

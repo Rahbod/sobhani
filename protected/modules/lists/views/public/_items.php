@@ -12,7 +12,11 @@ Yii::app()->clientScript->registerScript('target', '
         $(this).addClass("loading");
     });
 ');
-foreach($items as $item):
+arsort($voteAvg, SORT_DESC);
+foreach($voteAvg as $itemID => $avg):
+    if(!isset($items[$itemID]))
+        continue;
+    $item = $items[$itemID];
     $voted = Votes::checkVote($model->id, $item->item_id);
     $hash = base64_encode(json_encode(['list_id' => $item->list_id, 'item_id' => $item->item_id]));
     ?>
@@ -48,7 +52,7 @@ foreach($items as $item):
                     }'), array('class' => 'vote-trigger pull-left'));
                     echo '<span class="vote-trigger active pull-left" style="margin-left: 10px;line-height: 46px;">%' . $voteAvg[$item->item_id] . '</span>';
                 } else
-                    echo '<span class="vote-trigger active pull-left">%'.$voteAvg[$item->item_id].'</span>';
+                    echo '<span class="vote-trigger active pull-left">%'.$avg.'</span>';
                 ?>
                 <div class="text-right"><?= $item->item->title ?></div>
             </h4>
