@@ -42,7 +42,7 @@ if(Yii::app()->user->roles == 'admin'){
             </div>
             <div class="box-body">
                 <?php $this->widget('zii.widgets.grid.CGridView', array(
-                    'id'=>'admins-grid',
+                    'id'=>'lists-grid',
                     'dataProvider'=>$lists->search(true),
                     'itemsCssClass'=>'table table-striped',
                     'columns'=>array(
@@ -97,6 +97,18 @@ if(Yii::app()->user->roles == 'admin'){
                         ),
                         array(
                             'class'=>'CButtonColumn',
+                            'template' => '{view} {update} {delete}',
+                            'buttons'=>array(
+                                'view'=>array(
+                                    'url'=>'Yii::app()->createUrl("/lists/view", array("id" => $data->id))',
+                                ),
+                                'delete'=>array(
+                                    'url'=>'Yii::app()->createUrl("/lists/manage/delete", array("id" => $data->id))',
+                                ),
+                                'update'=>array(
+                                    'url'=>'Yii::app()->createUrl("/lists/manage/update", array("id" => $data->id))',
+                                ),
+                            ),
                         ),
                     ),
                 )); ?>
