@@ -7,7 +7,7 @@
             <li>
                 <span><a href="<?= $this->createAbsoluteUrl('/terms') ?>">شرایط</a></span>
                 | <span><a href="<?= $this->createAbsoluteUrl('/about') ?>">درباره</a></span>
-                | <span><a href="<?= $this->createAbsoluteUrl('/contactUs') ?>">تماس</a></span>
+                | <span><a href="<?= $this->createAbsoluteUrl('/contact') ?>">تماس</a></span>
             </li>
             <li>کلیه حقوق برای 10 بهترین محفوظ است.</li>
         </ul>

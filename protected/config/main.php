@@ -39,6 +39,7 @@ return array(
 		'pages',
 		'places',
 		'lists',
+        'contact',
 		'comments'=>array(
 			//you may override default config for all connecting models
 			'defaultModelConfig' => array(
@@ -118,7 +119,7 @@ return array(
 				'lists/category/<id:\d+>/<title:.*>'=>'lists/category/view',
 				'new' => 'lists/public/new',
 				'<type:(recommended|latest)>' => 'lists/public/rows',
-				'<action:(about|contactUs|contact|help|terms|search|faq)>' => 'site/<action>',
+				'<action:(about|contact|help|terms|search|faq)>' => 'site/<action>',
 				'my-lists' => 'users/public/lists',
 				'<action:(logout|dashboard|googleLogin|login|register|changePassword|forgetPassword|profile|notifications|recoverPassword|bookmarks)>' => 'users/public/<action>',
 				'<module:\w+>/<id:\d+>'=>'<module>/public/view',
