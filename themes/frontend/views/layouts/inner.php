@@ -59,6 +59,20 @@
                         </div>
                     <?php endforeach; ?>
                 </div>
+
+                <?php if($this->similarProvider):?>
+                    <div class="tren">
+                        <h4>لیست های مرتبط</h4>
+                        <?php foreach ($this->similarProvider as $item): ?>
+                            <div class="trending">
+                                <a href="<?= $item->getViewUrl() ?>"><img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/200x200/'. $item->getImage() ?>" alt="<?= $item->title ?>" title="<?= $item->title ?>">
+                                    <?= $item->title ?></a>
+                                <br>
+                                <?= $item->seen ?>&nbsp;بازدید
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

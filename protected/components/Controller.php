@@ -51,6 +51,7 @@ class Controller extends AuthController
     public $prices;
     public $leftBox;
     public $tempPath = 'uploads/temp';
+    public $similarProvider = false;
 
     public function getPageSizeDropDownTag()
     {

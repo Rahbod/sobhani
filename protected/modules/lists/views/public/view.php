@@ -114,5 +114,14 @@ $this->pageTitle = $model->title;
         <?php else:?>
             <a class="btn btn-blue add-new-item" data-toggle="modal" href="#login-modal"><i class="glyphicon glyphicon-plus"></i>افزودن گزینه جدید</a>
         <?php endif;?>
+
+        <div class="new-list-box">
+            <p class="text-center">شما نیز میتوانید لیست دلخواه خود را ایجاد کنید.</p>
+            <p class="text-center">
+                <a class="btn btn-blue btn-custom" href="<?= $this->createUrl('/new') ?>" title="ایجاد لیستی از بهترین ها">
+                    ایجاد لیستی از بهترین ها
+                </a>
+            </p>
+        </div>
 	</div>
 </div>

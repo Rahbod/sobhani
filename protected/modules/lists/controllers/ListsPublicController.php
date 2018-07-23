@@ -89,6 +89,15 @@ class ListsPublicController extends Controller
         $this->keywords = $model->getKeywords();
         $this->description = mb_substr(strip_tags($model->description),0,160,'UTF-8');
         $this->pageTitle = $model->title;
+
+        // get latest news
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('id <> :id');
+        $criteria->addCondition('category_id = :catid');
+        $criteria->params = [':id' => $id, ':catid' => $model->category_id];
+        $criteria->limit = 10;
+        $this->similarProvider = Lists::model()->findAll($criteria);
+
         Yii::app()->db->createCommand()->update('{{lists}}', array('seen' => (int)$model->seen + 1), 'id = :id', array(':id' => $id));
 
         if (isset($_POST['title'])) {

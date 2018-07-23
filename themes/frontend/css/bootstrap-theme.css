@@ -1839,3 +1839,27 @@ input.item-title{
 .item-title{
     font-size: 18px;
 }
+
+.new-list-box{
+    margin-top: 50px;
+    display: block;
+    overflow: hidden;
+    border-top: 1px solid #aaa;
+    padding: 50px 15px;
+}
+
+.new-list-box p:first-of-type{
+    font-size: 1.5em;
+}
+
+.btn-custom{
+    width: 75%;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 30px;
+    line-height: 32px;
+    padding: 15px !important;
+}
+.tren{
+    margin-bottom: 30px;
+}
