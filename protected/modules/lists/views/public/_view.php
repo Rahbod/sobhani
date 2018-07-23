@@ -5,7 +5,7 @@ $url = Yii::app()->getBaseUrl(true).'/uploads/lists/thumbs/200x200/';
 ?>
 <div class="list-item col-lg-6 col-md-6 col-sm-6 col-xs-12">
     <a href="<?= $data->getViewUrl()?>">
-        <img src="<?= $url.$data->getImage()?>">
+        <img src="<?= $url.$data->getImage()?>" alt="<?= $data->title ?>" title="<?= $data->title ?>">
         <?= $data->title ?>
     </a>
 </div>

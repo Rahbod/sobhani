@@ -18,11 +18,11 @@ $this->pageTitle = $model->title;
 </div>
 <div class="list-item-view">
     <div class="image-box">
-        <img src="<?= Yii::app()->baseUrl.'/uploads/lists/thumbs/200x200/'.$model->getImage()?>" class="image">
+        <img src="<?= Yii::app()->baseUrl.'/uploads/lists/thumbs/200x200/'.$model->getImage()?>" class="image" alt="<?= $model->title ?>" title="<?= $model->title ?>">
         <h2><?= $model->title ?></h2>
         <?php if($model->user_type == 'user'):?>
         <div class="user-image">
-            <img src="<?= $model->user->userDetails->getAvatar() ?>">
+            <img src="<?= $model->user->userDetails->getAvatar() ?>" alt="<?= $model->user->userDetails?$model->user->userDetails->getShowName():$model->user->email ?>" title="<?= $model->user->userDetails?$model->user->userDetails->getShowName():$model->user->email ?>">
             <small><?= $model->user->userDetails ? CHtml::link($model->user->userDetails->getShowName(),array('/users/public/viewProfile/'.$model->user->id.'/'.str_replace(' ', '-', $model->user->userDetails->getShowName()))):$model->user->email ?></small>
         </div>
         <?php endif; ?>

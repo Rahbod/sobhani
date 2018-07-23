@@ -8,7 +8,7 @@ $purifier=new CHtmlPurifier();
 
 <div class="profile">
     <div class="info">
-        <img src="<?php echo $model->userDetails->getAvatar();?>">
+        <img src="<?php echo $model->userDetails->getAvatar();?>" alt="<?= $model->userDetails->getShowName() ?>" title="<?= $model->userDetails->getShowName() ?>">
         <div class="text">
             <h1><?php echo $model->userDetails->getShowName();?></h1>
             <small><span><?php echo $model->email;?></span><span>تاریخ عضویت: <?php echo JalaliDate::date('d F Y', $model->create_date);?></span></small>

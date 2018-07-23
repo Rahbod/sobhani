@@ -17,7 +17,7 @@ $this->breadcrumbs=array(
                 <label>تصویر</label>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div style="width: 300px;height: auto;display: inline-block;margin-bottom: 15px">
-                        <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/items/'.$itemRel->image ?>" style="width: 100%;height: auto;display: inline-block">
+                        <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/items/'.$itemRel->image ?>" style="width: 100%;height: auto;display: inline-block" alt="<?= $itemRel->item->title ?>" title="<?= $itemRel->item->title ?>">
                     </div>
                 </div>
             </div>

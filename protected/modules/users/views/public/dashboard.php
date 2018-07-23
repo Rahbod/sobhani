@@ -44,7 +44,7 @@ $model = UserDetails::model()->findByPk($user->id);
         <div class="uploader-message error"></div>
     </div>
     <div class="user-image">
-        <img src="<?= $user->userDetails->getAvatar() ?>">
+        <img src="<?= $user->userDetails->getAvatar() ?>" alt="<?= $user->userDetails->getShowName() ?>" title="<?= $user->userDetails->getShowName() ?>">>
     </div>
     <strong><?= $user->userDetails->getShowName() ?></strong>
     <div class="description"><?= $user->email?></div>

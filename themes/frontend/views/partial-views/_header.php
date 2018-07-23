@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="logo-box">
                     <a href="<?= Yii::app()->getBaseUrl(true)?>">
-                        <img src="<?php echo Yii::app()->theme->baseUrl.'/svg/logo.svg' ?>">
+                        <img src="<?php echo Yii::app()->theme->baseUrl.'/svg/logo.svg' ?>" alt="<?= Yii::app()->name ?>" title="<?= Yii::app()->name ?>">
                     </a>
                 </div>
             </div>

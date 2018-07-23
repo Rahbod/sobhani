@@ -28,8 +28,8 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
             ?>
             <div class="thumbnail-container">
                 <div class="thumbnail">
-                    <a href="<?= $this->createUrl('/lists/' . $item->id . '/' . str_replace(' ', '-', $item->title)) ?>">
-                        <img src="<?= $listUrl . $item->getImage() ?>">
+                    <a href="<?= $this->createUrl('/lists/' . $item->id . '/' . str_replace(' ', '-', $item->title)) ?>" title="<?= $item->title ?>">
+                        <img src="<?= $listUrl . $item->getImage() ?>" alt="<?= $item->title ?>" title="<?= $item->title ?>">
                         <div class="overlay">
                             <h3><?= $item->title ?></h3>
                         </div>
@@ -72,7 +72,7 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
                                 if ($item):
                                     if ($item->image && is_file($listItemPath . $item->image)):
                                         ?>
-                                        <img src="<?= $listItemUrl . $item->image ?>">
+                                        <img src="<?= $listItemUrl . $item->image ?>"  alt="<?= $item->title ?>" title="<?= $item->title ?>">
                                     <?php
                                     endif;
                                 endif;
@@ -105,7 +105,7 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
                             <?php if ($list->user_type == 'user'): ?>
                                 <div class="user-image">
                                     <a href="<?= Yii::app()->createUrl('/users/public/viewProfile/' . $list->user->id . '/' . str_replace(' ', '-', $list->user->userDetails->getShowName())) ?>">
-                                        <img class="asrc" src="<?= $list->user->userDetails->getAvatar() ?>">
+                                        <img class="asrc" src="<?= $list->user->userDetails->getAvatar() ?>"  alt="<?= $list->user->userDetails ? $list->user->userDetails->getShowName() : $list->user->email ?>" title="<?= $list->user->userDetails ? $list->user->userDetails->getShowName() : $list->user->email ?>">
                                         <small><?= $list->user->userDetails ? $list->user->userDetails->getShowName() : $list->user->email ?></small>
                                     </a>
                                 </div>
@@ -152,7 +152,7 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
                 <h4>ده فهرست برتر</h4>
                 <?php foreach ($this->getTopListBySeen() as $item): ?>
                     <div class="trending">
-                        <a href="<?= $item->getViewUrl() ?>"><img src="<?= $listUrl . $item->getImage() ?>">
+                        <a href="<?= $item->getViewUrl() ?>" title="<?= $item->title ?>"><img src="<?= $listUrl . $item->getImage() ?>" alt="<?= $item->title ?>" title="<?= $item->title ?>">
                         <?= $item->title ?></a>
                         <br>
                           <?= $item->seen ?>&nbsp;بازدید

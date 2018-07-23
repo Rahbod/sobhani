@@ -1,7 +1,7 @@
 <div class="footer">
     <div class="container">
         <a href="<?= Yii::app()->getBaseUrl(true)?>">
-            <img src="<?= Yii::app()->theme->baseUrl ?>/svg/logo-gray.svg" class="logo">
+            <img src="<?= Yii::app()->theme->baseUrl."/svg/logo-gray.svg" ?>" class="logo" alt="<?= Yii::app()->name ?>" title="<?= Yii::app()->name ?>">
         </a>
         <ul class="list-unstyled">
             <li>
@@ -30,7 +30,7 @@
         </ul>
         <div class="rahbod-container">
             <a href="http://rahbod.com" target="_blank" title="طراحی و پیاده سازی شده توسط رهبد" class="rahbod">
-                <img src="<?= Yii::app()->baseUrl.'/themes/frontend/svg/rahbod.svg'?>" alt="Rahbod">
+                <img src="<?= Yii::app()->baseUrl.'/themes/frontend/svg/rahbod.svg'?>"  alt="Rahbod" title="Rahbod">
             </a>
         </div>
     </div>

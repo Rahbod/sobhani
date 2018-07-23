@@ -59,7 +59,7 @@ foreach($voteAvg as $itemID => $avg):
         </div>
         <?php if($item->image && is_file($itemImagePath.$item->image)):?>
             <div class="list-view-image">
-                <img src="<?= $itemImageUrl.$item->image ?>" alt="<?= $item->item->title ?>" >
+                <img src="<?= $itemImageUrl.$item->image ?>" alt="<?= $item->item->title ?>" title="<?= $item->item->title ?>">
             </div>
         <?php endif;?>
         <div class="text"><?= $item->description ?></div>

@@ -52,7 +52,7 @@ $this->breadcrumbs=array(
             <?php  echo $form->labelEx($model,'image'); ?>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div style="width: 300px;height: auto;display: inline-block;margin-bottom: 15px">
-                    <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/lists/'.$model->image ?>" style="width: 100%;height: auto;display: inline-block">
+                    <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/lists/'.$model->image ?>" style="width: 100%;height: auto;display: inline-block" alt="<?= $model->title ?>" title="<?= $model->title ?>">
                 </div>
             </div>
         </div>
@@ -87,7 +87,6 @@ $this->breadcrumbs=array(
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div style="width: 300px;height: auto;display: inline-block;margin-bottom: 15px">
-
                                     <img src="<?= Yii::app()->getBaseUrl(true).'/uploads/items/'.$item['image']?>" style="width: 100%;height: auto;display: inline-block">
                                 </div>
                             </div>
