@@ -124,10 +124,16 @@ body{
 }
 .thumbnail-container{
     width: 200px;
+    height: 200px;
     margin-left: 20px;
 }
 .thumbnail-container .thumbnail{
     border: none;
+    width: 200px;
+    height: 200px;
+}
+img{
+    text-indent: -9999px;
 }
 .thumbnail .thumb a{
     display: inline-block;
@@ -265,14 +271,15 @@ body{
 .content .left-side .container-col .member img{
     background: rgba(0, 0, 0, 0) url("//avatars.thetoptens.com/sm/masoncarr2244.png") no-repeat scroll center center;
 }
-.content .left-side h3{
+
+.content .left-side h2{
     background: #F5F5F5;
     font-size: 16px;
     font-weight: normal;
     color: #888485;
     border-radius: 1px;
     padding: 0 15px 0 17px;
-    margin: 30px 0 15px;
+    margin: 15px 0 30px;
     display: block;
     height: 40px;
     line-height: 40px;
@@ -338,7 +345,7 @@ body{
     -o-transition: all 0.2s cubic-bezier(.25,.8,.25,1);
     transition: all 0.2s cubic-bezier(.25,.8,.25,1);
 }
-.feature-item p b{
+.feature-item .item-title{
     color: #3285A7;
     font-size: 18px;
     line-height: 26px;
@@ -599,6 +606,7 @@ body{
     float: right;
     margin-left: 12px;
     width: 100px;
+    min-height: 100px;
     height: auto;
     -webkit-border-radius:2px;
     -moz-border-radius:2px;
@@ -1417,11 +1425,10 @@ input[type="radio"]{
 }
 .content .left-side strong{
     color: #3285A7;
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 22px;
+    line-height: 26px;
     font-weight: normal;
     display: block;
-    margin: 20px 0 20px 0;
 }
 .content .left-side strong a{
     color: #3285A7;
@@ -1728,7 +1735,7 @@ input.item-title{
     line-height: 25px;
     text-align: right;
 }
-input.form-control{
+.contact-form input.form-control{
     height: 42px !important;
 }
 .contact-form .btn.dropdown-toggle.btn-default,
@@ -1827,4 +1834,8 @@ input.form-control{
 .grayscale:hover {
     filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale");
     opacity: 1;
+}
+
+.item-title{
+    font-size: 18px;
 }

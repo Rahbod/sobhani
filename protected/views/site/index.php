@@ -18,8 +18,7 @@ $listItemPath = Yii::getPathOfAlias('webroot') . '/uploads/items/thumbs/200x200/
 $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
 ?>
 <div class="slider">
-    <h1><?= Controller::parseNumbers(number_format($count)) ?>&nbsp;لیست از بهترین ها براساس رای شما
-        </h1>
+    <h1><?= Controller::parseNumbers(number_format($count)) ?>&nbsp;لیست از بهترین ها براساس رای شما</h1>
     <div class="is-carousel" data-items="7" data-item-selector="thumbnail-container" data-margin="10" data-dots="1"
          data-nav="1" data-mouse-drag="1"
          data-responsive='{"1920":{"items":"7"},"1200":{"items":"6"},"992":{"items":"5"},"768":{"items":"3"},"480":{"items":"2"},"0":{"items":"1"}}'>
@@ -62,17 +61,14 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
                     <div class="newlist">
                         <div class="multiimage">
                             <?php
-
                             $itemRel = $list->itemRel;
-                            ?>
-                            <?php
-                            $i = 0;
                             $item = $itemRel[0];
+                            $i = 0;
                             while ($i < 3):
                                 if ($item):
                                     if ($item->image && is_file($listItemPath . $item->image)):
                                         ?>
-                                        <img src="<?= $listItemUrl . $item->image ?>"  alt="<?= $item->title ?>" title="<?= $item->title ?>">
+                                        <img src="<?= $listItemUrl . $item->image ?>"  alt="<?= $item->item->title ?>" title="<?= $item->item->title ?>">
                                     <?php
                                     endif;
                                 endif;
@@ -82,9 +78,7 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
                             ?>
                         </div>
                         <i>لیست جدید</i>
-                        <strong>
-                            <a href="<?= $this->createUrl('/lists/' . $list->id . '/' . str_replace(' ', '-', $list->title)) ?>"><?= $list->title ?></a>
-                        </strong>
+                        <h2><strong><a href="<?= $this->createUrl('/lists/' . $list->id . '/' . str_replace(' ', '-', $list->title)) ?>"><?= $list->title ?></a></strong></h2>
                         <ol type="1">
                             <?php
                             $voteAvg = Votes::VoteAverages($list->id);
@@ -115,7 +109,7 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
                 <?php endforeach; ?>
             </div>
             <div class="events">
-                <h3>در حال رخ دادن</h3>
+                <h2>در حال رخ دادن</h2>
                 <input type="hidden" id="last-id" value="<?= $lastEvents[0]->id?>">
                 <table id="feed" itemscope="5">
                     <tbody>
@@ -129,12 +123,12 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
                 </table>
             </div>
             <div class="specials">
-                <h3>لیست های ویژه</h3>
+                <h2>لیست های ویژه</h2>
                 <?php foreach ($this->getSpecialLists(6) as $list): ?>
                     <div class="feature-item">
-                        <img src="<?= $listUrl . $list->getImage() ?>">
+                        <a href="<?= $list->getViewUrl() ?>"><img src="<?= $listUrl . $list->getImage() ?>" alt="<?= $list->title ?>" title="<?= $list->title ?>"></a>
                         <p>
-                            <b><a href="<?= $list->getViewUrl() ?>"><?= $list->title ?></a></b>
+                            <a href="<?= $list->getViewUrl() ?>"><h3 class="item-title"><?= $list->title ?></h3></a>
                             <?php
                             $txt = strip_tags($list->description);
                             echo mb_substr($txt, 0, 80, "UTF-8").(mb_strlen($txt)>80?"...":"");

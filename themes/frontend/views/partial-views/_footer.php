@@ -17,11 +17,6 @@
                     <i class="facebook-icon"></i>
                 </a>
             </li>
-<!--            <li>-->
-<!--                <a href="--><?//= $this->socialLinks['google']?><!--">-->
-<!--                    <i class="google-icon"></i>-->
-<!--                </a>-->
-<!--            </li>-->
             <li>
                 <a href="<?= $this->socialLinks['telegram']?>">
                     <i class="telegram-icon"></i>

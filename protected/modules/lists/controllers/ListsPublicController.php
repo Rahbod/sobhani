@@ -111,12 +111,12 @@ class ListsPublicController extends Controller
 
                     $image = new UploadedFiles($this->tempPath, $rel->image, array(
                         'thumbnail' => array(
-                            'width' => 200,
-                            'height' => 200
+                            'width' => 150,
+                            'height' => 150
                         ),
                         'resize' => array(
-                            'width' => 600,
-                            'height' => 400
+                            'width' => 400,
+                            'height' => 300
                         )));
 
                     if ($rel->save()) {
@@ -151,8 +151,8 @@ class ListsPublicController extends Controller
                     'height' => 200
                 ),
                 'resize' => array(
-                    'width' => 600,
-                    'height' => 400
+                    'width' => 400,
+                    'height' => 300
                 ))) : [];
             $model->status = isset($_POST['draft']) ? Lists::STATUS_DRAFT : ($model->user_type == 'admin' ? Lists::STATUS_APPROVED : Lists::STATUS_PENDING);
 
@@ -162,12 +162,12 @@ class ListsPublicController extends Controller
                     if (isset($item['image']))
                         $itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
                             'thumbnail' => array(
-                                'width' => 200,
-                                'height' => 200
+                                'width' => 150,
+                                'height' => 150
                             ),
                             'resize' => array(
-                                'width' => 600,
-                                'height' => 400
+                                'width' => 400,
+                                'height' => 300
                             )));
                 }
             }
@@ -206,8 +206,8 @@ class ListsPublicController extends Controller
                 'height' => 200
             ),
             'resize' => array(
-                'width' => 600,
-                'height' => 400
+                'width' => 400,
+                'height' => 300
             )));
 
         $oldItemImages = [];
@@ -227,23 +227,23 @@ class ListsPublicController extends Controller
                     if (isset($item['image']) && isset($oldItemImages[$key]) && $oldItemImages[$key] != $item['image'])
                         $itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
                             'thumbnail' => array(
-                                'width' => 200,
-                                'height' => 200
+                                'width' => 150,
+                                'height' => 150
                             ),
                             'resize' => array(
-                                'width' => 600,
-                                'height' => 400
+                                'width' => 400,
+                                'height' => 300
                             )));
                     else {
                         if (isset($item['image']))
                             $itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
                                 'thumbnail' => array(
-                                    'width' => 200,
-                                    'height' => 200
+                                    'width' => 150,
+                                    'height' => 150
                                 ),
                                 'resize' => array(
-                                    'width' => 600,
-                                    'height' => 400
+                                    'width' => 400,
+                                    'height' => 300
                                 )));
                         else
                             $itemImages[$key] = [];
@@ -271,12 +271,12 @@ class ListsPublicController extends Controller
                 if ($item->image)
                     $itemImages[$key] = new UploadedFiles($this->itemImagePath, $item->image, array(
                         'thumbnail' => array(
-                            'width' => 200,
-                            'height' => 200
+                            'width' => 150,
+                            'height' => 150
                         ),
                         'resize' => array(
-                            'width' => 600,
-                            'height' => 400
+                            'width' => 400,
+                            'height' => 300
                         )));
             }
         }
