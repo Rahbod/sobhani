@@ -95,11 +95,11 @@ class Controller extends AuthController
             ->from('ym_site_setting')
             ->where('name = "site_description"')
             ->queryScalar();
-        $this->keywords = Yii::app()->db->createCommand()
+        $this->keywords = implode(',', json_decode(Yii::app()->db->createCommand()
             ->select('value')
             ->from('ym_site_setting')
             ->where('name = "keywords"')
-            ->queryScalar();
+            ->queryScalar(), true));
         $this->siteName = Yii::app()->db->createCommand()
             ->select('value')
             ->from('ym_site_setting')
@@ -149,6 +149,18 @@ class Controller extends AuthController
                     'items' => array(
                         array('label' => '<i class="fa fa-circle-o"></i>مدیریت', 'url' => Yii::app()->createUrl('/lists/category/admin/')),
                         array('label' => '<i class="fa fa-circle-o"></i>افزودن دسته بندی لیست', 'url' => Yii::app()->createUrl('/lists/category/create')),
+                    )
+                ),
+
+                array(
+                    'label' => '<i class="fa fa-support"></i><span>تماس با ما</span> <i class="fa fa-angle-left pull-left"></i>',
+                    'url' => '#',
+                    'itemOptions' => array('class' => 'treeview', 'tabindex' => "-1"),
+                    'submenuOptions' => array('class' => 'treeview-menu'),
+                    'items' => array(
+                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت پیام ها', 'url' => Yii::app()->createUrl('/contact/messages/admin')),
+                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت بخش های تماس ', 'url' => Yii::app()->createUrl('/contact/department/admin')),
+                        array('label' => '<i class="fa fa-circle-o"></i>مدیریت دریافت کنندگان ', 'url' => Yii::app()->createUrl('/contact/receivers/admin')),
                     )
                 ),
                 array(

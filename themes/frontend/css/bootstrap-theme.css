@@ -260,7 +260,7 @@ body{
 }
 .content{
     overflow: hidden;
-    margin-top: 60px;
+    margin: 60px 0;
 }
 .content .left-side .container-col .member img{
     background: rgba(0, 0, 0, 0) url("//avatars.thetoptens.com/sm/masoncarr2244.png") no-repeat scroll center center;
@@ -1644,4 +1644,187 @@ input.item-title{
     display: block;
     overflow: hidden;
     width: 100%;
+}
+
+
+.contact-box{
+    display: inline-block;
+    margin-bottom: 110px;
+    padding-top: 30px;
+    padding:0 auto;
+    position: relative;
+}
+.social-networks .social-icons{
+    display: block;
+    height: 34px;
+    margin-top: 10px;
+}
+.social-networks .social-icons .svg-icons{
+    margin: 0 5px;
+    float: left;
+}
+.social-networks .social-icons {
+    display: block;
+    height: 34px;
+    margin-top: 15px;
+    direction: ltr;
+}
+.social-networks .social-icons > a{
+    display: inline-block;
+}
+.social-networks .svg-icons {
+    display: inline-block;
+    overflow: hidden;
+    background-size: 30px !important;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 0 4px;
+    border: 2px solid #fff;
+}
+.social-networks{
+    height: 60px;
+    display: block;
+    overflow: hidden;
+}
+.contact-box #contact-google-map{
+    width: 100%;
+    height:350px;
+    border-radius: 4px 4px 0 0;
+}
+.contact-box .row p{
+    margin-bottom: 20px;
+    font-size: 12px;
+}
+.contact-box .contact-form{
+    background: #f5f5f5;
+    border-radius: 0 0 4px 4px;
+    padding: 40px;
+}
+.contact-form #department {
+    width: 100%;
+    text-align: right;
+    padding: 10px 12px;
+    color: rgba(61, 61, 61, 0.66);
+    position: relative;
+}
+.contact-form .dropdown-menu{
+    width: 100%;
+}
+.contact-form .form-group{
+    padding-bottom: 20px !important;
+    margin-bottom: 0;
+    position: relative;
+}
+.contact-form .form-control{
+    color: rgba(61, 61, 61, 0.66);
+    box-shadow: none;
+    height: auto;
+}
+.contact-form .form-group .errorMessage{
+    position: absolute;
+    bottom: 0;
+    right: 7px;
+    line-height: 25px;
+    text-align: right;
+}
+input.form-control{
+    height: 42px !important;
+}
+.contact-form .btn.dropdown-toggle.btn-default,
+.contact-form textarea.form-control,
+.contact-form input.form-control{
+    background-color: #fff!important;
+    border: none !important;
+}
+.contact-form .bootstrap-select.form-control{
+    background-color: transparent !important;
+}
+.contact-form .captcha-container img{
+    height: 42px;
+    margin: 0 5px;
+    border-radius: 4px;
+    overflow: hidden;
+    display: inline-block;
+}
+.contact-form .col-lg-4 .form-group:last-child,
+.contact-form .col-lg-8 .form-group:last-child{
+    margin-bottom: 0;
+}
+.contact-form textarea.form-control{
+    height: 228px;
+    resize: none;
+}
+.contact-form .col-lg-8 .form-group{
+    overflow: hidden;
+}
+.contact-form .col-lg-8{
+    padding-right: 0;
+}
+.contact-form .captcha{
+    width: 25%;
+}
+.contact-box .address{
+    padding: 0;
+    margin-top: 10px;
+}
+.contact-box .address div,
+.contact-box .address p{
+    margin-bottom: 10px;
+}
+.contact-box .address div,
+.contact-box .address p{
+    overflow: hidden;
+    text-align: justify;
+    color: #3a3a3a;
+}
+
+.contact-form .btn-blue{
+    width: auto;
+    border-radius: 4px;
+    padding: 8px 30px;
+}
+
+.contact-icon-outer{
+    width: 90px;
+    height: 110px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.contact-icon {
+    background: url("../svg/gray-logo.svg") no-repeat center transparent;
+    background-size: 90px auto;
+    opacity:0.1;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    right: -10px;
+    top: 0;
+}
+
+.svg-icons.twitter-icon{
+    background: url("../svg/twitter.svg") no-repeat scroll center transparent;
+}
+.svg-icons.youtube-icon{
+    background: url("../svg/youtube.svg") no-repeat scroll center transparent;
+}
+.svg-icons.instagram-icon{
+    background: url("../svg/instagram.svg") no-repeat scroll center transparent;
+}
+.svg-icons.facebook-icon{
+    background: url("../svg/facebook.svg") no-repeat scroll center transparent;
+}
+.svg-icons.telegram-icon{
+    background: url("../svg/telegram.svg") no-repeat scroll center transparent;
+}
+
+.grayscale-static,
+.grayscale {
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+    -webkit-transition: all 0.3s ease 0s; -moz-transition: all 0.3s ease 0s; -ms-transition: all 0.3s ease 0s; -o-transition: all 0.3s ease 0s; transition: all 0.3s ease 0s;
+}
+.grayscale:hover {
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale");
+    opacity: 1;
 }

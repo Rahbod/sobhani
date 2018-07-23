@@ -1,6 +1,7 @@
 <?php
 /* @var $this SiteController */
 /* @var $model ContactForm */
+/* @var $page Pages */
 /* @var $form CActiveForm */
 
 $this->pageTitle="تماس با ما";
@@ -8,24 +9,22 @@ $this->pageHeader="تماس با ما";
 $this->breadcrumbs=array(
 	'تماس با ما',
 );
+
 ?>
-<h2><?= $model->title ?></h2>
+<h2><?= $page->title ?></h2>
 <div class="page-text" dir="auto"><?php
     $purifier=new CHtmlPurifier();
-    echo $purifier->purify($model->summary);
+    echo $purifier->purify($page->summary);
     ?></div>
 <div class="contact-box relative">
     <?php $this->renderPartial('//partial-views/_flashMessage') ?>
     <div class="row">
         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-            <p>                        در صورتی که مایل به تماس با شرکت هستید، می توانید از طریق فرم زیر بخش مورد نظر خود را انتخاب و موضوع خود را مطرح کنید. همچنین می توانید با شماره تماس های درج شده نیز تماس حاصل فرمایید.</p>
+            <p>در صورتی که مایل به تماس با ما هستید، می توانید از طریق فرم زیر بخش مورد نظر خود را انتخاب و موضوع خود را مطرح کنید.</p>
         </div>
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
             <?php $this->renderPartial('//partial-views/_socials') ?>
         </div>
-    </div>
-    <div id="contact-google-map" style="position: relative; overflow: hidden;">
-        <?php $this->renderPartial('//partial-views/_map') ?>
     </div>
     <?php $form=$this->beginWidget('CActiveForm', array(
         'id'=>'contact-form',
@@ -73,15 +72,20 @@ $this->breadcrumbs=array(
                     <?php $this->widget('CCaptcha'); ?>
                     <?php echo $form->textField($model,'verifyCode',array('class'=>'form-control captcha pull-right','placeholder'=>"تصویر امنیتی")); ?>
                     <?php echo $form->error($model,'verifyCode') ?>
-                    <?php echo CHtml::submitButton('ارسال',array('class' => 'btn btn-blue pull-left')); ?>
+                    <?php echo CHtml::submitButton('ارسال',array('class' => 'btn btn-primary pull-left')); ?>
                 </div>
             </div>
         </div>
     <?php $this->endWidget() ?>
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-8 pull-left address">
-        <p><?= CHtml::encode(SiteSetting::getOption('address')) ?></p>
-        <div><span class="pull-right">تلفن :</span><div class="pull-left ltr"><?= CHtml::encode(SiteSetting::getOption('tel')) ?></div></div>
-        <div><span class="pull-right">فکس :</span><div class="pull-left ltr"><?= CHtml::encode(SiteSetting::getOption('fax')) ?></div></div>
-        <p><span class="pull-right">پست الکترونیکی :</span><span class="pull-left ltr"><?= CHtml::encode(SiteSetting::getOption('master_email')) ?></span></p>
+<!--        <p>--><?//= CHtml::encode(SiteSetting::getOption('address')) ?><!--</p>-->
+<!--        <div><span class="pull-right">تلفن :</span><div class="pull-left ltr">--><?//= CHtml::encode(SiteSetting::getOption('tel')) ?><!--</div></div>-->
+<!--        <div><span class="pull-right">فکس :</span><div class="pull-left ltr">--><?//= CHtml::encode(SiteSetting::getOption('fax')) ?><!--</div></div>-->
+<!--        <p><span class="pull-right">پست الکترونیکی :</span><span class="pull-left ltr">--><?//= CHtml::encode(SiteSetting::getOption('master_email')) ?><!--</span></p>-->
     </div>
 </div>
+<script>
+    $(function () {
+        $("#yw0_button").click();
+    });
+</script>
