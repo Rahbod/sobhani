@@ -8,6 +8,20 @@
     }
 }
 @media screen and (max-width: 767px) {
+    .item-title{
+        overflow: hidden;
+        height: auto;
+    }
+    .items-list h4{
+        font-size: 0.95em;
+    }
+    .content .left-side h2{
+        height: auto;
+        line-height: 32px;
+    }
+    .feature-item .item-title{
+        overflow: hidden;
+    }
     .uploader-container,
     .uploader-container .dropzone.single,
     .userinfo .user-image{
@@ -16,14 +30,12 @@
         min-height:100px;
         overflow: hidden;
     }
-    .content .left-side strong{
-        font-size: 16px;
+    .content .left-side h2{
+        font-size: 18px;
+        margin-bottom: 15px;
     }
     .slider + .content{
         margin-top: 0;
-    }
-    .content .left-side strong a{
-        font-size: 14px;
     }
     .content .left-side .context ol{
         padding-left: 10px;
@@ -125,7 +137,6 @@
 
     .content .left-side .context .newlist strong {
         text-align: justify;
-        font-size: 18px;
         direction: rtl;
     }
 

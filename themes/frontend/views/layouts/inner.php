@@ -49,7 +49,7 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 right-side">
                 <?php $this->renderPartial('//partial-views/_right_col'); ?>
                 <div class="tren">
-                    <h4>ده فهرست برتر</h4>
+                    <h4>ده لیست برتر</h4>
                     <?php foreach ($this->getTopListBySeen() as $item): ?>
                         <div class="trending">
                             <a href="<?= $item->getViewUrl() ?>"><img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/200x200/'. $item->getImage() ?>" alt="<?= $item->title ?>" title="<?= $item->title ?>">

@@ -41,32 +41,38 @@ foreach ($parents as $parentID => $parent){
     <div class="add-list-form">
         <div class="form-row">
             <?php echo $form->textField($model,'title',array('class'=>'transparent-input', 'placeholder' => 'عنوان لیست')); ?>
-            <?php echo $form->textArea($model,'description',array('placeholder'=>'توضیحات...')); ?>
-            <?php $this->widget('ext.dropZoneUploader.dropZoneUploader', array(
-                'id' => 'uploaderLogo',
-                'model' => $model,
-                'name' => 'image',
-                'containerClass' => 'uploader',
-                'maxFiles' => 1,
-                'maxFileSize' => 0.5, //MB
-                'url' => $this->createUrl('upload'),
-                'deleteUrl' => $this->createUrl('deleteUpload'),
-                'acceptedFiles' => '.jpg, .jpeg, .png',
-                'serverFiles' => isset($image)?$image:[],
-                'onSuccess' => '
-                    var responseObj = JSON.parse(res);
-                    if(responseObj.status){
-                        {serverName} = responseObj.fileName;
-                        $(".uploader-message").html("");
-                    }
-                    else{
-                        $(".uploader-message").html(responseObj.message);
-                        this.removeFile(file);
-                    }
-                ',
-            )); ?>
-            <?php echo $form->error($model,'image'); ?>
-            <div class="uploader-message error"></div>
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <?php $this->widget('ext.dropZoneUploader.dropZoneUploader', array(
+                        'id' => 'uploaderLogo',
+                        'model' => $model,
+                        'name' => 'image',
+                        'containerClass' => 'uploader',
+                        'maxFiles' => 1,
+                        'maxFileSize' => 0.5, //MB
+                        'url' => $this->createUrl('upload'),
+                        'deleteUrl' => $this->createUrl('deleteUpload'),
+                        'acceptedFiles' => '.jpg, .jpeg, .png',
+                        'serverFiles' => isset($image)?$image:[],
+                        'onSuccess' => '
+                            var responseObj = JSON.parse(res);
+                            if(responseObj.status){
+                                {serverName} = responseObj.fileName;
+                                $(".uploader-message").html("");
+                            }
+                            else{
+                                $(".uploader-message").html(responseObj.message);
+                                this.removeFile(file);
+                            }
+                        ',
+                    )); ?>
+                    <?php echo $form->error($model,'image'); ?>
+                    <div class="uploader-message error"></div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                    <?php echo $form->textArea($model,'description',array('placeholder'=>'توضیحات...')); ?>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <?= $form->label($model, 'category_id')?>
@@ -88,9 +94,6 @@ foreach ($parents as $parentID => $parent){
                     <?= CHtml::textField("Lists[items][{$i}][title]", isset($model->items[$i]['title'])?$model->items[$i]['title']:'', array('class' => 'transparent-input item-title', 'placeholder' => "عنوان گزینه")) ?>
                 </div>
                 <div class="row">
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                        <?= CHtml::textArea("Lists[items][{$i}][description]", isset($model->items[$i]['description'])?$model->items[$i]['description']:'', array('class' => 'form-control', 'placeholder' => "نظر...")) ?>
-                    </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                         <?php $this->widget('ext.dropZoneUploader.dropZoneUploader', array(
                             'id' => "uploaderImage{$i}",
@@ -115,6 +118,9 @@ foreach ($parents as $parentID => $parent){
                                 ",
                         )); ?>
                         <div class="uploader-message-<?= $i ?> error"></div>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                        <?= CHtml::textArea("Lists[items][{$i}][description]", isset($model->items[$i]['description'])?$model->items[$i]['description']:'', array('class' => 'form-control', 'placeholder' => "نظر...")) ?>
                     </div>
                 </div>
             </div>

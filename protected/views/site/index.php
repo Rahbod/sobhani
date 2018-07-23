@@ -143,7 +143,7 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/150x150/';
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 right-side">
             <?php $this->renderPartial('//partial-views/_right_col'); ?>
             <div class="tren">
-                <h4>ده فهرست برتر</h4>
+                <h4>ده لیست برتر</h4>
                 <?php foreach ($this->getTopListBySeen() as $item): ?>
                     <div class="trending">
                         <a href="<?= $item->getViewUrl() ?>" title="<?= $item->title ?>"><img src="<?= $listUrl . $item->getImage() ?>" alt="<?= $item->title ?>" title="<?= $item->title ?>">

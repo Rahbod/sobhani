@@ -22,6 +22,7 @@
  * @property Items[] $itemObj
  * @property ListItemRel[] $itemRel
  * @property Users[] $bookmarks
+ * @property Tags[] $tags
  */
 class Lists extends CActiveRecord
 {
@@ -39,6 +40,7 @@ class Lists extends CActiveRecord
 	}
 
     public $items = null;
+    public $formTags=[];
     public $statusLabels = array(
         self::STATUS_PENDING => 'در انتظار بررسی',
         self::STATUS_APPROVED => 'تایید شده',
@@ -66,6 +68,7 @@ class Lists extends CActiveRecord
 			array('items, description', 'safe'),
 			array('items', 'checkItems', 'except' => 'change_status'),
 			array('category_id', 'required', 'on' => 'change_status'),
+            array('formTags', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, title, image, description, user_type, user_id, category_id, create_date, seen, status', 'safe', 'on'=>'search'),
@@ -101,6 +104,14 @@ class Lists extends CActiveRecord
 			'itemObj' => array(self::MANY_MANY, 'Items', '{{list_item_rel}}(list_id, item_id)'),
 			'itemRel' => array(self::HAS_MANY, 'ListItemRel', 'list_id'),
 			'bookmarks' => array(self::MANY_MANY, 'Users', '{{user_bookmarks}}(list_id, user_id)'),
+            'tagsRel' => array(self::HAS_MANY, 'TagRel', 'model_id',
+                'on' => 'tagsRel.model_name = :model_name',
+                'params' => array(':model_name' => get_class($this))
+            ),
+            'tags' => array(self::MANY_MANY, 'Tags', '{{tag_rel}}(model_id,tag_id)',
+                'condition' => '`tags_tags`.model_name = :model_name',
+                'params' => array(':model_name' => get_class($this))
+            ),
 		);
 	}
 
@@ -129,6 +140,7 @@ class Lists extends CActiveRecord
 			'create_date' => 'تاریخ ثبت',
 			'seen' => 'بازدید',
 			'status' => 'وضعیت',
+			'formTags' => 'کلمات کلیدی',
 		);
 	}
 
@@ -180,44 +192,80 @@ class Lists extends CActiveRecord
 
     protected function afterSave()
     {
-        $tempPath = Yii::getPathOfAlias('webroot').'/uploads/temp/';
-        $itemImagesPath = Yii::getPathOfAlias('webroot').'/uploads/items/';
-        if($this->scenario != 'change_status' && $this->items){
-			ListItemRel::model()->deleteAllByAttributes(array('list_id' => $this->id));
-			echo '<meta charset="utf-8"><pre>';
-            foreach($this->items as $item){
-				if(!empty($item['title'])) {
-					$model = Items::model()->findByAttributes(array('title' => $item['title']));
-					if ($model === null) {
-						$model = new Items();
-						$model->title = $item['title'];
-						$model->status = $this->user_type == 'admin' ? Items::STATUS_APPROVED : Items::STATUS_PENDING;
-						@$model->save();
-					}
-					if($model){
-						$rel = new ListItemRel();
+        $tempPath = Yii::getPathOfAlias('webroot') . '/uploads/temp/';
+        $itemImagesPath = Yii::getPathOfAlias('webroot') . '/uploads/items/';
+        if ($this->scenario != 'change_status' && $this->items) {
+            ListItemRel::model()->deleteAllByAttributes(array('list_id' => $this->id));
+            echo '<meta charset="utf-8"><pre>';
+            foreach ($this->items as $item) {
+                if (!empty($item['title'])) {
+                    $model = Items::model()->findByAttributes(array('title' => $item['title']));
+                    if ($model === null) {
+                        $model = new Items();
+                        $model->title = $item['title'];
+                        $model->status = $this->user_type == 'admin' ? Items::STATUS_APPROVED : Items::STATUS_PENDING;
+                        @$model->save();
+                    }
+                    if ($model) {
+                        $rel = new ListItemRel();
                         $rel->item_id = $model->id;
                         $rel->list_id = $this->id;
-                        $rel->image = isset($item['image']) && (is_file($tempPath . $item['image']) or is_file($itemImagesPath . $item['image']))?$item['image']:null;
-                        $rel->description = isset($item['description'])?$item['description']:null;
+                        $rel->image = isset($item['image']) && (is_file($tempPath . $item['image']) or is_file($itemImagesPath . $item['image'])) ? $item['image'] : null;
+                        $rel->description = isset($item['description']) ? $item['description'] : null;
                         $rel->user_id = Yii::app()->user->roles == 'admin' ? null : $this->user_id;
                         $rel->status = ListItemRel::STATUS_ACCEPTED;
                         @$rel->save();
                     }
-				}
+                }
             }
         }
-		
-		if($this->scenario == 'change_status'){
-			if($this->status == Lists::STATUS_APPROVED){
-				$ids = CHtml::listData($this->itemObj, 'id', 'id');
-				$criteria = new CDbCriteria();
-				$criteria->addInCondition('id', $ids);
-				Items::model()->updateAll(array('status' => Lists::STATUS_APPROVED), $criteria);
-			}
-		}
-		
+
+        if ($this->scenario == 'change_status') {
+            if ($this->status == Lists::STATUS_APPROVED) {
+                $ids = CHtml::listData($this->itemObj, 'id', 'id');
+                $criteria = new CDbCriteria();
+                $criteria->addInCondition('id', $ids);
+                Items::model()->updateAll(array('status' => Lists::STATUS_APPROVED), $criteria);
+            }
+
+            $this->formTags = isset($_POST[get_class($this)]['formTags']) ? explode(',', $_POST[get_class($this)]['formTags']) : null;
+            if ($this->formTags && !empty($this->formTags)) {
+                if (!$this->isNewRecord) {
+                    $cr = new CDbCriteria();
+                    $cr->compare("model_name", get_class($this));
+                    $cr->compare("model_id", $this->id);
+                    TagRel::model()->deleteAll($cr);
+                }
+
+                foreach ($this->formTags as $tag) {
+                    $tagModel = Tags::model()->findByAttributes(array('title' => $tag));
+                    if ($tagModel) {
+                        $tag_rel = new TagRel();
+                        $tag_rel->model_name = get_class($this);
+                        $tag_rel->model_id = $this->id;
+                        $tag_rel->tag_id = $tagModel->id;
+                        $tag_rel->save(false);
+                    } else if(!empty($tag)){
+                        $tagModel = new Tags();
+                        $tagModel->title = $tag;
+                        $tagModel->save(false);
+                        $tag_rel = new TagRel();
+                        $tag_rel->model_name = get_class($this);
+                        $tag_rel->model_id = $this->id;
+                        $tag_rel->tag_id = $tagModel->id;
+                        $tag_rel->save(false);
+                    }
+                }
+            }
+        }
+
         parent::afterSave();
+    }
+
+    public function getKeywords()
+    {
+        $tags = CHtml::listData($this->tags,'title','title');
+        return implode(',',$tags);
     }
 	
 	protected function afterFind()
@@ -233,6 +281,8 @@ class Lists extends CActiveRecord
 					'status' => $item->status,
 				);
 			}
+
+        $this->formTags = CHtml::listData($this->tags,'title','title');
 	}
 
 	public function getViewUrl()

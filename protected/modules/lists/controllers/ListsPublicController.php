@@ -73,7 +73,7 @@ class ListsPublicController extends Controller
         $model = $this->loadModel($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
-        if ($model->status != Lists::STATUS_APPROVED && (Yii::app()->user->type !='admin' && $model->user_id != Yii::app()->user->getId()))
+        if ($model->status != Lists::STATUS_APPROVED && (Yii::app()->user->isGuest || (Yii::app()->user->type !='admin' && $model->user_id != Yii::app()->user->getId())))
             throw new CHttpException(404, 'The requested page does not exist.');
         $criteria = new CDbCriteria();
         $criteria->join = 'LEFT OUTER JOIN `ym_votes` `votes` ON  (`votes`.`item_id` = `itemRel`.`item_id`) LEFT OUTER JOIN `ym_items` `item` ON (`votes`.`item_id` = `item`.`id`)';
@@ -85,6 +85,10 @@ class ListsPublicController extends Controller
         $criteria->params[':status'] = ListItemRel::STATUS_ACCEPTED;
         $criteria->index = 'item_id';
         $items = ListItemRel::model()->findAll($criteria);
+
+        $this->keywords = $model->getKeywords();
+        $this->description = mb_substr(strip_tags($model->description),0,160,'UTF-8');
+        $this->pageTitle = $model->title;
         Yii::app()->db->createCommand()->update('{{lists}}', array('seen' => (int)$model->seen + 1), 'id = :id', array(':id' => $id));
 
         if (isset($_POST['title'])) {
@@ -112,11 +116,13 @@ class ListsPublicController extends Controller
                     $image = new UploadedFiles($this->tempPath, $rel->image, array(
                         'thumbnail' => array(
                             'width' => 150,
-                            'height' => 150
+                            'height' => 150,
+                            'quality' => 50
                         ),
                         'resize' => array(
                             'width' => 400,
-                            'height' => 300
+                            'height' => 300,
+                            'quality' => 60
                         )));
 
                     if ($rel->save()) {
@@ -152,7 +158,8 @@ class ListsPublicController extends Controller
                 ),
                 'resize' => array(
                     'width' => 400,
-                    'height' => 300
+                    'height' => 300,
+                    'quality' => 60
                 ))) : [];
             $model->status = isset($_POST['draft']) ? Lists::STATUS_DRAFT : ($model->user_type == 'admin' ? Lists::STATUS_APPROVED : Lists::STATUS_PENDING);
 
@@ -163,11 +170,13 @@ class ListsPublicController extends Controller
                         $itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
                             'thumbnail' => array(
                                 'width' => 150,
-                                'height' => 150
+                                'height' => 150,
+                                'quality' => 50
                             ),
                             'resize' => array(
                                 'width' => 400,
-                                'height' => 300
+                                'height' => 300,
+                                'quality' => 60
                             )));
                 }
             }
@@ -207,7 +216,8 @@ class ListsPublicController extends Controller
             ),
             'resize' => array(
                 'width' => 400,
-                'height' => 300
+                'height' => 300,
+                'quality' => 60
             )));
 
         $oldItemImages = [];
@@ -228,22 +238,26 @@ class ListsPublicController extends Controller
                         $itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
                             'thumbnail' => array(
                                 'width' => 150,
-                                'height' => 150
+                                'height' => 150,
+                                'quality' => 50
                             ),
                             'resize' => array(
                                 'width' => 400,
-                                'height' => 300
+                                'height' => 300,
+                                'quality' => 60
                             )));
                     else {
                         if (isset($item['image']))
                             $itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
                                 'thumbnail' => array(
                                     'width' => 150,
-                                    'height' => 150
+                                    'height' => 150,
+                                    'quality' => 50
                                 ),
                                 'resize' => array(
                                     'width' => 400,
-                                    'height' => 300
+                                    'height' => 300,
+                                    'quality' => 60
                                 )));
                         else
                             $itemImages[$key] = [];
@@ -272,11 +286,13 @@ class ListsPublicController extends Controller
                     $itemImages[$key] = new UploadedFiles($this->itemImagePath, $item->image, array(
                         'thumbnail' => array(
                             'width' => 150,
-                            'height' => 150
+                            'height' => 150,
+                            'quality' => 50
                         ),
                         'resize' => array(
                             'width' => 400,
-                            'height' => 300
+                            'height' => 300,
+                            'quality' => 60
                         )));
             }
         }

@@ -2,7 +2,7 @@
 
 class Imager
 {
-    public function createThumbnail($imagePath, $width, $height, $faceDetection = true, $outputDirection = null)
+    public function createThumbnail($imagePath, $width, $height, $faceDetection = true, $outputDirection = null, $quality = 100)
     {
         if (!file_exists($imagePath))
             throw new Exception("Image doesn't exists.");
@@ -45,7 +45,7 @@ class Imager
                 $this->crop($imagePath, $width, $height);
         } else {
             $imagePath = $this->resize($imagePath, $outputDirection, $width, $height);
-            $this->crop($imagePath, $width, $height);
+            $this->crop($imagePath, $width, $height, $quality);
         }
     }
 

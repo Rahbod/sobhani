@@ -272,9 +272,10 @@ class UploadedFiles
     public function createThumbnail($image, $destination)
     {
 
-        $w = isset($this->getOption('thumbnail')['width']) && $this->getOption('thumbnail')['width']?$this->getOption('thumbnail')['width']:150;
-        $h = isset($this->getOption('thumbnail')['height']) && $this->getOption('thumbnail')['height']?$this->getOption('thumbnail')['height']:150;
-        $this->getImager()->createThumbnail($image, $w, $h, false, $destination);
+        $w = isset($this->getOption('thumbnail')['width']) && $this->getOption('thumbnail')['width'] ? $this->getOption('thumbnail')['width'] : 150;
+        $h = isset($this->getOption('thumbnail')['height']) && $this->getOption('thumbnail')['height'] ? $this->getOption('thumbnail')['height'] : 150;
+        $q = isset($this->getOption('thumbnail')['quality']) && $this->getOption('thumbnail')['quality'] ? $this->getOption('thumbnail')['quality'] : 100;
+        $this->getImager()->createThumbnail($image, $w, $h, false, $destination, $q);
     }
 
     public function doResize($image, $destination = false)
