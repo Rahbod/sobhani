@@ -1,8 +1,8 @@
 <?
 /* @var $model Lists */
 /* @var $items ListItemRel[] */
-$itemImagePath = Yii::getPathOfAlias('webroot').'/uploads/items/thumbs/200x200/';
-$itemImageUrl = Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/200x200/';
+$itemImagePath = Yii::getPathOfAlias('webroot').'/uploads/items/thumbs/150x150/';
+$itemImageUrl = Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/150x150/';
 $i = 1;
 $voteAvg = Votes::VoteAverages($model->id);
 Yii::app()->clientScript->registerScript('target', '

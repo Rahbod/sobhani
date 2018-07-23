@@ -14,8 +14,8 @@ $cs->registerScriptFile($baseUrl . '/js/owl.carousel.min.js');
 $listPath = Yii::getPathOfAlias('webroot') . '/uploads/lists/thumbs/200x200/';
 $listUrl = Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/200x200/';
 
-$listItemPath = Yii::getPathOfAlias('webroot') . '/uploads/items/thumbs/200x200/';
-$listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/200x200/';
+$listItemPath = Yii::getPathOfAlias('webroot') . '/uploads/items/thumbs/150x150/';
+$listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/150x150/';
 ?>
 <div class="slider">
     <h1><?= Controller::parseNumbers(number_format($count)) ?>&nbsp;لیست از بهترین ها براساس رای شما</h1>
