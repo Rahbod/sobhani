@@ -96,11 +96,13 @@ class Controller extends AuthController
             ->from('ym_site_setting')
             ->where('name = "site_description"')
             ->queryScalar();
-        $this->keywords = implode(',', json_decode(Yii::app()->db->createCommand()
+        $this->keywords = Yii::app()->db->createCommand()
             ->select('value')
             ->from('ym_site_setting')
             ->where('name = "keywords"')
-            ->queryScalar(), true));
+            ->queryScalar();
+        $this->keywords = is_array($this->keywords)?implode(',', json_decode($this->keywords, true)):"";
+
         $this->siteName = Yii::app()->db->createCommand()
             ->select('value')
             ->from('ym_site_setting')

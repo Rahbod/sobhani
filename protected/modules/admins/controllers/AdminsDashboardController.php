@@ -32,7 +32,14 @@ class AdminsDashboardController extends Controller
 
         $commentCriteria = new CDbCriteria();
         $commentCriteria->compare('t.status', Comment::STATUS_NOT_APPROWED);
-        $statistics = ['comments' => Comment::model()->count($commentCriteria)];
+
+        $messagesCriteria = new CDbCriteria();
+        $messagesCriteria->compare('t.seen', 0);
+
+        $statistics = [
+            'comments' => Comment::model()->count($commentCriteria),
+            'messages' => ContactMessages::model()->count($messagesCriteria),
+        ];
 
         $criteria = new CDbCriteria();
         $criteria->addCondition('status = :status');

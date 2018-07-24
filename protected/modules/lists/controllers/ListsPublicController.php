@@ -441,9 +441,10 @@ class ListsPublicController extends Controller
                 }
                 if (Votes::checkVote($data['list_id'], $data['item_id'])) {
                     if ($vote->user_id)
-                        Votes::model()->deleteAllByAttributes(['user_id' => $vote->user_id, 'list_id' => $data['list_id']]);
+                        Votes::model()->deleteAllByAttributes(['user_id' => $vote->user_id, 'list_id' => $data['list_id'], 'item_id' => $data['item_id']]);
                     else
-                        Votes::model()->deleteAllByAttributes(['ip' => $vote->ip, 'list_id' => $data['list_id']]);
+                        Votes::model()->deleteAllByAttributes(['ip' => $vote->ip, 'list_id' => $data['list_id'], 'item_id' => $data['item_id']]);
+                    Votes::removeVoteFromCookie($data['list_id'] . '-' . $data['item_id']);
                 }
                 $vote->list_id = $data['list_id'];
                 $vote->item_id = $data['item_id'];
@@ -459,6 +460,32 @@ class ListsPublicController extends Controller
                     $this->sendJson(['status' => true, 'avgs' => Votes::VoteAverages($vote->list_id), 'newAvg' => Votes::VoteAverages($vote->list_id, $vote->item_id), 'message' => 'رای شما با موفقیت ثبت گردید.']);
                 else
                     $this->sendJson(['status' => false, 'message' => 'در انجام عملیات مشکلی بوجود آمده است! لطفا مجددا تلاش فرمایید.']);
+                break;
+
+            case 'unvote':
+                if (!isset($_POST['hash']))
+                    $this->sendJson(['status' => false]);
+                $data = json_decode(base64_decode($_POST['hash']), true);
+
+                $vote = new Votes();
+                $vote->ip = Votes::getRealIp();
+                if (!Yii::app()->user->isGuest && Yii::app()->user->type == 'user') {
+                    $userID = Yii::app()->user->getId();
+                    $vote->user_id = $userID;
+                }
+
+                if (Votes::checkVote($data['list_id'], $data['item_id'])) {
+                    if ($vote->user_id)
+                        Votes::model()->deleteAllByAttributes(['user_id' => $vote->user_id, 'list_id' => $data['list_id'], 'item_id' => $data['item_id']]);
+                    else
+                        Votes::model()->deleteAllByAttributes(['ip' => $vote->ip, 'list_id' => $data['list_id'], 'item_id' => $data['item_id']]);
+                    Votes::removeVoteFromCookie($data['list_id'] . '-' . $data['item_id']);
+                }
+
+                $vote->list_id = $data['list_id'];
+                $vote->item_id = $data['item_id'];
+
+                $this->sendJson(['status' => true, 'avgs' => Votes::VoteAverages($vote->list_id), 'newAvg' => Votes::VoteAverages($vote->list_id, $vote->item_id), 'message' => 'رای شما حذف شد.']);
                 break;
             default:
                 $this->sendJson(['status' => false]);

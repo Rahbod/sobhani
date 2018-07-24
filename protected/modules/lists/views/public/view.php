@@ -28,7 +28,7 @@ $this->pageTitle = $model->title;
         <?php endif; ?>
         <div class="text"><?= $model->description ?></div>
     </div>
-	<h3>
+	<h2>
 		ده بهترین
         <a target="_blank" href="https://telegram.me/share/url?url=<?= Yii::app()->createAbsoluteUrl('/lists/'.$model->id.'/'.str_replace(' ', '-', $model->title))?>" class="telegram-link gray pull-left" title="اشتراک گذاری در تلگرام"><i></i></a>
 		<?php
@@ -59,7 +59,7 @@ $this->pageTitle = $model->title;
 				array('class' => 'favorite pull-left', 'data-toggle' => 'modal', 'data-target' => '#login-modal', 'title' => 'افزودن به علاقه مندی ها'));
 		endif;
 		?>
-	</h3>
+	</h2>
 	<div class="add-list-form items-list">
         <div>
 		    <?php $this->renderPartial('_items',compact('items', 'model')); ?>

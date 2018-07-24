@@ -214,7 +214,22 @@ class Lists extends CActiveRecord
                         $rel->description = isset($item['description']) ? $item['description'] : null;
                         $rel->user_id = Yii::app()->user->roles == 'admin' ? null : $this->user_id;
                         $rel->status = ListItemRel::STATUS_ACCEPTED;
-                        @$rel->save();
+                        if($rel->save()){
+                            // insert links
+                            if (count($item['links']) > 0) {
+                                foreach ($item['links'] as $link) {
+                                    if (empty($link['title']) || empty($link['value']) || $link['value'] == 'http://')
+                                        continue;
+                                    if (!preg_match("~^(?:f|ht)tps?://~i", $link['value']))
+                                        $link['value'] = 'http://' . $link['value'];
+                                    $lModel = new ItemRelLinks();
+                                    $lModel->title = $link['title'];
+                                    $lModel->url = $link['value'];
+                                    $lModel->item_rel_id = $rel->id;
+                                    @$lModel->save();
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -279,6 +294,7 @@ class Lists extends CActiveRecord
 					'description' => $item->description,
 					'image' => $item->image,
 					'status' => $item->status,
+                    'links' => $item->links
 				);
 			}
 

@@ -13,12 +13,12 @@
         </ul>
         <ul class="navbar-social">
             <li>
-                <a href="<?= $this->socialLinks['facebook']?>">
+                <a href="<?= isset($this->socialLinks['facebook'])?$this->socialLinks['facebook']:''?>">
                     <i class="facebook-icon"></i>
                 </a>
             </li>
             <li>
-                <a href="<?= $this->socialLinks['telegram']?>">
+                <a href="<?= isset($this->socialLinks['telegram'])?$this->socialLinks['telegram']:''?>">
                     <i class="telegram-icon"></i>
                 </a>
             </li>

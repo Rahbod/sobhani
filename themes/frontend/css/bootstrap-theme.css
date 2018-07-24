@@ -1863,3 +1863,70 @@ input.item-title{
 .tren{
     margin-bottom: 30px;
 }
+.dynamic-container{
+    position: relative;
+}
+.dynamic-container .dynamic-box{
+    display: block;
+    width: 100%;
+    padding-right: 30px;
+}
+.dynamic-container .dynamic-field{
+    white-space: nowrap;
+    display: block;
+    overflow: hidden;
+    vertical-align: top;
+    margin-bottom: 2px;
+}
+.dynamic-container .dynamic-input,
+.dynamic-container .dynamic-label{
+    display: table-cell;
+    width: 1%;
+    padding: 0 2px;
+}
+.dynamic-container .operation-links{
+    position: absolute;
+    right: 15px;
+    top: 10px;
+}
+.dynamic-box input{
+    border:none;
+}
+.dynamic-box .dynamic-input input{
+    direction: ltr !important;
+}
+
+.list-view-links{
+    display: block;
+    overflow: hidden;
+    margin-top: 30px;
+    border-top: 1px dashed #ddd;
+    padding: 15px 0;
+}
+
+.pre-line{
+    white-space: pre-line;
+}
+
+
+.view-alert{
+    position: fixed;
+    top: 70px;
+    max-width: 250px;
+    display: inline-block;
+    left: 30px;
+    border-radius: 0;
+    padding: 10px 20px;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+    z-index: 1000;
+    opacity: 1;
+}
+
+.view-alert.hidden{
+    opacity: 0;
+    top: 10px;
+}

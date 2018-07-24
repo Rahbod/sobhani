@@ -20,9 +20,9 @@ if(Yii::app()->user->roles == 'admin'){
 }
 ?>
 <div class="row boxed-statistics">
-    <div class="col-md-4 col-xs-6">
+    <div class="col-md-3 col-xs-6">
         <!-- small box -->
-        <div class="small-box bg-blue">
+        <div class="small-box bg-green-active">
             <div class="inner">
                 <h3><?php echo $statistics['comments'];?></h3>
                 <p>نظرات (خوانده نشده)</p>
@@ -31,6 +31,19 @@ if(Yii::app()->user->roles == 'admin'){
                 <i class="ion ion-android-chat"></i>
             </div>
             <a href="<?php echo $this->createUrl('/comments/comment/admin');?>" class="small-box-footer">مشاهده نظرات <i class="fa fa-arrow-circle-left"></i></a>
+        </div>
+    </div>
+    <div class="col-md-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-maroon">
+            <div class="inner">
+                <h3><?php echo $statistics['messages'];?></h3>
+                <p>پیغام ها (خوانده نشده)</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-android-contact"></i>
+            </div>
+            <a href="<?php echo $this->createUrl('/contact/messages/admin');?>" class="small-box-footer">مشاهده پیغام ها <i class="fa fa-arrow-circle-left"></i></a>
         </div>
     </div>
 </div>
@@ -90,7 +103,7 @@ if(Yii::app()->user->roles == 'admin'){
                         array(
                             'header'=>'عملیات',
                             'value' => function($data){
-                                $link = Yii::app()->createUrl('/list/changeStatus').'/'.$data->id;
+                                $link = Yii::app()->createUrl('/lists/manage/changeStatus').'/'.$data->id;
                                 return '<a href="'.$link.'" class="btn btn-xs btn-success">تغییر وضعیت</a>';
                             },
                             'type' => 'raw'

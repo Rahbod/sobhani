@@ -146,7 +146,13 @@ class Votes extends CActiveRecord
 			if (!in_array($hash, $votes)) {
 				array_push($votes, $hash);
 				$votes = base64_encode(CJSON::encode($votes));
-				Yii::app()->request->cookies['VT'] = new CHttpCookie('VT', $votes);
+                $newCookie = new CHttpCookie('VT', $votes);
+                $newCookie->domain = '';
+                $newCookie->expire = time() + (60 * 60 * 24 * 365);
+                $newCookie->path = '/';
+                $newCookie->secure = false;
+                $newCookie->httpOnly = false;
+                Yii::app()->request->cookies['VT'] = $newCookie;
 			}
 		}
 	}
@@ -158,6 +164,27 @@ class Votes extends CActiveRecord
 			$votes = CJSON::decode(base64_decode($cookie->value));
 			if (in_array($hash, $votes))
 				return true;
+		}
+		return false;
+	}
+
+	public static function removeVoteFromCookie($hash)
+	{
+		$cookie = Yii::app()->request->cookies->contains('VT') ? Yii::app()->request->cookies['VT'] : null;
+		if (!is_null($cookie)) {
+			$votes = CJSON::decode(base64_decode($cookie->value));
+			if (in_array($hash, $votes)) {
+                unset($votes[array_search($hash, $votes)]);
+                $votes = base64_encode(CJSON::encode($votes));
+                $newCookie = new CHttpCookie('VT', $votes);
+                $newCookie->domain = '';
+                $newCookie->expire = time() + (60 * 60 * 24 * 365);
+                $newCookie->path = '/';
+                $newCookie->secure = false;
+                $newCookie->httpOnly = false;
+                Yii::app()->request->cookies['VT'] = $newCookie;
+                return true;
+            }
 		}
 		return false;
 	}
@@ -175,7 +202,7 @@ class Votes extends CActiveRecord
 	{
 		$total = Votes::model()->countByAttributes(['list_id' => $listID]);
 		$percents = [];
-		foreach (ListItemRel::model()->findAllByAttributes(['list_id' => $listID], array('order' => 'item_id')) as $item) {
+		foreach (ListItemRel::model()->findAllByAttributes(['list_id' => $listID], array('order' => 'id DESC')) as $item) {
 			$c = Votes::model()->countByAttributes(['list_id' => $listID, 'item_id' => $item->item_id]);
 			$percents[$item->item_id] = $c == 0 ? 0 : round($c / $total * 100);
 			if ($itemID && $itemID == $item->item_id)

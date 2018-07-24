@@ -8,9 +8,25 @@
     }
 }
 @media screen and (max-width: 767px) {
+    .dynamic-container .dynamic-input,
+    .dynamic-container .dynamic-label{
+        display: block;
+        width: 100%;
+    }
+
+    .dynamic-container .dynamic-box .dynamic-field:not(:last-of-type){
+        border-bottom: 1px dashed #ccc;
+        margin-bottom: 3px;
+        padding-bottom: 3px;
+    }
     .item-title{
         overflow: hidden;
         height: auto;
+    }
+
+    form .item-title{
+        overflow: hidden;
+        height: 50px;
     }
     .items-list h4{
         font-size: 0.95em;
