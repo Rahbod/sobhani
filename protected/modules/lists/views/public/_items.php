@@ -92,7 +92,7 @@ foreach($voteAvg as $itemID => $avg):
             </div>
 
             <!--Items Related Links-->
-            <?php /*if($item->links):?>
+            <?php if($item->links):?>
                 <div class="list-view-links">
                     <b>لینک های مرتبط</b>
                     <ul>
@@ -101,7 +101,7 @@ foreach($voteAvg as $itemID => $avg):
                         <?php endforeach; ?>
                     </ul>
                 </div>
-            <?php endif;*/?>
+            <?php endif;?>
         </div>
         <!--Comments-->
         <?php $this->widget('comments.widgets.ECommentsListWidget', array('model' => $item)); ?>

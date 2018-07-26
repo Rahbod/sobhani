@@ -172,4 +172,10 @@ class ListCategories extends CActiveRecord
             }
         }
     }
+
+    public function getKeywords()
+    {
+        $tags = CHtml::listData($this->tags,'title','title');
+        return implode(',',$tags);
+    }
 }

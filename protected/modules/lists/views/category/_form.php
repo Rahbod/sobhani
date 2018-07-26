@@ -30,19 +30,19 @@
 		<?php echo $form->error($model,'description'); ?>
 	</div>
 
-<!--    <div class="form-group">-->
-<!--        --><?php //echo $form->labelEx($model,'formTags'); ?>
-<!--        --><?php
-//        $this->widget("ext.tagIt.tagIt",array(
-//            'model' => $model,
-//            'attribute' => 'formTags',
-//            'suggestType' => 'json',
-//            'suggestUrl' => Yii::app()->createUrl('/tags/list'),
-//            'data' => $model->formTags
-//        ));
-//        ?>
-<!--        --><?php //echo $form->error($model,'formTags'); ?>
-<!--    </div>-->
+    <div class="form-group">
+        <?php echo $form->labelEx($model,'formTags'); ?>
+        <?php
+        $this->widget("ext.tagIt.tagIt",array(
+            'model' => $model,
+            'attribute' => 'formTags',
+            'suggestType' => 'json',
+            'suggestUrl' => Yii::app()->createUrl('/tags/list'),
+            'data' => $model->formTags
+        ));
+        ?>
+        <?php echo $form->error($model,'formTags'); ?>
+    </div>
 
 	<div class="form-group buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'افزودن' : 'ویرایش',array('class' => 'btn btn-success')); ?>

@@ -158,6 +158,7 @@ class ListsCategoryController extends Controller
 		Yii::app()->theme = 'frontend';
 		$this->layout = '//layouts/inner';
 		$model = $this->loadModel($id);
+		$this->keywords = $model->getKeywords();
 		$this->render('view', compact('model'));
 	}
 }
