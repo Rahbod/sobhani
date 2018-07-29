@@ -1930,3 +1930,7 @@ input.item-title{
     opacity: 0;
     top: 10px;
 }
+
+body.open-menu header ul.nav{
+
+}

@@ -42,19 +42,19 @@ $this->breadcrumbs=array(
                 <?php echo $form->error($model,'status'); ?>
             </div>
 
-<!--            <div class="form-group">-->
-<!--                --><?php //echo $form->labelEx($model,'formTags'); ?>
-<!--                --><?php
-//                $this->widget("ext.tagIt.tagIt",array(
-//                    'model' => $model,
-//                    'attribute' => 'formTags',
-//                    'suggestType' => 'json',
-//                    'suggestUrl' => Yii::app()->createUrl('/tags/list'),
-//                    'data' => $model->formTags
-//                ));
-//                ?>
-<!--                --><?php //echo $form->error($model,'formTags'); ?>
-<!--            </div>-->
+            <div class="form-group">
+                <?php echo $form->labelEx($model,'formTags'); ?>
+                <?php
+                $this->widget("ext.tagIt.tagIt",array(
+                    'model' => $model,
+                    'attribute' => 'formTags',
+                    'suggestType' => 'json',
+                    'suggestUrl' => Yii::app()->createUrl('/tags/list'),
+                    'data' => $model->formTags
+                ));
+                ?>
+                <?php echo $form->error($model,'formTags'); ?>
+            </div>
 
             <div class="form-group buttons">
                 <?= CHtml::submitButton('ثبت',array('class' => 'btn btn-success')); ?>
