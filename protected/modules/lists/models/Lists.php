@@ -12,6 +12,7 @@
  * @property string $user_id
  * @property string $category_id
  * @property string $create_date
+ * @property string $update_date
  * @property string $seen
  * @property string $status
  *
@@ -60,18 +61,19 @@ class Lists extends CActiveRecord
 			array('title', 'length', 'max'=>255),
 			array('image', 'length', 'max'=>512),
 			array('user_id, category_id, seen', 'length', 'max'=>10),
-			array('create_date, user_type', 'length', 'max'=>20),
+			array('create_date, update_date, user_type', 'length', 'max'=>20),
 			array('status', 'length', 'max'=>1),
 			array('status', 'default', 'value'=>self::STATUS_PENDING),
 			array('seen', 'default', 'value'=>0),
 			array('create_date', 'default', 'value'=>time()),
+			array('update_date', 'default', 'value'=>time()),
 			array('items, description', 'safe'),
 			array('items', 'checkItems', 'except' => 'change_status'),
 			array('category_id', 'required', 'on' => 'change_status'),
             array('formTags', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, image, description, user_type, user_id, category_id, create_date, seen, status', 'safe', 'on'=>'search'),
+			array('id, title, image, description, user_type, user_id, category_id, create_date, update_date, seen, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -138,6 +140,7 @@ class Lists extends CActiveRecord
 			'user_id' => 'کاربر',
 			'category_id' => 'دسته بندی',
 			'create_date' => 'تاریخ ثبت',
+			'create_date' => 'تاریخ آخرین تغییرات',
 			'seen' => 'بازدید',
 			'status' => 'وضعیت',
 			'formTags' => 'کلمات کلیدی',
@@ -236,6 +239,7 @@ class Lists extends CActiveRecord
         }
 
         if ($this->scenario == 'change_status') {
+            $this->update_date = time();
             if ($this->status == Lists::STATUS_APPROVED) {
                 $ids = CHtml::listData($this->itemObj, 'id', 'id');
                 $criteria = new CDbCriteria();

@@ -418,7 +418,7 @@ class Controller extends AuthController
     {
         $criteria = new CDbCriteria();
         $criteria->compare('status', Lists::STATUS_APPROVED);
-        $criteria->order = 'id DESC';
+        $criteria->order = 't.update_date DESC';
         $criteria->limit = $limit;
         return Lists::model()->findAll($criteria);
     }

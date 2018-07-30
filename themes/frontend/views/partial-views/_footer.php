@@ -11,18 +11,7 @@
             </li>
             <li>کلیه حقوق برای 10 بهترین محفوظ است.</li>
         </ul>
-        <ul class="navbar-social">
-            <li>
-                <a href="<?= isset($this->socialLinks['facebook'])?$this->socialLinks['facebook']:''?>">
-                    <i class="facebook-icon"></i>
-                </a>
-            </li>
-            <li>
-                <a href="<?= isset($this->socialLinks['telegram'])?$this->socialLinks['telegram']:''?>">
-                    <i class="telegram-icon"></i>
-                </a>
-            </li>
-        </ul>
+        <?php $this->renderPartial("//partial-views/_socials"); ?>
         <div class="rahbod-container">
             <a href="http://rahbod.com" target="_blank" title="طراحی و پیاده سازی شده توسط رهبد" class="rahbod">
                 <img src="<?= Yii::app()->baseUrl.'/themes/frontend/svg/rahbod.svg'?>"  alt="Rahbod" title="Rahbod">
