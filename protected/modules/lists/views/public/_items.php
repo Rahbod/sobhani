@@ -95,9 +95,9 @@ foreach($voteAvg as $itemID => $avg):
             <?php if($item->links):?>
                 <div class="list-view-links">
                     <b>لینک های مرتبط</b>
-                    <ul>
+                    <ul class="list-unstyled">
                         <?php foreach ($item->links as $link): ?>
-                            <li><a href="<?= $link->url ?>" target="_blank" rel="nofollow"><?= $link->title ?></a></li>
+                            <li><a href="<?= $link->url ?>" target="_blank" rel="nofollow"><i class="icon icon-link"></i><?= $link->title ?></a></li>
                         <?php endforeach; ?>
                     </ul>
                 </div>

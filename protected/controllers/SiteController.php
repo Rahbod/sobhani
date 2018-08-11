@@ -56,7 +56,12 @@ class SiteController extends Controller
         $slider = Lists::model()->findAll($criteria);
         $count = Lists::model()->count($criteria);
 
-        $lastEvents = UserNotifications::model()->findAll(['limit' => 5, 'order' => 'id DESC']);
+
+        $criteria = new CDbCriteria();
+        $criteria->addCondition(new CDbExpression("id NOT IN(SELECT id from ym_user_notifications where message like '%لیست شما%')"));
+        $criteria->order = "id DESC";
+        $criteria->limit = 5;
+        $lastEvents = UserNotifications::model()->findAll($criteria);
 
         $this->render('index', compact('slider', 'count', 'lastEvents'));
     }

@@ -16,13 +16,31 @@ $this->breadcrumbs=array(
 				'dataProvider'=>$model->search(),
 				'filter'=>$model,
 				'itemsCssClass'=>'table table-striped',
-				'template' => '{summary} {pager} {items} {pager}',
+				'template' => '{pager} {items} {pager}',
+                'ajaxUpdate' => true,
+                'afterAjaxUpdate' => "function(id, data){
+                    $('html, body').animate({
+                    scrollTop: ($('#'+id).offset().top-130)
+                    },1000,'easeOutCubic');
+                }",
+                'pager' => array(
+                    'header' => '',
+                    'firstPageLabel' => '<<',
+                    'lastPageLabel' => '>>',
+                    'prevPageLabel' => '<',
+                    'nextPageLabel' => '>',
+                    'cssFile' => false,
+                    'htmlOptions' => array(
+                        'class' => 'pagination pagination-sm',
+                    ),
+                ),
+                'pagerCssClass' => 'blank',
 				'columns'=>array(
-					array(
-						'header'=>Yii::t('commentsModule.msg', 'Model'),
-						'name'=>'owner_name',
-						'htmlOptions'=>array('width'=>50),
-					),
+//					array(
+//						'header'=>Yii::t('commentsModule.msg', 'Model'),
+//						'name'=>'owner_name',
+//						'htmlOptions'=>array('width'=>50),
+//					),
 					array(
 						'header'=>Yii::t('commentsModule.msg', 'Model\'s ID'),
 						'name'=>'owner_id',
@@ -35,8 +53,11 @@ $this->breadcrumbs=array(
 					),
 					array(
 						'header'=>Yii::t('commentsModule.msg', 'Link'),
-						'value'=>'CHtml::link(CHtml::link(Yii::t("CommentsModule.msg", "Link"), $data->pageUrl, array("target"=>"_blank")))',
-						'type'=>'raw',
+//						'value'=>'CHtml::link(CHtml::link(Yii::t("CommentsModule.msg", "Link"), $data->pageUrl, array("target"=>"_blank")))',
+                        'value'=>function($data) {
+                            return CHtml::link(Yii::t("CommentsModule.msg", "Link"), $data->pageUrl, array("target" => "_blank"));
+                        },
+                        'type'=>'raw',
 						'htmlOptions'=>array('width'=>50),
 					),
 					array(

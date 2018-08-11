@@ -33,7 +33,7 @@
     }
     .content .left-side h2{
         height: auto;
-        line-height: 32px;
+        line-height: 32px !important;
     }
     .feature-item .item-title{
         overflow: hidden;
@@ -49,6 +49,12 @@
     .content .left-side h2{
         font-size: 18px;
         margin-bottom: 15px;
+    }
+    .content .left-side h2 .telegram-link.gray{
+        line-height: 32px !important;
+    }
+    .content .left-side h2 .telegram-link.gray i{
+        height: 20px;
     }
     .slider + .content{
         margin-top: 0;
@@ -249,6 +255,14 @@
     }
     .comment-form-outer{
         margin-bottom: 30px;
+    }
+    .content .left-side strong{
+        font-size: 18px;
+    }
+}
+@media (max-width: 400px){
+    .social-networks{
+        width: 100%;
     }
 }
 @media (min-width: 768px) and (max-width: 991px) {

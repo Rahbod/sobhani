@@ -118,7 +118,7 @@ $this->pageTitle = $model->title;
         <div class="new-list-box">
             <p class="text-center">شما نیز میتوانید لیست دلخواه خود را ایجاد کنید.</p>
             <p class="text-center">
-                <a class="btn btn-blue btn-custom" href="<?= $this->createUrl('/new') ?>" title="ایجاد لیستی از بهترین ها">
+                <a class="btn btn-orange btn-custom" href="<?= $this->createUrl('/new') ?>" title="ایجاد لیستی از بهترین ها">
                     ایجاد لیستی از بهترین ها
                 </a>
             </p>

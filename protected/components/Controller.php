@@ -123,7 +123,7 @@ class Controller extends AuthController
 
     public static function createAdminMenu()
     {
-        if(Yii::app()->user->roles === 'admin')
+        if(Yii::app()->user->roles === 'admin' || Yii::app()->user->roles === 'superAdmin')
             return array(
                 array(
                     'label' => 'منوی مدیریت',
@@ -154,7 +154,10 @@ class Controller extends AuthController
                         array('label' => '<i class="fa fa-circle-o"></i>افزودن دسته بندی لیست', 'url' => Yii::app()->createUrl('/lists/category/create')),
                     )
                 ),
-
+                array(
+                    'label' => '<i class="fa fa-comment"></i><span>نظرات</span>',
+                    'url' => Yii::app()->createUrl('/comments/comment/admin'),
+                ),
                 array(
                     'label' => '<i class="fa fa-support"></i><span>تماس با ما</span> <i class="fa fa-angle-left pull-left"></i>',
                     'url' => '#',

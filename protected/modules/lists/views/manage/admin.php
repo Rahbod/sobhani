@@ -1,7 +1,7 @@
 <?php
 /* @var $this ListsManageController */
 /* @var $model Lists */
-
+Yii::app()->getModule('admins');
 $this->breadcrumbs=array(
 	'مدیریت',
 );

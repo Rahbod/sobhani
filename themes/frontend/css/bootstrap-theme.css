@@ -1076,6 +1076,14 @@ img{
     background: #2e7a9b;
     color: #fff;
 }
+.add-list-form .btn-orange{
+    background: #E99A00;
+    color: #fff;
+}
+.add-list-form .btn-orange:hover{
+    background: #c48100;
+    color: #fff;
+}
 .add-list-form .btn-gray{
     background: #BEBEBE;
     color: #fff;
