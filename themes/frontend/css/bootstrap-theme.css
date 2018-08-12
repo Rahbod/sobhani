@@ -1490,6 +1490,9 @@ input[type="radio"]{
 }
 .list-item-view h2{
     overflow: hidden;
+    background-color: transparent !important;
+    color: #222 !important;
+    font-size: 22px !important;
 }
 .list-item-view .image-box{
     min-height:230px;
