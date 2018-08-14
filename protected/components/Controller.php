@@ -141,7 +141,6 @@ class Controller extends AuthController
                     'items' => array(
                         array('label' => '<i class="fa fa-circle-o"></i>مدیریت', 'url' => Yii::app()->createUrl('/lists/manage/admin/')),
                         array('label' => '<i class="fa fa-circle-o"></i>افزودن لیست', 'url' => Yii::app()->createUrl('/lists/manage/create')),
-                        array('label' => '<i class="fa fa-circle-o"></i>نظرات', 'url' => Yii::app()->createUrl('/comments/comment/admin')),
                     )
                 ),
                 array(
