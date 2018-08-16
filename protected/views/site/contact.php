@@ -6,9 +6,9 @@
 
 $this->pageTitle="تماس با ما";
 $this->pageHeader="تماس با ما";
-$this->breadcrumbs=array(
-	'تماس با ما',
-);
+//$this->breadcrumbs=array(
+//	'تماس با ما',
+//);
 
 ?>
 <h2><?= $page->title ?></h2>
