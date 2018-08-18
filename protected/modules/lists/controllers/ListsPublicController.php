@@ -358,7 +358,7 @@ class ListsPublicController extends Controller
             default:
             case 'latest':
                 $title = 'تازه ها';
-                $lists = $this->getLatestLists(-1);
+                $lists = $this->getLatestListsByID(-1);
                 break;
         }
         $this->pageTitle = $title;

@@ -56,6 +56,79 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/150x150/';
 <div class="content">
     <div class="container">
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 left-side">
+            <div class="context" style="min-height: 145px;">
+                <div class="newlist" style="min-height: 145px;margin-bottom: 0;padding-left: 15px;">
+                    <i>"۱۰ بهترین" مکانی برای معرفی و انتخاب بهترین ها</i>
+                    <h2><strong>
+                        <a href="" style="font-size: 25px;" class="typewrite" data-period="2000" data-type='[
+                        "۱۰ بهترین وبسایت دانلود...",
+                        "۱۰ بهترین شهر دیدنی جهان..."
+                        ]'>
+                            <span class="wrap"></span>
+                        </a>
+                    </strong></h2>
+                    <span>شما نیز می توانید لیستی از بهترین ها ایجاد کنید:</span>
+                    <div style="margin-top: 20px;"><a href="/new" class="btn btn-info btn-lg">ایجاد لیستی از بهترین ها</a></div>
+                    <script>
+                        var TxtType = function(el, toRotate, period) {
+                            this.toRotate = toRotate;
+                            this.el = el;
+                            this.loopNum = 0;
+                            this.period = parseInt(period, 10) || 2000;
+                            this.txt = '';
+                            this.tick();
+                            this.isDeleting = false;
+                        };
+
+                        TxtType.prototype.tick = function() {
+                            var i = this.loopNum % this.toRotate.length;
+                            var fullTxt = this.toRotate[i];
+
+                            if (this.isDeleting) {
+                                this.txt = fullTxt.substring(0, this.txt.length - 1);
+                            } else {
+                                this.txt = fullTxt.substring(0, this.txt.length + 1);
+                            }
+
+                            this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+                            var that = this;
+                            var delta = 200 - Math.random() * 100;
+
+                            if (this.isDeleting) { delta /= 2; }
+
+                            if (!this.isDeleting && this.txt === fullTxt) {
+                                delta = this.period;
+                                this.isDeleting = true;
+                            } else if (this.isDeleting && this.txt === '') {
+                                this.isDeleting = false;
+                                this.loopNum++;
+                                delta = 500;
+                            }
+
+                            setTimeout(function() {
+                                that.tick();
+                            }, delta);
+                        };
+
+                        window.onload = function() {
+                            var elements = document.getElementsByClassName('typewrite');
+                            for (var i=0; i<elements.length; i++) {
+                                var toRotate = elements[i].getAttribute('data-type');
+                                var period = elements[i].getAttribute('data-period');
+                                if (toRotate) {
+                                    new TxtType(elements[i], JSON.parse(toRotate), period);
+                                }
+                            }
+                            // INJECT CSS
+                            var css = document.createElement("style");
+                            css.type = "text/css";
+                            css.innerHTML = ".typewrite > .wrap { border-left: 0.08em solid #888485}";
+                            document.body.appendChild(css);
+                        };
+                    </script>
+                </div>
+            </div>
             <div class="context">
                 <?php foreach ($this->getLatestLists(1) as $list): ?>
                     <div class="newlist">

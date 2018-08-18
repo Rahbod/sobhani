@@ -229,6 +229,9 @@ img{
     z-index: 3;
     opacity: .5;
 }
+.content .left-side .newlist h2{
+    padding: 0;
+}
 .content .left-side{
     padding-bottom: 30px;
 }
@@ -1946,4 +1949,7 @@ input.item-title{
 
 body.open-menu header ul.nav{
 
+}
+#mobile-menu .icon-link::before{
+    content: '';
 }

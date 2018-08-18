@@ -2,8 +2,7 @@
 /* @var $list Lists[] */
 /* @var $title string */
 $this->breadcrumbs = array(
-    'همه لیست ها' => array('/lists'),
-    $title
+    'همه لیست ها' => array('/lists')
 );
 ?>
 <h2><?= $title ?></h2>
