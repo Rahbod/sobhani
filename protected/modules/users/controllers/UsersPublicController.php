@@ -618,12 +618,27 @@ class UsersPublicController extends Controller
         // Login codes
         if (isset($_GET['ajax']) && ($_GET['ajax'] === 'users-login-modal-form' || $_GET['ajax'] === 'users-login-form')) {
             if (isset($_GET['mode'])) $model->scenario = $_GET['mode'];
+
+            switch ($model->scenario) {
+                case 'resend-verification':
+                case 'mobile-verification':
+                case 'mobile':
+                    unset($_POST['UserLoginForm']['verification_field_value']);
+                    unset($_POST['UserLoginForm']['password']);
+                    break;
+                case 'username':
+                    unset($_POST['UserLoginForm']['mobile']);
+                    unset($_POST['UserLoginForm']['verification_code']);
+                    break;
+            }
+
             $errors = CActiveForm::validate($model);
             if (CJSON::decode($errors)) {
                 echo $errors;
                 Yii::app()->end();
             }
         }
+        $enc = NEW bCrypt();
         // collect user input data
         if (isset($_POST['UserLoginForm'])) {
             $model->attributes = $_POST['UserLoginForm'];
@@ -640,19 +655,16 @@ class UsersPublicController extends Controller
                         $user->username = $model->mobile;
                         $user->create_date = time();
                     }
-                    $user->password = $code;
-                    if(!$user->isNewRecord) {
-                        $enc = NEW bCrypt();
-                        $user->password = $enc->hash($user->password);
-                    }
+                    $user->password = $enc->hash($code);
                     $user->status = 'active';
+                    $user->role_id = 1;
                     $user->verification_token = $code;
-                    $user->send_verify_date = time();
-                    if ($user->save()) {
+                    $user->send_verify_date = time()+120;
+                    if ($user->save(false)) {
                         $req = @Notify::SendSms("کد تایید شما: {$code} می باشد.", $model->mobile);
                         $result = array('status' => $req?true:false);
                     } else
-                        $result = array('status' => false);
+                        $result = array('status' => false, 'message' => 'متاسفانه مشکلی پیش آمده! مجددا تلاش فرمایید.');
                     echo CJSON::encode($result);
                     Yii::app()->end();
                     break;
@@ -660,12 +672,12 @@ class UsersPublicController extends Controller
                     $code = rand(12321, 99999);
                     $user = Users::model()->findByMobile($model->mobile);
                     if($user && $user->verification_token && $user->send_verify_date> time()) {
-                        $user->send_verify_date = time();
+                        $user->send_verify_date = time()+120;
                         if ($user->save(false)) {
                             $req = @Notify::SendSms("کد تایید شما: {$user->verification_token} می باشد.", $model->mobile);
-                            $result = array('status' => $req ? true : false);
+                            $result = array('status' => $req ? true : false, 'message' => 'کد تایید مجددا برای شما ارسال گردید.');
                         } else
-                            $result = array('status' => false);
+                            $result = array('status' => false, 'message' => 'متاسفانه مشکلی پیش آمده! مجددا تلاش فرمایید.');
                     }else {
                         if (!$user) {
                             $user = new Users();
@@ -673,19 +685,16 @@ class UsersPublicController extends Controller
                             $user->username = $model->mobile;
                             $user->create_date = time();
                         }
-                        $user->password = $code;
-                        if (!$user->isNewRecord) {
-                            $enc = NEW bCrypt();
-                            $user->password = $enc->hash($user->password);
-                        }
+                        $user->password = $enc->hash($code);
                         $user->status = 'active';
+                        $user->role_id = 1;
                         $user->verification_token = $code;
-                        $user->send_verify_date = time();
-                        if ($user->save()) {
+                        $user->send_verify_date = time()+1000000;
+                        if ($user->save(false)) {
                             $req = @Notify::SendSms("کد تایید شما: {$code} می باشد.", $model->mobile);
-                            $result = array('status' => $req ? true : false);
+                            $result = array('status' => $req ? true : false, 'message' => 'کد تایید مجددا برای شما ارسال گردید.');
                         } else
-                            $result = array('status' => false);
+                            $result = array('status' => false, 'message' => 'متاسفانه مشکلی پیش آمده! مجددا تلاش فرمایید.');
                     }
                     echo CJSON::encode($result);
                     Yii::app()->end();
@@ -697,7 +706,7 @@ class UsersPublicController extends Controller
                         $model->password = $model->verification_code;
                     }else{
                         $message = '';
-                        if($user->send_verify_date >= time())
+                        if($user->send_verify_date < time())
                             $message = 'کد تایید منقضی شده است.';
                         else
                             $message = 'کد تایید اشتباه است.';
@@ -705,6 +714,7 @@ class UsersPublicController extends Controller
                         echo CJSON::encode($result);
                         Yii::app()->end();
                     }
+                    break;
                 case 'username':
                     // validate user input and redirect to the previous page if valid
                     if ($model->validate() && $model->login()) {
@@ -714,12 +724,13 @@ class UsersPublicController extends Controller
                         else
                             $redirect = $this->createUrl('/dashboard');
                         if (isset($_GET['ajax'])) {
-                            echo CJSON::encode(array('status' => true, 'url' => $redirect, 'msg' => 'در حال انتقال ...'));
-                            Yii::app()->end();
+                            $result = array('status' => true, 'url' => $redirect, 'message' => 'در حال انتقال ...');
                         } else
                             $this->redirect($redirect);
                     } else
-                        $model->password = '';
+                        $result = array('status' => false, 'message' => "خطا در ورود!");
+                    echo CJSON::encode($result);
+                    Yii::app()->end();
                     break;
                 default:
                     $result = array('status' => false);

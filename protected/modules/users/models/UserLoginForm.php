@@ -45,34 +45,30 @@ class UserLoginForm extends CFormModel
             array('verification_field_value', 'length', 'is' => 11, 'on' => 'mobileAuth'),
 			// multiple username
 			array('verification_field_value, verification_field', 'safe'),
-			array('verification_field_value', 'check', 'fields' => ['mobile', 'email']),
+			array('verification_field_value', 'check'),
 			// authenticate_field needs to be authenticated
 			array('authenticate_field', 'authenticate', 'on' => 'username'),
 		);
 	}
 
-	public function check($attribute, $params)
-	{
-        $criteria = new CDbCriteria();
-        $criteria->compare('email', $this->{$attribute});
-        $criteria->limit = 1;
-        $email = Users::model()->find($criteria);
-        if($email){
-            $this->email = $email->email;
-            $this->verification_field = 'email';
-            $this->scenario = 'emailAuth';
-        }else{
-            $criteria = new CDbCriteria();
-            $criteria->compare('mobile', $this->{$attribute});
-            $criteria->limit = 1;
-            $mobile = UserDetails::model()->find($criteria);
-            if($mobile){
-                $this->email = $mobile->user->email;
-                $this->verification_field = 'mobile';
-                $this->scenario = 'mobileAuth';
+        public function check($attribute, $params)
+        {
+            $email = Users::model()->findByAttributes(array('email' => $this->{$attribute}));
+            if ($email) {
+                $this->email = $email->email;
+                $this->verification_field = 'email';
+                $this->scenario = 'emailAuth';
+            } else {
+                $mobile = Users::model()->findByMobile($this->{$attribute});
+                if ($mobile->username == $this->{$attribute}) {
+                    $this->verification_field = 'username';
+                    $this->scenario = 'usernameAuth';
+                } else if ($mobile->userDetails->mobile == $this->{$attribute}) {
+                    $this->verification_field = 'mobile';
+                    $this->scenario = 'mobileAuth';
+                }
             }
         }
-	}
 
 	/**
 	 * Declares attribute labels.
@@ -130,7 +126,7 @@ class UserLoginForm extends CFormModel
 			if ($this->OAuth)
 				$this->_identity = new UserIdentity($this->verification_field_value, null, $this->OAuth);
 			else
-				$this->_identity = new UserIdentity($this->verification_field_value, $this->password);
+				$this->_identity = new UserIdentity($this->verification_field_value, $this->password,null, $this->verification_field);
 			$this->_identity->authenticate();
 		}
 		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)
@@ -151,7 +147,7 @@ class UserLoginForm extends CFormModel
 	}
     protected function afterValidate()
     {
-        $this->password = $this->encrypt($this->password);
+//        $this->password = $this->encrypt($this->password);
         return parent::afterValidate();
     }
 

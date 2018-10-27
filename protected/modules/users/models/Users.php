@@ -101,6 +101,7 @@ class Users extends CActiveRecord
             array('status', 'length', 'max' => 8),
             array('create_date', 'length', 'max' => 20),
             array('send_verify_date', 'length', 'max' => 12),
+            array('send_verify_date', 'safe'),
             array('phone', 'length', 'max' => 11),
             array('mobile', 'length', 'is' => 11, 'message' => 'شماره موبایل اشتباه است'),
             array('address', 'length', 'max' => 1000),

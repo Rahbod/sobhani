@@ -14,7 +14,7 @@ $form = $this->beginWidget('CActiveForm', array(
         'onsubmit' => 'return false;'
     ),
 )); ?>
-    <p id="login-error" class="errorMessage text-center"></p>
+    <p id="login-error" class="text-center" style="font-size: 11px"></p>
     <div class="tab-content">
         <div class="tab-pane fade in active" id="mobile-form">
             <div>
@@ -71,15 +71,14 @@ $form = $this->beginWidget('CActiveForm', array(
         </div>
     </div>
 <?php $this->endWidget(); ?>
+
 <script>
     $(function () {
-        $("body").on("click", '.login-submit-btn', function () {
+        $("body").on("click", ".login-submit-btn", function () {
             var $this = $(this),
                 loginMode = $this.val(),
-                form = $this.parents('form'),
+                form = $this.parents("form"),
                 url = form.attr("action");
-
-            console.log(loginMode);
 
             $.ajax({
                 "type": "POST",
@@ -90,35 +89,53 @@ $form = $this->beginWidget('CActiveForm', array(
                     $("#login-modal .loading-container").show();
                 },
                 "success": function (data) {
-                    form.find("#login-error").html("").removeClass('success error');
+                    form.find("#login-error").html("").removeClass("success error");
                     console.log(data);
-                    if (typeof data === "object" && typeof data.status === 'undefined') {
+                    if (typeof data === "object" && typeof data.status === "undefined") {
                         $.each(data, function (key, value) {
-                            form.find("#" + key + "_em_").show().html(value.toString()).parent().removeClass('success').addClass('error');
-                            form.find("#login-error").append("<br>"+value.toString()).addClass('error').show();
+                            form.find("#" + key + "_em_").show().html(value.toString()).parent().removeClass("success").addClass("error");
+                            form.find("#login-error").append("<br>"+value.toString()).addClass("error").show();
                         });
                         $("#login-modal .loading-container").hide();
-                        setTimeout(function () {
-                            form.find("#login-error").fadeOut();
-                        }, 5000);
                     }
-                    else if (data.status) {
-                        if(loginMode === 'username') {
-                            window.location = data.url;
-                            $("#"+loginMode+"-form .login-submit-btn").val(data.msg);
-                        }else if(loginMode === 'mobile'){
+                    else {
+                        if (loginMode === "username") {
+                            if (data.status) {
+                                window.location = data.url;
+                                $("#" + loginMode + "-form .login-submit-btn").val(data.msg);
+                            } else {
+                                $("#login-modal .loading-container").hide();
+                                form.find("#login-error").html(data.message).addClass("error").removeClass("success").show();
+                            }
+                        } else if (loginMode === "mobile") {
                             $("#login-modal .loading-container").hide();
-                            $("#go-verify").tab("show");
+                            if (data.status) {
+                                $("#go-verify").tab("show");
+                            } else
+                                form.find("#login-error").html(data.message).addClass("error").removeClass("success").show();
+                        } else if (loginMode === "mobile-verification" || loginMode === "resend-verification") {
+                            $("#login-modal .loading-container").hide();
+                            if (data.status)
+                                form.find("#login-error").html(data.message).addClass("success").removeClass("error").show();
+                            else
+                                form.find("#login-error").html(data.message).addClass("error").removeClass("success").show();
                         }
                     }
+                    setTimeout(function () {
+                        form.find("#login-error").fadeOut();
+                    }, 5000);
                 },
                 error: function (err) {
                     $("#login-modal .loading-container").hide();
                     console.log(err);
                 }
             });
+        }).on("keypress", "#users-login-modal-form", function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
         });
     })
 </script>
-<?php
-
