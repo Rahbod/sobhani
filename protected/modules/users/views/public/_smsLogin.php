@@ -34,6 +34,7 @@ $form = $this->beginWidget('CActiveForm', array(
         <div class="tab-pane fade" id="mobile-verification-form">
             <p>کد تایید به شماره تلفن همراه شما ارسال گردید.</p>
             <div>
+                <span class="login-timer">120</span>
                 <?php echo $form->textField($model, 'verification_code', array('style' => 'letter-spacing:3px','class' => 'ltr text-right text-field', 'placeholder' => 'کد تایید', 'maxLength' => 5)); ?>
                 <?php echo $form->error($model, 'verification_code'); ?>
             </div>
@@ -42,7 +43,7 @@ $form = $this->beginWidget('CActiveForm', array(
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="resend-verification" class="login-submit-btn btn btn-default">
+                    <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="resend-verification" class="login-submit-btn btn btn-default resend-btn">
                         <i class="icon icon-refresh"></i>
                         ارسال مجدد کد فعالسازی</button>
                 </div>
@@ -82,7 +83,7 @@ $form = $this->beginWidget('CActiveForm', array(
 
             $.ajax({
                 "type": "POST",
-                "url": url + "?ajax=users-login-modal-form&mode="+loginMode,
+                "url": url + "?ajax=users-login-modal-form&mode=" + loginMode,
                 "data": form.serialize(),
                 "dataType": "json",
                 "beforeSend": function () {
@@ -94,7 +95,7 @@ $form = $this->beginWidget('CActiveForm', array(
                     if (typeof data === "object" && typeof data.status === "undefined") {
                         $.each(data, function (key, value) {
                             form.find("#" + key + "_em_").show().html(value.toString()).parent().removeClass("success").addClass("error");
-                            form.find("#login-error").append("<br>"+value.toString()).addClass("error").show();
+                            form.find("#login-error").append("<br>" + value.toString()).addClass("error").show();
                         });
                         $("#login-modal .loading-container").hide();
                     }
@@ -102,23 +103,33 @@ $form = $this->beginWidget('CActiveForm', array(
                         if (loginMode === "username") {
                             if (data.status) {
                                 window.location = data.url;
-                                $("#" + loginMode + "-form .login-submit-btn").val(data.msg);
+                                $("#" + loginMode + "-form .login-submit-btn").val(data.message);
                             } else {
                                 $("#login-modal .loading-container").hide();
-                                form.find("#login-error").html(data.message).addClass("error").removeClass("success").show();
+                                form.find("#login-error").html(data.message).addClass("text-danger").removeClass("text-success").show();
                             }
                         } else if (loginMode === "mobile") {
                             $("#login-modal .loading-container").hide();
                             if (data.status) {
                                 $("#go-verify").tab("show");
+                                $("#mobile-verification-form").find(".text-field").val("").focus();
+                                timer(120);
                             } else
-                                form.find("#login-error").html(data.message).addClass("error").removeClass("success").show();
+                                form.find("#login-error").html(data.message).addClass("text-error").removeClass("text-success").show();
                         } else if (loginMode === "mobile-verification" || loginMode === "resend-verification") {
                             $("#login-modal .loading-container").hide();
-                            if (data.status)
-                                form.find("#login-error").html(data.message).addClass("success").removeClass("error").show();
+                            if (data.status) {
+                                if (loginMode === "mobile-verification")
+                                    window.location = data.url;
+                                if (loginMode === "resend-verification") {
+                                    $("#mobile-verification-form").find(".text-field").val("").focus();
+                                    $(".resend-btn").addClass("btn-default").removeClass("btn-border-primary");
+                                    timer(120);
+                                }
+                                form.find("#login-error").html(data.message).addClass("text-success").removeClass("text-error").show();
+                            }
                             else
-                                form.find("#login-error").html(data.message).addClass("error").removeClass("success").show();
+                                form.find("#login-error").html(data.message).addClass("text-error").removeClass("text-success").show();
                         }
                     }
                     setTimeout(function () {
@@ -130,12 +141,26 @@ $form = $this->beginWidget('CActiveForm', array(
                     console.log(err);
                 }
             });
-        }).on("keypress", "#users-login-modal-form", function(e) {
+        }).on("keypress", "#users-login-modal-form", function (e) {
             var keyCode = e.keyCode || e.which;
             if (keyCode === 13) {
                 e.preventDefault();
                 return false;
             }
         });
+
+        var timerInterval = false;
+
+        function timer(counter) {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(function () {
+                counter--;
+
+                if (counter === 0) {
+                    clearInterval(timerInterval);
+                    $(".resend-btn").removeClass("btn-default").addClass("btn-border-primary");
+                }
+            }, 1000);
+        }
     })
 </script>

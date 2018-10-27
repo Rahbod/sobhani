@@ -13,7 +13,7 @@
     <meta name="description" content="<?= $this->description?>">
     <title><?= (!empty($this->pageTitle)?$this->pageTitle.' | ':'').$this->siteName ?></title>
 
-    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/css/fontiran.css">
+    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/css/fontiran-fa-num.css">
     <?php
     $baseUrl = Yii::app()->theme->baseUrl;
     $cs = Yii::app()->getClientScript();
