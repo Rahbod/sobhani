@@ -19,7 +19,7 @@
             <?php endforeach; ?>
         </div>
         <div id="menu2" class="tab-pane fade">
-            <?php foreach($this->getLatestLists() as $list): ?>
+            <?php foreach($this->getLatestListsByID() as $list): ?>
                 <a href="<?= $list->getViewUrl() ?>"><?= $list->title ?></a>
             <?php endforeach; ?>
         </div>

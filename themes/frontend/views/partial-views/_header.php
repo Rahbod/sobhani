@@ -28,8 +28,9 @@
                         <li><a href="<?= $this->createUrl('/notifications')?>" class="e" title="پیام ها"><i class="envelope-icon"></i><?php if($this->userNotifications != 0 and Yii::app()->request->pathInfo != 'notifications'):?><span class="notification-count"><?= $this->userNotifications?></span><?php endif;?></a></li>
                         <li><a href="<?= $this->createUrl('/logout')?>" class="l" title="خروج"><i class="logout-icon"></i></a></li>
                     <?php else:?>
-                        <li><a href="#login-modal" data-toggle="modal">ورود</a></li>
-                        <li><a href="#join-modal" data-toggle="modal">ثبت نام</a></li>
+<!--                        <li><a href="#login-modal" data-toggle="modal">ورود</a></li>-->
+<!--                        <li><a href="#join-modal" data-toggle="modal">ثبت نام</a></li>-->
+                        <li><a href="#login-modal" data-toggle="modal">ورود/ثبت نام</a></li>
                     <?php endif;?>
                 </ul>
             </div>
@@ -59,8 +60,8 @@
             <li><a href="<?= $this->createUrl('/lists') ?>">لیست ها</a></li>
             <li><a href="<?= $this->createUrl('/latest') ?>">تازه ها</a></li>
             <li><a href="<?= $this->createUrl('/new') ?>">افزودن لیست</a></li>
-            <li><a href="<?= $this->createUrl('/recommended') ?>">پیشنهاد برای شما</a></li>
             <?php if(!Yii::app()->user->isGuest && Yii::app()->user->type =='user'):?>
+                <li><a href="<?= $this->createUrl('/recommended') ?>">پیشنهاد برای شما</a></li>
                 <li><a href="<?= $this->createUrl('/dashboard')?>"><i class="user-icon"></i><?= Yii::app()->user->showName ?></a>
                 <li class="icon-link"><a href="<?= $this->createUrl('/dashboard')?>" class="h"><i class="home-icon"></i></a></li>
                 <li class="icon-link"><a href="<?= $this->createUrl('/bookmarks')?>" class="s"><i class="star-icon"></i></a></li>

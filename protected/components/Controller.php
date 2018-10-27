@@ -429,6 +429,19 @@ class Controller extends AuthController
      * @param int $limit
      * @return Lists[]
      */
+    public function getLatestListsByID($limit = 5)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('status', Lists::STATUS_APPROVED);
+        $criteria->order = 't.id DESC';
+        $criteria->limit = $limit;
+        return Lists::model()->findAll($criteria);
+    }
+
+    /**
+     * @param int $limit
+     * @return Lists[]
+     */
     public function getTopLists($limit = 10)
     {
         $criteria = new CDbCriteria();
