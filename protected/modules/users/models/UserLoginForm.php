@@ -16,6 +16,9 @@ class UserLoginForm extends CFormModel
 	public $OAuth;
     public $authenticate_field;
     public $oauth_authenticate_field;
+    public $mobile;
+    public $verification_code;
+    public $login_mode;
 
 	private $_identity;
 
@@ -28,6 +31,7 @@ class UserLoginForm extends CFormModel
     {
 		return array(
 			// username and password are required
+			array('mobile', 'required' ,'on' => 'mobile'),
 			array('verification_field_value, password', 'required' ,'except' => 'OAuth'),
 			array('email ,OAuth', 'required' ,'on' => 'OAuth'),
 			// rememberMe needs to be a boolean

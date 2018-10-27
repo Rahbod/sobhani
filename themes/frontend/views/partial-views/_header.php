@@ -28,8 +28,9 @@
                         <li><a href="<?= $this->createUrl('/notifications')?>" class="e" title="پیام ها"><i class="envelope-icon"></i><?php if($this->userNotifications != 0 and Yii::app()->request->pathInfo != 'notifications'):?><span class="notification-count"><?= $this->userNotifications?></span><?php endif;?></a></li>
                         <li><a href="<?= $this->createUrl('/logout')?>" class="l" title="خروج"><i class="logout-icon"></i></a></li>
                     <?php else:?>
-                        <li><a href="#login-modal" data-toggle="modal">ورود</a></li>
-                        <li><a href="#join-modal" data-toggle="modal">ثبت نام</a></li>
+<!--                        <li><a href="#login-modal" data-toggle="modal">ورود</a></li>-->
+<!--                        <li><a href="#join-modal" data-toggle="modal">ثبت نام</a></li>-->
+                        <li><a href="#login-modal" data-toggle="modal">ورود/ثبت نام</a></li>
                     <?php endif;?>
                 </ul>
             </div>

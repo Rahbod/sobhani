@@ -1953,3 +1953,65 @@ body.open-menu header ul.nav{
 #mobile-menu .icon-link::before{
     content: '';
 }
+
+#login-modal .modal-dialog{
+    width: 500px;
+}
+#login-modal form button{
+    width: 100%;
+    padding: 13px 15px;
+    border-radius: 0;
+}
+#login-modal form .text-field{
+    text-align: center;
+    direction: ltr;
+    border-color: #ccc;
+}
+#login-modal form .btn-red{
+    padding: 9px 15px;
+}
+.modal.fade.modal-center{
+    margin: 0 auto;
+    -webkit-transform: translate(0, 0);
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0);
+}
+
+.modal.fade.modal-center.in{
+    margin: 0 auto;
+    opacity: 1;
+    -webkit-transform: translate(0, 0);
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0);
+}
+
+.modal.fade.modal-center .modal-dialog{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin: 0 auto;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.modal.fade.modal-center.modal-center.in .modal-dialog{
+    opacity: 1;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}

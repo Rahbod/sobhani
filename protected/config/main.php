@@ -121,7 +121,7 @@ return array(
 				'<type:(recommended|latest)>' => 'lists/public/rows',
 				'<action:(about|contact|help|terms|search|faq)>' => 'site/<action>',
 				'my-lists' => 'users/public/lists',
-				'<action:(logout|dashboard|googleLogin|login|register|changePassword|forgetPassword|profile|notifications|recoverPassword|bookmarks)>' => 'users/public/<action>',
+				'<action:(logout|dashboard|googleLogin|login|mobileLogin|register|changePassword|forgetPassword|profile|notifications|recoverPassword|bookmarks)>' => 'users/public/<action>',
 				'<module:\w+>/<id:\d+>'=>'<module>/public/view',
 				'<module:\w+>/<controller:\w+>'=>'<module>/<controller>/index',
 				'<controller:\w+>/<action:\w+>/<id:\d+>/<title:(.*)>'=>'<controller>/<action>',
