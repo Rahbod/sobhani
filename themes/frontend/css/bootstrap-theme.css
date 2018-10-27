@@ -1991,7 +1991,7 @@ body.open-menu header ul.nav{
 
 .modal.fade.modal-center .modal-dialog{
     position: absolute;
-    top: 40%;
+    top: 25%;
     left: 50%;
     margin: 0 auto;
     -webkit-transform: translate(-50%, -50%);

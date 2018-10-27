@@ -15,7 +15,6 @@ $form = $this->beginWidget('CActiveForm', array(
     ),
 )); ?>
     <p id="login-error" class="errorMessage text-center"></p>
-    <p id="UserLoginForm_authenticate_field_em_" class="errorMessage"></p>
     <div class="tab-content">
         <div class="tab-pane fade in active" id="mobile-form">
             <div>
@@ -24,7 +23,8 @@ $form = $this->beginWidget('CActiveForm', array(
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="mobile" data-toggle="tab" data-target="#mobile-verification-form" class="login-submit-btn btn btn-primary">ارسال کد فعالسازی</button>
+                    <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="mobile" class="login-submit-btn btn btn-primary">ارسال کد فعالسازی</button>
+                    <a id="go-verify" data-toggle="tab" data-target="#mobile-verification-form"></a>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <button type="button" class="btn btn-default" data-toggle="tab" data-target="#username-form">ورود با نام کاربری</button>
@@ -34,7 +34,7 @@ $form = $this->beginWidget('CActiveForm', array(
         <div class="tab-pane fade" id="mobile-verification-form">
             <p>کد تایید به شماره تلفن همراه شما ارسال گردید.</p>
             <div>
-                <?php echo $form->textField($model, 'verification_code', array('class' => 'ltr text-right text-field', 'placeholder' => 'کد تایید')); ?>
+                <?php echo $form->textField($model, 'verification_code', array('style' => 'letter-spacing:3px','class' => 'ltr text-right text-field', 'placeholder' => 'کد تایید', 'maxLength' => 5)); ?>
                 <?php echo $form->error($model, 'verification_code'); ?>
             </div>
             <div style="display: block;margin-bottom: 10px">
@@ -91,25 +91,30 @@ $form = $this->beginWidget('CActiveForm', array(
                 },
                 "success": function (data) {
                     form.find("#login-error").html("").removeClass('success error');
+                    console.log(data);
                     if (typeof data === "object" && typeof data.status === 'undefined') {
                         $.each(data, function (key, value) {
                             form.find("#" + key + "_em_").show().html(value.toString()).parent().removeClass('success').addClass('error');
                             form.find("#login-error").append("<br>"+value.toString()).addClass('error').show();
                         });
+                        $("#login-modal .loading-container").hide();
+                        setTimeout(function () {
+                            form.find("#login-error").fadeOut();
+                        }, 5000);
                     }
                     else if (data.status) {
                         if(loginMode === 'username') {
                             window.location = data.url;
-                            // $("#"+loginMode+"-form .login-submit-btn").val(data.msg);
-                        }else{
+                            $("#"+loginMode+"-form .login-submit-btn").val(data.msg);
+                        }else if(loginMode === 'mobile'){
                             $("#login-modal .loading-container").hide();
-                            $("#mobile-verification-form").tab("toggle");
+                            $("#go-verify").tab("show");
                         }
                     }
                 },
-                error: function (data) {
+                error: function (err) {
                     $("#login-modal .loading-container").hide();
-                    alert(data);
+                    console.log(err);
                 }
             });
         });

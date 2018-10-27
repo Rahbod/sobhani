@@ -63,7 +63,7 @@ class UsersPublicController extends Controller
                 'attribute' => 'avatar',
                 'rename' => 'random',
                 'validateOptions' => array(
-                    'acceptedTypes' => array('jpg','jpeg','png')
+                    'acceptedTypes' => array('jpg', 'jpeg', 'png')
                 ),
                 'insert' => true,
                 'module' => 'users',
@@ -72,7 +72,7 @@ class UsersPublicController extends Controller
                 'scenario' => 'upload_photo',
                 'storeMode' => 'field',
                 'afterSaveActions' => array(
-                    'resize' => array('width'=>500,'height'=>500)
+                    'resize' => array('width' => 500, 'height' => 500)
                 )
             ),
             'deleteUpload' => array(
@@ -91,7 +91,7 @@ class UsersPublicController extends Controller
     public function actionLogout()
     {
         Yii::app()->user->logout();
-        Yii::app()->user->setState('clinic',null);
+        Yii::app()->user->setState('clinic', null);
         $this->redirect(Yii::app()->createAbsoluteUrl('//'));
     }
 
@@ -107,7 +107,7 @@ class UsersPublicController extends Controller
 
         $lists = new Lists('search');
         $lists->unsetAttributes();
-        if(isset($_GET['Lists']))
+        if (isset($_GET['Lists']))
             $lists->attributes = $_GET['Lists'];
         $lists->user_type = 'user';
         $lists->user_id = $user->id;
@@ -164,7 +164,7 @@ class UsersPublicController extends Controller
         $tmpDIR = Yii::getPathOfAlias("webroot") . '/uploads/temp/';
         $tmpUrl = Yii::app()->createAbsoluteUrl('/uploads/temp/');
         $avatarDIR = Yii::getPathOfAlias("webroot") . '/uploads/users/avatar/';
-        if(!is_dir($avatarDIR))
+        if (!is_dir($avatarDIR))
             mkdir($avatarDIR);
         $avatarUrl = Yii::app()->createAbsoluteUrl('/uploads/users/avatar');
 
@@ -222,7 +222,7 @@ class UsersPublicController extends Controller
      */
     public function actionViewProfile($id)
     {
-        if(Yii::app()->user->getId() == $id)
+        if (Yii::app()->user->getId() == $id)
             $this->redirect(['/dashboard']);
 
         Yii::app()->theme = 'frontend';
@@ -232,7 +232,7 @@ class UsersPublicController extends Controller
 
         $lists = new Lists('search');
         $lists->unsetAttributes();
-        if(isset($_GET['Lists']))
+        if (isset($_GET['Lists']))
             $lists->attributes = $_GET['Lists'];
         $lists->user_type = 'user';
         $lists->user_id = $model->id;
@@ -314,14 +314,13 @@ class UsersPublicController extends Controller
                         $result = Mailer::mail($model->email, 'درخواست تغییر کلمه عبور در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail'], Yii::app()->params['SMTP']);
                         if ($result) {
                             if (isset($_GET['ajax'])) {
-                                echo CJSON::encode(array('state' => 1, 'url' => Yii::app()->baseUrl,  'msg' => 'ایمیل بازیابی رمز عبور به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.'));
+                                echo CJSON::encode(array('state' => 1, 'url' => Yii::app()->baseUrl, 'msg' => 'ایمیل بازیابی رمز عبور به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.'));
                                 Yii::app()->end();
                             } else {
                                 Yii::app()->user->setFlash('success', 'ایمیل بازیابی رمز عبور به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.');
                                 $this->refresh();
                             }
-                        } else
-                        {
+                        } else {
                             if (isset($_GET['ajax'])) {
                                 echo CJSON::encode(array('state' => 0, 'msg' => 'در ارسال ایمیل مشکلی ایجاد شده است، لطفاً مجددا تلاش کنید.'));
                                 Yii::app()->end();
@@ -330,8 +329,7 @@ class UsersPublicController extends Controller
                                 $this->refresh();
                             }
                         }
-                    } else
-                    {
+                    } else {
                         if (isset($_GET['ajax'])) {
                             echo CJSON::encode(array('state' => 0, 'msg' => 'بیش از 3 بار نمی توانید درخواست تغییر کلمه عبور بدهید.'));
                             Yii::app()->end();
@@ -389,14 +387,14 @@ class UsersPublicController extends Controller
                 $model->password = $_POST['Users']['password'];
                 $model->repeatPassword = $_POST['Users']['repeatPassword'];
                 $model->setScenario('recover-password');
-                if($model->validate()){
+                if ($model->validate()) {
                     $model->verification_token = null;
                     $model->change_password_request_count = 0;
                     $model->password = $model->encrypt($model->password);
-                    if($model->save(false)){
+                    if ($model->save(false)) {
                         Yii::app()->user->setFlash('success', 'کلمه عبور با موفقیت تغییر یافت.');
                         $this->redirect($this->createUrl('/login'));
-                    }else
+                    } else
                         Yii::app()->user->setFlash('failed', 'در انجام عملیات خطایی رخ داده است لطفا مجددا تلاش کنید.');
                 }
             }
@@ -407,7 +405,7 @@ class UsersPublicController extends Controller
         } else
             $this->redirect($this->createAbsoluteUrl('//'));
     }
-    
+
 
     /**
      * Performs the AJAX validation.
@@ -423,13 +421,13 @@ class UsersPublicController extends Controller
 
     public function actionGoogleLogin()
     {
-        if(isset($_GET['return-url']))
+        if (isset($_GET['return-url']))
             Yii::app()->user->returnUrl = $_GET['return-url'];
         $googleAuth = new GoogleOAuth();
         $model = new UserLoginForm('OAuth');
         $googleAuth->login($model);
     }
-    
+
     public function actionLogin()
     {
         Yii::app()->theme = 'frontend';
@@ -450,7 +448,7 @@ class UsersPublicController extends Controller
         // collect user input data
         if (isset($_POST['UserLoginForm'])) {
             $model->attributes = $_POST['UserLoginForm'];
-            if(isset($_POST['returnUrl']))
+            if (isset($_POST['returnUrl']))
                 Yii::app()->user->returnUrl = $_POST['returnUrl'];
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login()) {
@@ -503,7 +501,7 @@ class UsersPublicController extends Controller
                 $message .= '<a href="' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '">' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '</a>';
                 $message .= '</div>';
                 $message .= '<div style="font-size: 8pt;color: #888;text-align: right;">این لینک فقط 3 روز اعتبار دارد.</div>';
-                Mailer::mail($model->email, 'ثبت نام در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail'],Yii::app()->params['SMTP']);
+                Mailer::mail($model->email, 'ثبت نام در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail'], Yii::app()->params['SMTP']);
                 // Send Sms
                 $siteName = Yii::app()->name;
                 $message = "ثبت نام شما در سایت {$siteName} با موفقیت انجام شد.
@@ -544,7 +542,7 @@ class UsersPublicController extends Controller
             $message .= '<a href="' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '">' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '</a>';
             $message .= '</div>';
             $message .= '<div style="font-size: 8pt;color: #888;text-align: right;">این لینک فقط 3 روز اعتبار دارد.</div>';
-            Mailer::mail($model->email, 'ثبت نام در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail'],Yii::app()->params['SMTP']);
+            Mailer::mail($model->email, 'ثبت نام در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail'], Yii::app()->params['SMTP']);
             Yii::app()->user->setFlash('success', 'ایمیل فعال سازی به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.');
             $this->redirect(array('/login'));
         } else
@@ -597,7 +595,7 @@ class UsersPublicController extends Controller
 
         $model = new Lists('search');
         $model->unsetAttributes();
-        if(isset($_GET['Lists']))
+        if (isset($_GET['Lists']))
             $model->attributes = $_GET['Lists'];
         $model->user_type = 'user';
         $model->user_id = $user->id;
@@ -606,7 +604,6 @@ class UsersPublicController extends Controller
             'model' => $model
         ));
     }
-
 
 
     public function actionMobileLogin()
@@ -620,6 +617,7 @@ class UsersPublicController extends Controller
         $model = new UserLoginForm;
         // Login codes
         if (isset($_GET['ajax']) && ($_GET['ajax'] === 'users-login-modal-form' || $_GET['ajax'] === 'users-login-form')) {
+            if (isset($_GET['mode'])) $model->scenario = $_GET['mode'];
             $errors = CActiveForm::validate($model);
             if (CJSON::decode($errors)) {
                 echo $errors;
@@ -629,83 +627,106 @@ class UsersPublicController extends Controller
         // collect user input data
         if (isset($_POST['UserLoginForm'])) {
             $model->attributes = $_POST['UserLoginForm'];
-            var_dump($model->attributes);exit;
-            if(isset($_POST['returnUrl']))
+            if (isset($_POST['returnUrl']))
                 Yii::app()->user->returnUrl = $_POST['returnUrl'];
-            // validate user input and redirect to the previous page if valid
-            if ($model->validate() && $model->login()) {
-                if (Yii::app()->user->returnUrl != Yii::app()->request->baseUrl . '/' &&
-                    Yii::app()->user->returnUrl != 'logout')
-                    $redirect = Yii::app()->user->returnUrl;
-                else
-                    $redirect = $this->createUrl('/dashboard');
-                if (isset($_GET['ajax'])) {
-                    echo CJSON::encode(array('status' => true, 'url' => $redirect, 'msg' => 'در حال انتقال ...'));
+            $mode = isset($_GET['mode']) && !empty($_GET['mode']) ? $_GET['mode'] : null;
+            switch ($mode) {
+                case 'mobile':
+                    $code = rand(12321, 99999);
+                    $user = Users::model()->findByMobile($model->mobile);
+                    if (!$user) {
+                        $user = new Users();
+                        $user->mobile = $model->mobile;
+                        $user->username = $model->mobile;
+                        $user->create_date = time();
+                    }
+                    $user->password = $code;
+                    if(!$user->isNewRecord) {
+                        $enc = NEW bCrypt();
+                        $user->password = $enc->hash($user->password);
+                    }
+                    $user->status = 'active';
+                    $user->verification_token = $code;
+                    $user->send_verify_date = time();
+                    if ($user->save()) {
+                        $req = @Notify::SendSms("کد تایید شما: {$code} می باشد.", $model->mobile);
+                        $result = array('status' => $req?true:false);
+                    } else
+                        $result = array('status' => false);
+                    echo CJSON::encode($result);
                     Yii::app()->end();
-                } else
-                    $this->redirect($redirect);
-            } else
-                $model->password = '';
-        }
-        // End of login codes
-        if (!isset($_GET['ajax']))
-            $this->render('login', array(
-                'model' => $model,
-            ));
-
-        Yii::app()->theme = 'frontend';
-        $this->layout = '//layouts/inner';
-
-        $model = new Users('create');
-
-        if (isset($_GET['ajax']) && $_GET['ajax'] === 'users-register-modal-form') {
-            $errors = CActiveForm::validate($model);
-            if (CJSON::decode($errors)) {
-                echo $errors;
-                Yii::app()->end();
+                    break;
+                case 'resend-verification':
+                    $code = rand(12321, 99999);
+                    $user = Users::model()->findByMobile($model->mobile);
+                    if($user && $user->verification_token && $user->send_verify_date> time()) {
+                        $user->send_verify_date = time();
+                        if ($user->save(false)) {
+                            $req = @Notify::SendSms("کد تایید شما: {$user->verification_token} می باشد.", $model->mobile);
+                            $result = array('status' => $req ? true : false);
+                        } else
+                            $result = array('status' => false);
+                    }else {
+                        if (!$user) {
+                            $user = new Users();
+                            $user->mobile = $model->mobile;
+                            $user->username = $model->mobile;
+                            $user->create_date = time();
+                        }
+                        $user->password = $code;
+                        if (!$user->isNewRecord) {
+                            $enc = NEW bCrypt();
+                            $user->password = $enc->hash($user->password);
+                        }
+                        $user->status = 'active';
+                        $user->verification_token = $code;
+                        $user->send_verify_date = time();
+                        if ($user->save()) {
+                            $req = @Notify::SendSms("کد تایید شما: {$code} می باشد.", $model->mobile);
+                            $result = array('status' => $req ? true : false);
+                        } else
+                            $result = array('status' => false);
+                    }
+                    echo CJSON::encode($result);
+                    Yii::app()->end();
+                    break;
+                case 'mobile-verification':
+                    $user = Users::model()->findByMobile($model->mobile);
+                    if($user->verification_token == $model->verification_code && $user->send_verify_date >= time()){
+                        $model->verification_field_value = $model->mobile;
+                        $model->password = $model->verification_code;
+                    }else{
+                        $message = '';
+                        if($user->send_verify_date >= time())
+                            $message = 'کد تایید منقضی شده است.';
+                        else
+                            $message = 'کد تایید اشتباه است.';
+                        $result = array('status' => false, 'message' => $message);
+                        echo CJSON::encode($result);
+                        Yii::app()->end();
+                    }
+                case 'username':
+                    // validate user input and redirect to the previous page if valid
+                    if ($model->validate() && $model->login()) {
+                        if (Yii::app()->user->returnUrl != Yii::app()->request->baseUrl . '/' &&
+                            Yii::app()->user->returnUrl != 'logout')
+                            $redirect = Yii::app()->user->returnUrl;
+                        else
+                            $redirect = $this->createUrl('/dashboard');
+                        if (isset($_GET['ajax'])) {
+                            echo CJSON::encode(array('status' => true, 'url' => $redirect, 'msg' => 'در حال انتقال ...'));
+                            Yii::app()->end();
+                        } else
+                            $this->redirect($redirect);
+                    } else
+                        $model->password = '';
+                    break;
+                default:
+                    $result = array('status' => false);
+                    break;
             }
+            echo CJSON::encode($result);
+            Yii::app()->end();
         }
-
-        if (isset($_POST['Users'])) {
-            $model->attributes = $_POST['Users'];
-            $model->status = 'pending';
-            $model->create_date = time();
-            $pwd = $model->password;
-            $username = $model->email;
-            if ($model->save()) {
-                $token = md5($model->id . '#' . $model->password . '#' . $model->email . '#' . $model->create_date);
-                $model->updateByPk($model->id, array('verification_token' => $token));
-                $message = '<div style="color: #2d2d2d;font-size: 14px;text-align: right;">با سلام<br>برای فعال کردن حساب کاربری خود در ' . Yii::app()->name . ' بر روی لینک زیر کلیک کنید:</div>';
-                $message .= '<div style="text-align: right;font-size: 9pt;">';
-                $message .= '<a href="' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '">' . Yii::app()->getBaseUrl(true) . '/users/public/verify/token/' . $token . '</a>';
-                $message .= '</div>';
-                $message .= '<div style="font-size: 8pt;color: #888;text-align: right;">این لینک فقط 3 روز اعتبار دارد.</div>';
-                Mailer::mail($model->email, 'ثبت نام در ' . Yii::app()->name, $message, Yii::app()->params['noReplyEmail'],Yii::app()->params['SMTP']);
-                // Send Sms
-                $siteName = Yii::app()->name;
-                $message = "ثبت نام شما در سایت {$siteName} با موفقیت انجام شد.
-نام کاربری: {$username}
-کلمه عبور: {$pwd}";
-                $phone = $model->userDetails->mobile;
-//                if($phone)
-//                    Notify::SendSms($message, $phone);
-                if (isset($_GET['ajax'])) {
-                    echo CJSON::encode(array('status' => true, 'msg' => 'ایمیل فعال سازی به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.'));
-                    Yii::app()->end();
-                } else
-                    Yii::app()->user->setFlash('register-success', 'ایمیل فعال سازی به پست الکترونیکی شما ارسال شد. لطفا Inbox و Spam پست الکترونیکی خود را چک کنید.');
-            } else {
-                if (isset($_GET['ajax'])) {
-                    echo CJSON::encode(array('status' => false, 'msg' => 'متاسفانه در ثبت نام مشکلی بوجود آمده است. لطفا مجددا سعی کنید.'));
-                    Yii::app()->end();
-                } else
-                    Yii::app()->user->setFlash('register-failed', 'متاسفانه در ثبت نام مشکلی بوجود آمده است. لطفا مجددا سعی کنید.');
-            }
-        }
-
-//        if (!isset($_GET['ajax']))
-//            $this->render('register', array(
-//                'model' => $model,
-//            ));
     }
 }

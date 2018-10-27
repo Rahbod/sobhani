@@ -31,8 +31,9 @@ class UserLoginForm extends CFormModel
     {
 		return array(
 			// username and password are required
-			array('mobile', 'required' ,'on' => 'mobile'),
-			array('verification_field_value, password', 'required' ,'except' => 'OAuth'),
+			array('mobile', 'required' ,'on' => 'mobile, resend-verification, mobile-verification'),
+			array('verification_code', 'required' ,'on' => 'mobile-verification'),
+			array('verification_field_value, password', 'required', 'on' => 'username'),
 			array('email ,OAuth', 'required' ,'on' => 'OAuth'),
 			// rememberMe needs to be a boolean
 			array('rememberMe', 'boolean'),
@@ -40,12 +41,13 @@ class UserLoginForm extends CFormModel
             array('verification_field_value', 'email', 'on' => 'emailAuth'),
             array('verification_field_value', 'numerical', 'integerOnly' => true, 'on' => 'mobileAuth, nationalAuth'),
             array('verification_field_value', 'length', 'is' => 10, 'on' => 'nationalAuth'),
+            array('verification_code', 'length', 'is' => 5, 'on' => 'mobile-verification'),
             array('verification_field_value', 'length', 'is' => 11, 'on' => 'mobileAuth'),
 			// multiple username
 			array('verification_field_value, verification_field', 'safe'),
 			array('verification_field_value', 'check', 'fields' => ['mobile', 'email']),
 			// authenticate_field needs to be authenticated
-			array('authenticate_field', 'authenticate','except' => 'OAuth'),
+			array('authenticate_field', 'authenticate', 'on' => 'username'),
 		);
 	}
 
@@ -82,6 +84,8 @@ class UserLoginForm extends CFormModel
             'password' => 'کلمه عبور',
 			'rememberMe'=>'مرا بخاطر بسپار',
             'email' => 'پست الکترونیک',
+            'mobile' => 'شماره تلفن همراه',
+            'verification_code' => 'کد فعالسازی',
             'authenticate_field' => 'Authenticate Field',
             'verification_field_value' => 'پست الکترونیکی یا شماره موبایل',
 		);

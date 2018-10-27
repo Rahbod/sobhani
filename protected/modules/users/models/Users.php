@@ -310,4 +310,17 @@ class Users extends CActiveRecord
         else
             return false;
     }
+
+    public function findByMobile($mobile)
+    {
+        $code = rand(12321, 99999);
+        $user = Users::model()->findByAttributes(['username' => $mobile]);
+        if (!$user) {
+            $userDetail = UserDetails::model()->findByAttributes(['mobile' => $mobile]);
+            if ($userDetail)
+                return Users::model()->findByAttributes(['id' => $userDetail->user_id]);
+            return false;
+        }
+        return $user;
+    }
 }
