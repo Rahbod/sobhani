@@ -113,7 +113,7 @@ $form = $this->beginWidget('CActiveForm', array(
                             if (data.status) {
                                 $("#go-verify").tab("show");
                                 $("#mobile-verification-form").find(".text-field").val("").focus();
-                                timer(120);
+                                timer(5);
                             } else
                                 form.find("#login-error").html(data.message).addClass("text-error").removeClass("text-success").show();
                         } else if (loginMode === "mobile-verification" || loginMode === "resend-verification") {
