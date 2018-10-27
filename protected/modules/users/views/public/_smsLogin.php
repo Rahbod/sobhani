@@ -35,7 +35,7 @@ $form = $this->beginWidget('CActiveForm', array(
             <p>کد تایید به شماره تلفن همراه شما ارسال گردید.</p>
             <div class="relative">
                 <span class="login-timer">120</span>
-                <?php echo $form->textField($model, 'verification_code', array('style' => 'letter-spacing:3px','class' => 'ltr text-right text-field', 'placeholder' => 'کد تایید', 'maxLength' => 5)); ?>
+                <?php echo $form->textField($model, 'verification_code', array('class' => 'verification-code ltr text-right text-field', 'placeholder' => 'کد تایید', 'maxLength' => 5)); ?>
                 <?php echo $form->error($model, 'verification_code'); ?>
             </div>
             <div style="display: block;margin-bottom: 10px">
@@ -124,6 +124,7 @@ $form = $this->beginWidget('CActiveForm', array(
                                 if (loginMode === "resend-verification") {
                                     $("#mobile-verification-form").find(".text-field").val("").focus();
                                     $(".resend-btn").addClass("btn-default").removeClass("btn-border-primary");
+                                    $(".login-timer").parent().removeClass("danger-login");
                                     timer(120);
                                 }
                                 form.find("#login-error").html(data.message).addClass("text-success").removeClass("text-error").show();
@@ -155,7 +156,7 @@ $form = $this->beginWidget('CActiveForm', array(
             clearInterval(timerInterval);
             timerInterval = setInterval(function () {
                 counter--;
-                $(".login-timer").text(counter);
+                $(".login-timer").text(counter).parent().addClass("danger-login");
                 if (counter === 0) {
                     clearInterval(timerInterval);
                     $(".resend-btn").removeClass("btn-default").addClass("btn-border-primary");

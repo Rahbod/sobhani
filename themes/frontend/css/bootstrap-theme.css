@@ -2017,15 +2017,26 @@ body.open-menu header ul.nav{
 }
 
 .btn-border-primary{
-    -webkit-box-shadow: 0 0 3px #28609060;
-    -moz-box-shadow: 0 0 3px #28609060;
-    box-shadow: 0 0 3px #28609060;
+    -webkit-box-shadow: 0 0 6px #28609060;
+    -moz-box-shadow: 0 0 6px #28609060;
+    box-shadow: 0 0 6px #28609060;
     border-color: #204d74 !important;
     color: #286090;
     background-color: #fff;
 }
+
+.login-danger *{
+    -webkit-box-shadow: 0 0 6px #f9150080;
+    -moz-box-shadow: 0 0 6px #f9150080;
+    box-shadow: 0 0 6px #f9150080;
+    border-color: #f91500 !important;
+}
 .relative{
     position: relative;
+}
+.verification-code {
+    font-weight: bold;
+    letter-spacing: 3px
 }
 .login-timer{
     font-size: 16px;

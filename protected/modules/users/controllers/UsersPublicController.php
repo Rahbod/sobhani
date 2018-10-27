@@ -714,7 +714,6 @@ class UsersPublicController extends Controller
                         echo CJSON::encode($result);
                         Yii::app()->end();
                     }
-                    break;
                 case 'username':
                     // validate user input and redirect to the previous page if valid
                     if ($model->validate() && $model->login()) {
@@ -729,15 +728,15 @@ class UsersPublicController extends Controller
                             $this->redirect($redirect);
                     } else
                         $result = array('status' => false, 'message' => "خطا در ورود!");
-                    echo CJSON::encode($result);
-                    Yii::app()->end();
                     break;
                 default:
                     $result = array('status' => false);
                     break;
             }
-            echo CJSON::encode($result);
-            Yii::app()->end();
+            if (isset($_GET['ajax'])) {
+                echo CJSON::encode($result);
+                Yii::app()->end();
+            }
         }
     }
 }
