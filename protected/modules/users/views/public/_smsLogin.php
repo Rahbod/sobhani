@@ -33,7 +33,7 @@ $form = $this->beginWidget('CActiveForm', array(
         </div>
         <div class="tab-pane fade" id="mobile-verification-form">
             <p>کد تایید به شماره تلفن همراه شما ارسال گردید.</p>
-            <div>
+            <div class="relative">
                 <span class="login-timer">120</span>
                 <?php echo $form->textField($model, 'verification_code', array('style' => 'letter-spacing:3px','class' => 'ltr text-right text-field', 'placeholder' => 'کد تایید', 'maxLength' => 5)); ?>
                 <?php echo $form->error($model, 'verification_code'); ?>
@@ -155,7 +155,7 @@ $form = $this->beginWidget('CActiveForm', array(
             clearInterval(timerInterval);
             timerInterval = setInterval(function () {
                 counter--;
-
+                $(".login-timer").text(counter);
                 if (counter === 0) {
                     clearInterval(timerInterval);
                     $(".resend-btn").removeClass("btn-default").addClass("btn-border-primary");

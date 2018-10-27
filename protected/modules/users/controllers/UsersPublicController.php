@@ -689,7 +689,7 @@ class UsersPublicController extends Controller
                         $user->status = 'active';
                         $user->role_id = 1;
                         $user->verification_token = $code;
-                        $user->send_verify_date = time()+1000000;
+                        $user->send_verify_date = time()+120;
                         if ($user->save(false)) {
                             $req = @Notify::SendSms("کد تایید شما: {$code} می باشد.", $model->mobile);
                             $result = array('status' => $req ? true : false, 'message' => 'کد تایید مجددا برای شما ارسال گردید.');

@@ -2015,3 +2015,22 @@ body.open-menu header ul.nav{
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+
+.btn-border-primary{
+    -webkit-box-shadow: 0 0 3px #28609060;
+    -moz-box-shadow: 0 0 3px #28609060;
+    box-shadow: 0 0 3px #28609060;
+    border-color: #204d74 !important;
+    color: #286090;
+    background-color: #fff;
+}
+.relative{
+    position: relative;
+}
+.login-timer{
+    font-size: 16px;
+    font-weight: bold;
+    position: absolute;
+    line-height: 48px;
+    left: 15px;
+}
