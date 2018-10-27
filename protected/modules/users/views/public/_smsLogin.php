@@ -156,10 +156,11 @@ $form = $this->beginWidget('CActiveForm', array(
             clearInterval(timerInterval);
             timerInterval = setInterval(function () {
                 counter--;
+                $(".login-timer").text(counter);
                 if (counter === 0) {
                     clearInterval(timerInterval);
                     $(".resend-btn").removeClass("btn-default").addClass("btn-border-primary");
-                    $(".login-timer").text(counter).parent().addClass("danger-login");
+                    $(".login-timer").parent().addClass("danger-login");
                 }
             }, 1000);
         }
