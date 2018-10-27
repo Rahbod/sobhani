@@ -34,7 +34,7 @@ $form = $this->beginWidget('CActiveForm', array(
         <div class="tab-pane fade" id="mobile-verification-form">
             <p>کد تایید به شماره تلفن همراه شما ارسال گردید.</p>
             <div class="relative">
-                <span class="login-timer">120</span>
+                <span class="login-timer"></span>
                 <?php echo $form->textField($model, 'verification_code', array('class' => 'verification-code ltr text-right text-field', 'placeholder' => 'کد تایید', 'maxLength' => 5)); ?>
                 <?php echo $form->error($model, 'verification_code'); ?>
             </div>
@@ -113,7 +113,7 @@ $form = $this->beginWidget('CActiveForm', array(
                             if (data.status) {
                                 $("#go-verify").tab("show");
                                 $("#mobile-verification-form").find(".text-field").val("").focus();
-                                timer(5);
+                                timer(120);
                             } else
                                 form.find("#login-error").html(data.message).addClass("text-error").removeClass("text-success").show();
                         } else if (loginMode === "mobile-verification" || loginMode === "resend-verification") {
@@ -156,10 +156,10 @@ $form = $this->beginWidget('CActiveForm', array(
             clearInterval(timerInterval);
             timerInterval = setInterval(function () {
                 counter--;
-                $(".login-timer").text(counter).parent().addClass("danger-login");
                 if (counter === 0) {
                     clearInterval(timerInterval);
                     $(".resend-btn").removeClass("btn-default").addClass("btn-border-primary");
+                    $(".login-timer").text(counter).parent().addClass("danger-login");
                 }
             }, 1000);
         }

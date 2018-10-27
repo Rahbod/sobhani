@@ -2017,9 +2017,9 @@ body.open-menu header ul.nav{
 }
 
 .btn-border-primary{
-    -webkit-box-shadow: 0 0 6px #28609060;
-    -moz-box-shadow: 0 0 6px #28609060;
-    box-shadow: 0 0 6px #28609060;
+    -webkit-box-shadow: 0 0 10px #28609080;
+    -moz-box-shadow: 0 0 10px #28609080;
+    box-shadow: 0 0 10px #28609080;
     border-color: #204d74 !important;
     color: #286090;
     background-color: #fff;
