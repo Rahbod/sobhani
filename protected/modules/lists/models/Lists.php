@@ -198,8 +198,13 @@ class Lists extends CActiveRecord
         $tempPath = Yii::getPathOfAlias('webroot') . '/uploads/temp/';
         $itemImagesPath = Yii::getPathOfAlias('webroot') . '/uploads/items/';
         if ($this->scenario != 'change_status' && $this->items) {
-            ListItemRel::model()->deleteAllByAttributes(array('list_id' => $this->id));
-            echo '<meta charset="utf-8"><pre>';
+            $oldComments = [];
+            foreach (ListItemRel::model()->findAllByAttributes(array('list_id' => $this->id)) as $oldItem){
+                $oldComments[$oldItem->item_id] = $oldItem->comments;
+                $oldItem->delete();
+            }
+//            ListItemRel::model()->deleteAllByAttributes(array('list_id' => $this->id));
+
             foreach ($this->items as $item) {
                 if (!empty($item['title'])) {
                     $model = Items::model()->findByAttributes(array('title' => $item['title']));
@@ -218,6 +223,12 @@ class Lists extends CActiveRecord
                         $rel->user_id = Yii::app()->user->roles == 'admin' ? null : $this->user_id;
                         $rel->status = ListItemRel::STATUS_ACCEPTED;
                         if($rel->save()){
+                            // update comments
+                            if(isset($oldComments[$model->id]))
+                                foreach ($oldComments[$model->id] as $comment) {
+                                    $comment->owner_id = $rel->id;
+                                    @$comment->save(false);
+                                }
                             // insert links
                             if (count($item['links']) > 0) {
                                 foreach ($item['links'] as $link) {

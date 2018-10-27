@@ -18,6 +18,7 @@
  * @property Votes[] $votes
  * @property ItemRelLinks[] $links
  * @property Users $user
+ * @property Comment $comments
  */
 class ListItemRel extends CActiveRecord
 {
@@ -65,10 +66,12 @@ class ListItemRel extends CActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
+        Yii::app()->getModule('comments');
 		return array(
 			'list' => array(self::BELONGS_TO, 'Lists', 'list_id'),
 			'item' => array(self::BELONGS_TO, 'Items', 'item_id'),
 			'votes' => array(self::HAS_MANY, 'Votes', 'item_id', 'on' => '`votes`.`item_id` = `itemRel`.`item_id`', 'with'=>'item', 'group' => 'itemRel.id'),
+			'comments' => array(self::HAS_MANY, 'Comment', 'owner_id', 'on' => '`comments`.`owner_name` = :className', 'params'=>array(":className" => get_class($this))),
 			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
 			'links' => array(self::HAS_MANY, 'ItemRelLinks', 'item_rel_id'),
 		);
