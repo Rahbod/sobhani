@@ -23,7 +23,7 @@ $form = $this->beginWidget('CActiveForm', array(
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="mobile" class="login-submit-btn btn btn-primary">ارسال کد فعالسازی</button>
+                    <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="mobile" class="login-submit-btn btn btn-primary enter-trigger">ارسال کد فعالسازی</button>
                     <a id="go-verify" data-toggle="tab" data-target="#mobile-verification-form"></a>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -39,7 +39,7 @@ $form = $this->beginWidget('CActiveForm', array(
                 <?php echo $form->error($model, 'verification_code'); ?>
             </div>
             <div style="display: block;margin-bottom: 10px">
-                <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="mobile-verification" class="login-submit-btn btn btn-primary">ورود</button>
+                <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="mobile-verification" class="login-submit-btn btn btn-primary enter-trigger">ورود</button>
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -66,7 +66,7 @@ $form = $this->beginWidget('CActiveForm', array(
                     <button type="button" class="btn btn-default" data-toggle="tab" data-target="#mobile-form">ورود با شماره تلفن همراه</button>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="username" class="login-submit-btn btn btn-warning">ورود به حساب کاربری</button>
+                    <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="username" class="login-submit-btn btn btn-warning enter-trigger">ورود به حساب کاربری</button>
                 </div>
             </div>
         </div>
@@ -146,6 +146,7 @@ $form = $this->beginWidget('CActiveForm', array(
             var keyCode = e.keyCode || e.which;
             if (keyCode === 13) {
                 e.preventDefault();
+                $(this).parents(".tab-pane").find(".enter-trigger").trigger("click");
                 return false;
             }
         });
