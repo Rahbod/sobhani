@@ -107,7 +107,7 @@ class Users extends CActiveRecord
             array('address', 'length', 'max' => 1000),
             array('avatar', 'length', 'max' => 255),
             array('type, first_name, last_name, phone, mobile, address, avatar', 'safe'),
-            array('mobile', 'checkUnique', 'except' => 'OAuthInsert, recover-password'),
+            array('mobile', 'checkUnique', 'except' => 'OAuthInsert, recover-password, change_password'),
             // Register rules
             array('email, password, repeatPassword', 'required', 'on' => 'create'),
             array('repeatPassword', 'compare', 'compareAttribute' => 'password', 'on' => 'create', 'message' => 'کلمه های عبور همخوانی ندارند'),
@@ -145,8 +145,7 @@ class Users extends CActiveRecord
     public function oldPass($attribute, $params)
     {
         $bCrypt = new bCrypt();
-        $record = Users::model()->findByAttributes(array('email' => $this->email));
-        if (!$bCrypt->verify($this->$attribute, $record->password))
+        if (!$bCrypt->verify($this->$attribute, $this->password))
             $this->addError($attribute, 'کلمه عبور فعلی اشتباه است');
     }
 

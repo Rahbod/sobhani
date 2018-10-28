@@ -9,6 +9,7 @@ $this->breadcrumbs =[
 ];
 $model = UserDetails::model()->findByPk($user->id);
 ?>
+<?php $this->renderPartial('//partial-views/_flashMessage')?>
 <div class="userinfo">
     <div class="uploader-container">
         <?php $this->widget('ext.dropZoneUploader.dropZoneUploader', array(

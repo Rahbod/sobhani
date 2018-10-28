@@ -131,6 +131,7 @@ class UsersPublicController extends Controller
 
         if (isset($_POST['Users'])) {
             $model->attributes = $_POST['Users'];
+            echo '<meta charset="UTF-8">';
             if ($model->validate()) {
                 $model->password = $_POST['Users']['newPassword'];
                 $model->password = $model->encrypt($model->password);

@@ -142,7 +142,7 @@ $form = $this->beginWidget('CActiveForm', array(
                     console.log(err);
                 }
             });
-        }).on("keypress", "#users-login-modal-form", function (e) {
+        }).on("keypress", "#users-login-modal-form input", function (e) {
             var keyCode = e.keyCode || e.which;
             if (keyCode === 13) {
                 e.preventDefault();
