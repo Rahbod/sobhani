@@ -29,6 +29,7 @@ class UsersPublicController extends Controller
                 'mobileLogin',
                 'captcha',
                 'lists',
+                'sendSmsVerification',
             )
         );
     }
@@ -40,6 +41,7 @@ class UsersPublicController extends Controller
     {
         return array(
             'checkAccess + dashboard, setting, transactions, upgradePlan, buyPlan',
+            'sendSmsVerification + ajaxOnly',
         );
     }
 
@@ -606,6 +608,31 @@ class UsersPublicController extends Controller
         ));
     }
 
+    public function actionSendSmsVerification()
+    {
+        if (Yii::app()->user->isGuest)
+            $this->redirect(Yii::app()->getBaseUrl(true));
+        $user = Users::model()->findByPk(Yii::app()->user->getId());
+
+        if (!$user)
+            $this->redirect(Yii::app()->getBaseUrl(true));
+        $mobile = $user->userDetails->mobile;
+
+        $enc = new bCrypt();
+        $code = rand(12321, 99999);
+
+        $user->password = $enc->hash($code);
+        $user->verification_token = $code;
+        $user->send_verify_date = time() + 120;
+        if ($user->save(false)) {
+            $req = @Notify::SendSms("کد تایید شما: {$code} می باشد.", $mobile);
+            $result = array('status' => $req ? true : false, 'message' => 'کد تایید برای شما ارسال گردید.');
+        } else
+            $result = array('status' => false, 'message' => 'متاسفانه مشکلی پیش آمده! مجددا تلاش فرمایید.');
+
+        echo CJSON::encode($result);
+        Yii::app()->end();
+    }
 
     public function actionMobileLogin()
     {

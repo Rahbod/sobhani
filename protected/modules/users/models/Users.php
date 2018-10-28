@@ -186,7 +186,7 @@ class Users extends CActiveRecord
             'role_id' => 'نقش',
             'email' => 'پست الکترونیک',
             'repeatPassword' => 'تکرار کلمه عبور',
-            'oldPassword' => 'کلمه عبور فعلی',
+            'oldPassword' => 'کلمه عبور فعلی/کد فعالسازی',
             'newPassword' => 'کلمه عبور جدید',
             'create_date' => 'تاریخ ثبت نام',
             'status' => 'وضعیت کاربر',
