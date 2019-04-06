@@ -58,7 +58,7 @@ class SiteController extends Controller
 
 
         $criteria = new CDbCriteria();
-        $criteria->addCondition(new CDbExpression("id NOT IN(SELECT id from ym_user_notifications where message like '%لیست شما%')"));
+        $criteria->addCondition(new CDbExpression("id NOT IN(SELECT id from ym_user_notifications where message like '%لیست شما%' OR message like '%مدیر%')"));
         $criteria->order = "id DESC";
         $criteria->limit = 5;
         $lastEvents = UserNotifications::model()->findAll($criteria);

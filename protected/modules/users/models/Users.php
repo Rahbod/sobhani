@@ -14,6 +14,7 @@
  * @property string $verification_token
  * @property integer $change_password_request_count
  * @property integer $auth_mode
+ * @property integer $send_verify_date
  * @property string $repeatPassword
  * @property string $oldPassword
  * @property string $newPassword
@@ -59,14 +60,14 @@ class Users extends CActiveRecord
      */
     public function loadPropertyValues($values = array())
     {
-        if(isset($values) && $values){
-            $this->first_name = isset($values['first_name']) && !empty($values['first_name'])?$values['first_name']:null;
-            $this->last_name = isset($values['last_name']) && !empty($values['last_name'])?$values['last_name']:null;
-            $this->phone = isset($values['phone']) && !empty($values['phone'])?$values['phone']:null;
-            $this->mobile = isset($values['mobile']) && !empty($values['mobile'])?$values['mobile']:null;
-            $this->address = isset($values['address']) && !empty($values['address'])?$values['address']:null;
-            $this->avatar = isset($values['avatar']) && !empty($values['avatar'])?$values['avatar']:null;
-        }elseif($this){
+        if (isset($values) && $values) {
+            $this->first_name = isset($values['first_name']) && !empty($values['first_name']) ? $values['first_name'] : null;
+            $this->last_name = isset($values['last_name']) && !empty($values['last_name']) ? $values['last_name'] : null;
+            $this->phone = isset($values['phone']) && !empty($values['phone']) ? $values['phone'] : null;
+            $this->mobile = isset($values['mobile']) && !empty($values['mobile']) ? $values['mobile'] : null;
+            $this->address = isset($values['address']) && !empty($values['address']) ? $values['address'] : null;
+            $this->avatar = isset($values['avatar']) && !empty($values['avatar']) ? $values['avatar'] : null;
+        } elseif ($this) {
             $this->first_name = $this->userDetails->first_name;
             $this->last_name = $this->userDetails->last_name;
             $this->phone = $this->userDetails->phone;
@@ -99,12 +100,14 @@ class Users extends CActiveRecord
             array('role_id', 'length', 'max' => 10),
             array('status', 'length', 'max' => 8),
             array('create_date', 'length', 'max' => 20),
+            array('send_verify_date', 'length', 'max' => 12),
+            array('send_verify_date', 'safe'),
             array('phone', 'length', 'max' => 11),
             array('mobile', 'length', 'is' => 11, 'message' => 'شماره موبایل اشتباه است'),
             array('address', 'length', 'max' => 1000),
             array('avatar', 'length', 'max' => 255),
             array('type, first_name, last_name, phone, mobile, address, avatar', 'safe'),
-            array('mobile','checkUnique', 'except' => 'OAuthInsert, recover-password'),
+            array('mobile', 'checkUnique', 'except' => 'OAuthInsert, recover-password, change_password'),
             // Register rules
             array('email, password, repeatPassword', 'required', 'on' => 'create'),
             array('repeatPassword', 'compare', 'compareAttribute' => 'password', 'on' => 'create', 'message' => 'کلمه های عبور همخوانی ندارند'),
@@ -130,9 +133,9 @@ class Users extends CActiveRecord
     public function activeCaptcha()
     {
         $code = Yii::app()->controller->createAction('captcha')->verifyCode;
-        if(empty($code))
+        if (empty($code))
             $this->addError('verifyCode', 'کد امنیتی نمی تواند خالی باشد.');
-        elseif(strtolower($code) != strtolower($this->verifyCode))
+        elseif (strtolower($code) != strtolower($this->verifyCode))
             $this->addError('verifyCode', 'کد امنیتی نامعتبر است.');
     }
 
@@ -142,8 +145,7 @@ class Users extends CActiveRecord
     public function oldPass($attribute, $params)
     {
         $bCrypt = new bCrypt();
-        $record = Users::model()->findByAttributes(array('email' => $this->email));
-        if(!$bCrypt->verify($this->$attribute, $record->password))
+        if (!$bCrypt->verify($this->$attribute, $this->password))
             $this->addError($attribute, 'کلمه عبور فعلی اشتباه است');
     }
 
@@ -153,7 +155,7 @@ class Users extends CActiveRecord
     public function checkUnique($attribute, $params)
     {
         $record = UserDetails::model()->countByAttributes(array('mobile' => $this->mobile));
-        if($record)
+        if ($record)
             $this->addError($attribute, 'تلفن همراه تکراری می باشد.');
     }
 
@@ -184,7 +186,7 @@ class Users extends CActiveRecord
             'role_id' => 'نقش',
             'email' => 'پست الکترونیک',
             'repeatPassword' => 'تکرار کلمه عبور',
-            'oldPassword' => 'کلمه عبور فعلی',
+            'oldPassword' => 'کلمه عبور فعلی/کد فعالسازی',
             'newPassword' => 'کلمه عبور جدید',
             'create_date' => 'تاریخ ثبت نام',
             'status' => 'وضعیت کاربر',
@@ -198,6 +200,7 @@ class Users extends CActiveRecord
             'address' => 'آدرس',
             'avatar' => 'تصویر',
             'verifyCode' => 'کد امنیتی',
+            'send_verify_date' => 'تاریخ ارسال کد فعالسازی',
         );
     }
 
@@ -244,7 +247,7 @@ class Users extends CActiveRecord
 
     protected function afterValidate()
     {
-        if($this->isNewRecord)
+        if ($this->isNewRecord)
             $this->password = $this->encrypt($this->password);
         parent::afterValidate();
     }
@@ -257,7 +260,7 @@ class Users extends CActiveRecord
 
     public function afterSave()
     {
-        if($this->isNewRecord){
+        if ($this->isNewRecord) {
             $model = new UserDetails;
             $model->user_id = $this->id;
             $model->first_name = $this->first_name;
@@ -266,9 +269,9 @@ class Users extends CActiveRecord
             $model->mobile = $this->mobile;
             $model->address = $this->address;
             $model->avatar = $this->avatar;
-            if(!$model->save())
+            if (!$model->save())
                 $this->addErrors($model->errors);
-        }elseif($this->scenario == 'update'){
+        } elseif ($this->scenario == 'update') {
             $model = UserDetails::model()->findByPk($this->id);
             $model->first_name = $this->first_name;
             $model->last_name = $this->last_name;
@@ -276,7 +279,7 @@ class Users extends CActiveRecord
             $model->mobile = $this->mobile;
             $model->address = $this->address;
             $model->avatar = $this->avatar;
-            if(!@$model->save())
+            if (!@$model->save())
                 $this->addErrors($model->errors);
         }
         parent::afterSave();
@@ -292,5 +295,32 @@ class Users extends CActiveRecord
     {
         $bCrypt = new bCrypt();
         return $bCrypt->verify($this->generatePassword(), $this->password);
+    }
+
+    public function getVerificationCode()
+    {
+        if ($this->verification_token && $this->send_verify_date && $this->send_verify_date > time())
+            return $this->verification_token;
+
+        $code = rand(12323, 99999);
+        $this->send_verify_date = time();
+        $this->verification_token = $code;
+        if ($this->save(false))
+            return $code;
+        else
+            return false;
+    }
+
+    public function findByMobile($mobile)
+    {
+        $code = rand(12321, 99999);
+        $user = Users::model()->findByAttributes(['username' => $mobile]);
+        if (!$user) {
+            $userDetail = UserDetails::model()->findByAttributes(['mobile' => $mobile]);
+            if ($userDetail)
+                return Users::model()->findByAttributes(['id' => $userDetail->user_id]);
+            return false;
+        }
+        return $user;
     }
 }

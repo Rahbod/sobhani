@@ -34,9 +34,10 @@ class Notify
             $sms->AddNumber($phone);
             if($sms->getNumbers()){
                 $sms->AddMessage($message);
-                @$sms->SendWithLine();
+                return @$sms->SendWithLine();
             }
         }
+        return false;
     }
 
     public static function SendEmail($message, $email, $emailSubject)

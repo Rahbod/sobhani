@@ -16,6 +16,9 @@ class UserLoginForm extends CFormModel
 	public $OAuth;
     public $authenticate_field;
     public $oauth_authenticate_field;
+    public $mobile;
+    public $verification_code;
+    public $login_mode;
 
 	private $_identity;
 
@@ -28,7 +31,9 @@ class UserLoginForm extends CFormModel
     {
 		return array(
 			// username and password are required
-			array('verification_field_value, password', 'required' ,'except' => 'OAuth'),
+			array('mobile', 'required' ,'on' => 'mobile, resend-verification, mobile-verification'),
+			array('verification_code', 'required' ,'on' => 'mobile-verification'),
+			array('verification_field_value, password', 'required', 'on' => 'username'),
 			array('email ,OAuth', 'required' ,'on' => 'OAuth'),
 			// rememberMe needs to be a boolean
 			array('rememberMe', 'boolean'),
@@ -36,37 +41,34 @@ class UserLoginForm extends CFormModel
             array('verification_field_value', 'email', 'on' => 'emailAuth'),
             array('verification_field_value', 'numerical', 'integerOnly' => true, 'on' => 'mobileAuth, nationalAuth'),
             array('verification_field_value', 'length', 'is' => 10, 'on' => 'nationalAuth'),
+            array('verification_code', 'length', 'is' => 5, 'on' => 'mobile-verification'),
             array('verification_field_value', 'length', 'is' => 11, 'on' => 'mobileAuth'),
 			// multiple username
 			array('verification_field_value, verification_field', 'safe'),
-			array('verification_field_value', 'check', 'fields' => ['mobile', 'email']),
+			array('verification_field_value', 'check'),
 			// authenticate_field needs to be authenticated
-			array('authenticate_field', 'authenticate','except' => 'OAuth'),
+			array('authenticate_field', 'authenticate', 'on' => 'username'),
 		);
 	}
 
-	public function check($attribute, $params)
-	{
-        $criteria = new CDbCriteria();
-        $criteria->compare('email', $this->{$attribute});
-        $criteria->limit = 1;
-        $email = Users::model()->find($criteria);
-        if($email){
-            $this->email = $email->email;
-            $this->verification_field = 'email';
-            $this->scenario = 'emailAuth';
-        }else{
-            $criteria = new CDbCriteria();
-            $criteria->compare('mobile', $this->{$attribute});
-            $criteria->limit = 1;
-            $mobile = UserDetails::model()->find($criteria);
-            if($mobile){
-                $this->email = $mobile->user->email;
-                $this->verification_field = 'mobile';
-                $this->scenario = 'mobileAuth';
+        public function check($attribute, $params)
+        {
+            $email = Users::model()->findByAttributes(array('email' => $this->{$attribute}));
+            if ($email) {
+                $this->email = $email->email;
+                $this->verification_field = 'email';
+                $this->scenario = 'emailAuth';
+            } else {
+                $mobile = Users::model()->findByMobile($this->{$attribute});
+                if ($mobile->username == $this->{$attribute}) {
+                    $this->verification_field = 'username';
+                    $this->scenario = 'usernameAuth';
+                } else if ($mobile->userDetails->mobile == $this->{$attribute}) {
+                    $this->verification_field = 'mobile';
+                    $this->scenario = 'mobileAuth';
+                }
             }
         }
-	}
 
 	/**
 	 * Declares attribute labels.
@@ -78,6 +80,8 @@ class UserLoginForm extends CFormModel
             'password' => 'کلمه عبور',
 			'rememberMe'=>'مرا بخاطر بسپار',
             'email' => 'پست الکترونیک',
+            'mobile' => 'شماره تلفن همراه',
+            'verification_code' => 'کد فعالسازی',
             'authenticate_field' => 'Authenticate Field',
             'verification_field_value' => 'پست الکترونیکی یا شماره موبایل',
 		);
@@ -122,7 +126,7 @@ class UserLoginForm extends CFormModel
 			if ($this->OAuth)
 				$this->_identity = new UserIdentity($this->verification_field_value, null, $this->OAuth);
 			else
-				$this->_identity = new UserIdentity($this->verification_field_value, $this->password);
+				$this->_identity = new UserIdentity($this->verification_field_value, $this->password,null, $this->verification_field);
 			$this->_identity->authenticate();
 		}
 		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)
@@ -143,7 +147,7 @@ class UserLoginForm extends CFormModel
 	}
     protected function afterValidate()
     {
-        $this->password = $this->encrypt($this->password);
+//        $this->password = $this->encrypt($this->password);
         return parent::afterValidate();
     }
 
