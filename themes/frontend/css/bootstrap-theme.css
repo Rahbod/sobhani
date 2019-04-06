@@ -1953,3 +1953,6 @@ body.open-menu header ul.nav{
 #mobile-menu .icon-link::before{
     content: '';
 }
+.add-new-masoud a{
+    font-size: 25px;
+}
