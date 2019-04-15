@@ -57,17 +57,22 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/150x150/';
     <div class="container">
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 left-side">
             <div class="context" style="min-height: 145px;">
-                <div class="newlist" style="min-height: 145px;margin-bottom: 0;padding-left: 15px;">
+                <div class="newlist add-new-masoud" style="min-height: 145px;margin-bottom: 0;padding-left: 15px;">
                     <i>"۱۰ بهترین" مکانی برای معرفی و انتخاب بهترین ها</i>
                     <h2><strong>
-                        <a href="" style="font-size: 25px;" class="typewrite" data-period="2000" data-type='[
-                        "۱۰ بهترین وبسایت دانلود...",
-                        "۱۰ بهترین شهر دیدنی جهان..."
+                        <a class="typewrite" data-period="1000" data-type='[
+                        "محبوبترین باشگاه های فوتبال...",
+                        "دیدنی ترین مکان های گردشگری استان...",
+                        "۱۰ برترین آهنگ خواننده معروف...",
+                        "برترین فیلم های کارگردان بزرگ سینما...",
+                        "۵ بهترین خواننده پاپ دهه ۶۰...",
+                        "بهترین اپلیکشن های ویرایش تصاویر...",
+                        "معتبرترین شرکتهای ارائه دهنده..."
                         ]'>
                             <span class="wrap"></span>
                         </a>
                     </strong></h2>
-                    <span>شما نیز می توانید لیستی از بهترین ها ایجاد کنید:</span>
+                    <span>شما نیز می توانید لیست دلخواه خود را ایجاد کنید:</span>
                     <div style="margin-top: 20px;"><a href="/new" class="btn btn-info btn-lg">ایجاد لیستی از بهترین ها</a></div>
                     <script>
                         var TxtType = function(el, toRotate, period) {
@@ -200,8 +205,8 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/150x150/';
                 <?php foreach ($this->getSpecialLists(6) as $list): ?>
                     <div class="feature-item">
                         <a href="<?= $list->getViewUrl() ?>"><img src="<?= $listUrl . $list->getImage() ?>" alt="<?= $list->title ?>" title="<?= $list->title ?>"></a>
+                        <a href="<?= $list->getViewUrl() ?>"><h3 class="item-title"><?= $list->title ?></h3></a>
                         <p>
-                            <a href="<?= $list->getViewUrl() ?>"><h3 class="item-title"><?= $list->title ?></h3></a>
                             <?php
                             $txt = strip_tags($list->description);
                             echo mb_substr($txt, 0, 80, "UTF-8").(mb_strlen($txt)>80?"...":"");
@@ -209,7 +214,6 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/150x150/';
                         </p>
                     </div>
                 <?php endforeach; ?>
-
             </div>
 
         </div>
