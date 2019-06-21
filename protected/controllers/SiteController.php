@@ -66,6 +66,41 @@ class SiteController extends Controller
         $this->render('index', compact('slider', 'count', 'lastEvents'));
     }
 
+    public function actionIndexNew()
+    {
+        Yii::app()->theme = "new";
+        $this->layout = "public";
+
+        $criteria = new CDbCriteria();
+        $criteria->compare('status', Lists::STATUS_APPROVED);
+        $criteria->order = 'seen DESC';
+        $criteria->limit = 10;
+        $slider = Lists::model()->findAll($criteria);
+        $count = Lists::model()->count($criteria);
+
+
+        $criteria = new CDbCriteria();
+        $criteria->compare('status', Lists::STATUS_APPROVED);
+        $criteria->order = 'id DESC';
+        $criteria->limit = 7;
+        $newLists = Lists::model()->findAll($criteria);
+
+
+        $criteria = new CDbCriteria();
+        $criteria->addCondition(new CDbExpression("id NOT IN(SELECT id from ym_user_notifications where message like '%لیست شما%' OR message like '%مدیر%')"));
+        $criteria->order = "id DESC";
+        $criteria->limit = 5;
+        $lastEvents = UserNotifications::model()->findAll($criteria);
+
+        $statistics = [
+            'lists' => Lists::model()->countByAttributes(['status' => Lists::STATUS_APPROVED]),
+            'users' => Users::model()->count(),
+            'votes' => Votes::model()->count(),
+        ];
+
+        $this->render('index_new', compact('slider', 'count', 'lastEvents', 'newLists','statistics'));
+    }
+
     public function actionGetLastEvents()
     {
         if (isset($_POST['lastID'])) {

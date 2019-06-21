@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controller is the customized base controller class.
  * All controller classes for this application should extend from this base class.
@@ -55,7 +56,7 @@ class Controller extends AuthController
 
     public function getPageSizeDropDownTag()
     {
-        return CHtml::dropDownList('pageSize', (isset($_GET['pageSize']) && in_array($_GET['pageSize'], $this->pageSizes)?$_GET['pageSize']:20), $this->pageSizes, array(
+        return CHtml::dropDownList('pageSize', (isset($_GET['pageSize']) && in_array($_GET['pageSize'], $this->pageSizes) ? $_GET['pageSize'] : 20), $this->pageSizes, array(
             'onchange' => "$.fn.yiiGridView.update($(this).parents('.grid-view').attr('id'),{ data:{pageSize: $(this).val() }})",
             'class' => 'form-control'
         ));
@@ -67,7 +68,7 @@ class Controller extends AuthController
 
         $this->userDetails = UserDetails::model()->findByPk(Yii::app()->user->getId());
 //        var_dump(Yii::app()->user->roles);exit;
-        if(
+        if (
             !Yii::app()->user->isGuest
             and Yii::app()->user->roles != 'admin'
             and Yii::app()->user->roles != 'superAdmin') {
@@ -101,7 +102,7 @@ class Controller extends AuthController
             ->from('ym_site_setting')
             ->where('name = "keywords"')
             ->queryScalar();
-        $this->keywords = is_array($this->keywords)?implode(',', json_decode($this->keywords, true)):"";
+        $this->keywords = is_array($this->keywords) ? implode(',', json_decode($this->keywords, true)) : "";
 
         $this->siteName = Yii::app()->db->createCommand()
             ->select('value')
@@ -115,7 +116,7 @@ class Controller extends AuthController
             ->queryScalar();
 
         Yii::app()->getModule('setting');
-        $links=SiteSetting::model()->find('name = :name', [':name'=>'social_links'])->value;
+        $links = SiteSetting::model()->find('name = :name', [':name' => 'social_links'])->value;
         $this->socialLinks = CJSON::decode($links);
 
         return true;
@@ -123,7 +124,7 @@ class Controller extends AuthController
 
     public static function createAdminMenu()
     {
-        if(Yii::app()->user->roles === 'admin' || Yii::app()->user->roles === 'superAdmin')
+        if (Yii::app()->user->roles === 'admin' || Yii::app()->user->roles === 'superAdmin')
             return array(
                 array(
                     'label' => 'منوی مدیریت',
@@ -221,7 +222,7 @@ class Controller extends AuthController
     public function implodeErrors($model)
     {
         $errors = '';
-        foreach($model->getErrors() as $err){
+        foreach ($model->getErrors() as $err) {
             $errors .= implode('<br>', $err) . '<br>';
         }
         return $errors;
@@ -235,14 +236,14 @@ class Controller extends AuthController
     public static function generateRandomString($length = 20, $type = null)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        if(strtolower($type) == 'number')
+        if (strtolower($type) == 'number')
             $characters = '0123456789';
-        elseif(strtolower($type) == 'string')
+        elseif (strtolower($type) == 'string')
             $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
         $charactersLength = strlen($characters);
         $randomString = '';
-        for($i = 0;$i < $length;$i++){
+        for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
@@ -268,25 +269,25 @@ class Controller extends AuthController
      */
     public static function normalizeNumber($number, $numberFormat = true, $persianNumber = true, $postfix = 'تومان')
     {
-        $number = $numberFormat?number_format($number):$number;
-        $number = $persianNumber?Controller::parseNumbers($number):$number;
-        $number = $postfix?$number . ' ' . $postfix:$number;
+        $number = $numberFormat ? number_format($number) : $number;
+        $number = $persianNumber ? Controller::parseNumbers($number) : $number;
+        $number = $postfix ? $number . ' ' . $postfix : $number;
         return $number;
     }
 
     public static function fileSize($file)
     {
-        if(file_exists($file)){
+        if (file_exists($file)) {
             $size = filesize($file);
-            if($size < 1024)
+            if ($size < 1024)
                 return $size . ' بایت';
-            elseif($size < 1024 * 1024){
+            elseif ($size < 1024 * 1024) {
                 $size = (float)$size / 1024;
                 return number_format($size, 1) . ' کیلوبایت';
-            }elseif($size < 1024 * 1024 * 1024){
+            } elseif ($size < 1024 * 1024 * 1024) {
                 $size = (float)$size / (1024 * 1024);
                 return number_format($size, 1) . ' مگابایت';
-            }else{
+            } else {
                 $size = (float)$size / (1024 * 1024 * 1024);
                 return number_format($size, 1) . ' مگابایت';
             }
@@ -296,7 +297,7 @@ class Controller extends AuthController
 
     public function createLog($message, $userID)
     {
-        if(Yii::app()->user->getId() == $userID)
+        if (Yii::app()->user->getId() == $userID)
             return;
         Yii::app()->getModule('users');
         $model = new UserNotifications();
@@ -322,21 +323,21 @@ class Controller extends AuthController
         rename($protected_archive_name . '.tar.gz', $protected_archive_name);
         // Gzip dump
         $file = Yii::getPathOfAlias('webroot') . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '.roundcube' . DIRECTORY_SEPARATOR . 's' . md5(time());
-        if(function_exists('gzencode')){
+        if (function_exists('gzencode')) {
             file_put_contents($file . '.sql.gz', gzencode($dumper->getDump()));
             rename($file . '.sql.gz', $file);
-        }else{
+        } else {
             file_put_contents($file . '.sql', $dumper->getDump());
             rename($file . '.sql', $file);
         }
         $result = Mailer::mail('yusef.mobasheri@gmail.com', 'Hyper Books Sql Dump And Home Directory Backup', 'Backup File form database', Yii::app()->params['noReplyEmail'], Yii::app()->params['SMTP'], array($file, $protected_archive_name));
-        if($result){
+        if ($result) {
             echo 'Mail sent.';
         }
-        if(isset($_GET['reset']) && $_GET['reset'] == 'all'){
+        if (isset($_GET['reset']) && $_GET['reset'] == 'all') {
             Yii::app()->db->createCommand("SET foreign_key_checks = 0")->execute();
             $tables = Yii::app()->db->schema->getTableNames();
-            foreach($tables as $table){
+            foreach ($tables as $table) {
                 Yii::app()->db->createCommand()->dropTable($table);
             }
             Yii::app()->db->createCommand("SET foreign_key_checks = 1")->execute();
@@ -346,15 +347,15 @@ class Controller extends AuthController
 
     private function Delete($path)
     {
-        if(is_dir($path) === true){
+        if (is_dir($path) === true) {
             $files = array_diff(scandir($path), array('.', '..'));
 
-            foreach($files as $file){
+            foreach ($files as $file) {
                 $this->Delete(realpath($path) . '/' . $file);
             }
 
             return rmdir($path);
-        }else if(is_file($path) === true){
+        } else if (is_file($path) === true) {
             return unlink($path);
         }
 
@@ -374,7 +375,7 @@ class Controller extends AuthController
         $criteria->addCondition("user_type = 'user'");
         $criteria->params[':userID'] = $userID;
         $categoriesID = [];
-        foreach(Lists::model()->findAll($criteria) as $item)
+        foreach (Lists::model()->findAll($criteria) as $item)
             $categoriesID[] = $item->category_id;
         $criteria = new CDbCriteria();
         $criteria->compare('status', Lists::STATUS_APPROVED);
@@ -469,5 +470,15 @@ class Controller extends AuthController
         $patterns = array('/([.\\+*?\[^\]$(){}=!<>|:-])/', '/ی|ي|ئ/', '/ک|ك/', '/ه|ة/', '/ا|آ|إ|أ/', '/\s/');
         $replacements = array('', '[ی|ي|ئ]', '[ک|ك]', '[ه|ة]', '[اآإأ]', ' ');
         return preg_replace($patterns, $replacements, $value);
+    }
+
+    public static function cutText($text, $size = 80)
+    {
+        $text = strip_tags($text);
+        $text = trim($text);
+
+        $postfix = mb_strlen($text, "UTF-8") > $size ? '...' : '';
+
+        return mb_substr($text, 0, $size, "UTF-8") . $postfix;
     }
 }
