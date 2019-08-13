@@ -118,7 +118,7 @@ return array(
 				'users/public/viewProfile/<id:\d+>/<title:.*>'=>'users/public/viewProfile',
 				'lists/category/<id:\d+>/<title:.*>'=>'lists/category/view',
 				'new' => 'lists/public/new',
-				'<type:(recommended|latest)>' => 'lists/public/rows',
+				'<type:(recommended|latest|popular)>' => 'lists/public/rows',
 				'<action:(about|contact|help|terms|search|faq)>' => 'site/<action>',
 				'my-lists' => 'users/public/lists',
 				'<action:(logout|dashboard|googleLogin|login|mobileLogin|register|changePassword|forgetPassword|profile|notifications|recoverPassword|bookmarks)>' => 'users/public/<action>',
@@ -165,7 +165,7 @@ return array(
 			),
 		),
 		'clientScript'=>array(
-			'class'=>'ext.minScript.components.ExtMinScript',
+//			'class'=>'ext.minScript.components.ExtMinScript',
 			'coreScriptPosition' => CClientScript::POS_HEAD,
 			'defaultScriptFilePosition' => CClientScript::POS_END,
 		),

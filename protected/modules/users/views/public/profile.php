@@ -10,16 +10,65 @@ $this->breadcrumbs =[
     'کلمه عبور' => array('/changePassword'),
 ];
 ?>
-<!--<h2>تغییر مشخصات کاربری</h2>-->
-<div class="recommend">
-    <?php $this->renderPartial('//partial-views/_flashMessage');?>
-    <?php $form=$this->beginWidget('CActiveForm', array(
-        'id'=>'users-form',
-        'htmlOptions' => array('class' => 'inline-form'),
-        'enableAjaxValidation'=>true,
-    )); ?>
+<section class="createList section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3 mx-auto">
+                <div class="createList_header">
+                    <h4 class="-h4">ویرایش پروفایل</h4>
+                    <p class="mb-5 mt-4">اطلاعات کاربری خود را وارد کنید.</p>
+                </div>
+                <div class="formContainer">
+                    <?php $this->renderPartial('//partial-views/_flashMessage');?>
+                    <?php $form=$this->beginWidget('CActiveForm', array(
+                        'id'=>'users-form',
+                        'htmlOptions' => array('class' => 'inline-form'),
+                        'enableAjaxValidation'=>true,
+                    )); ?>
 
-    <div class="row">
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <?php echo $form->textField($model,'first_name',array('placeholder'=>$model->getAttributeLabel('first_name').' *','class'=>'form-control','maxlength'=>50)); ?>
+                                <?php echo $form->error($model,'first_name'); ?>
+                            </div>
+                            <div class="form-group">
+                                <?php echo $form->textField($model,'last_name',array('placeholder'=>$model->getAttributeLabel('last_name').' *','class'=>'form-control','maxlength'=>50)); ?>
+                                <?php echo $form->error($model,'last_name'); ?>
+                            </div>
+                            <div class="form-group">
+                                <?php echo $form->textField($model,'mobile',array('placeholder'=>$model->getAttributeLabel('mobile').' *','class'=>'form-control','maxlength'=>11)); ?>
+                                <?php echo $form->error($model,'mobile'); ?>
+                            </div>
+                            <div class="form-group">
+                                <?php echo CHtml::submitButton('ذخیره',array('class'=>'btn btn-outline-success pull-left')); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php $this->endWidget(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+<!--<div class="recommend">-->
+<!--    --><?php //$this->renderPartial('//partial-views/_flashMessage');?>
+<!--    --><?php //$form=$this->beginWidget('CActiveForm', array(
+//        'id'=>'users-form',
+//        'htmlOptions' => array('class' => 'inline-form'),
+//        'enableAjaxValidation'=>true,
+//    )); ?>
+<!---->
+<!--    <div class="row">-->
 <!--        <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">-->
 <!--            --><?php //$this->widget('ext.dropZoneUploader.dropZoneUploader', array(
 //                'id' => 'avatar-uploader',
@@ -47,23 +96,23 @@ $this->breadcrumbs =[
 <!--            <div class="uploader-message error"></div>-->
 <!--            --><?php //echo $form->error($model,'avatar'); ?>
 <!--        </div>-->
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 profile-left-side">
-            <div class="form-group">
-                <?php echo $form->textField($model,'first_name',array('placeholder'=>$model->getAttributeLabel('first_name').' *','class'=>'form-control','maxlength'=>50)); ?>
-                <?php echo $form->error($model,'first_name'); ?>
-            </div>
-            <div class="form-group">
-                <?php echo $form->textField($model,'last_name',array('placeholder'=>$model->getAttributeLabel('last_name').' *','class'=>'form-control','maxlength'=>50)); ?>
-                <?php echo $form->error($model,'last_name'); ?>
-            </div>
-            <div class="form-group">
-                <?php echo $form->textField($model,'mobile',array('placeholder'=>$model->getAttributeLabel('mobile').' *','class'=>'form-control','maxlength'=>11)); ?>
-                <?php echo $form->error($model,'mobile'); ?>
-            </div>
-            <div class="form-group">
-                <?php echo CHtml::submitButton('ذخیره',array('class'=>'btn btn-success pull-left')); ?>
-            </div>
-        </div>
-    </div>
-    <?php $this->endWidget(); ?>
-</div>
+<!--        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 profile-left-side">-->
+<!--            <div class="form-group">-->
+<!--                --><?php //echo $form->textField($model,'first_name',array('placeholder'=>$model->getAttributeLabel('first_name').' *','class'=>'form-control','maxlength'=>50)); ?>
+<!--                --><?php //echo $form->error($model,'first_name'); ?>
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                --><?php //echo $form->textField($model,'last_name',array('placeholder'=>$model->getAttributeLabel('last_name').' *','class'=>'form-control','maxlength'=>50)); ?>
+<!--                --><?php //echo $form->error($model,'last_name'); ?>
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                --><?php //echo $form->textField($model,'mobile',array('placeholder'=>$model->getAttributeLabel('mobile').' *','class'=>'form-control','maxlength'=>11)); ?>
+<!--                --><?php //echo $form->error($model,'mobile'); ?>
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                --><?php //echo CHtml::submitButton('ذخیره',array('class'=>'btn btn-success pull-left')); ?>
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    --><?php //$this->endWidget(); ?>
+<!--</div>-->

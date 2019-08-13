@@ -155,7 +155,7 @@ class ListsCategoryController extends Controller
 	}
 
 	public function actionView($id){
-		Yii::app()->theme = 'frontend';
+		Yii::app()->theme = 'new';
 		$this->layout = '//layouts/inner';
 		$model = $this->loadModel($id);
 		$this->keywords = $model->getKeywords();

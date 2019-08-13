@@ -24,8 +24,7 @@ $this->breadcrumbs = array(
                 <?= $data->title ?>
             </a>
             <div>
-                <?php
-                echo CHtml::ajaxLink('<small>حذف از علایق</small>',array('/lists/public/authJson'),array(
+                <?php echo CHtml::ajaxLink('<small>حذف از علایق</small>',array('/lists/public/authJson'),array(
                     'type' => 'POST',
                     'dataType' => 'JSON',
                     'data' => array('method' => 'bookmark','hash'=>base64_encode($data->id)),
@@ -43,8 +42,7 @@ $this->breadcrumbs = array(
                         }
                         $(".view-alert").removeClass("hidden");
                     }'
-                ),array('class' => 'remove-bookmark text-danger'));
-                ?>
+                ),array('class' => 'remove-bookmark text-danger')); ?>
             </div>
         </div>
     <?php endforeach;?>

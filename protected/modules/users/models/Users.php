@@ -323,4 +323,10 @@ class Users extends CActiveRecord
         }
         return $user;
     }
+
+    public function getListCount($number_format = false)
+    {
+        $c = Lists::model()->countByAttributes(['status' => Lists::STATUS_APPROVED, 'user_id' => $this->id]);
+        return $number_format ? number_format($c) : $c;
+    }
 }

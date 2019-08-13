@@ -14,7 +14,7 @@
     if ($this->registeredOnly === true && Yii::app()->user->isGuest === true) {
         // @todo change login and signup links
         Yii::app()->user->returnUrl = Yii::app()->request->url;
-        echo '&nbsp;<a href=" #login-modal" data-toggle="modal">' . Yii::t($this->_config['translationCategory'], 'Add Your Comment') . '</a>';
+        echo '&nbsp;<a href=" #login-modal" class="btn btn-outline-info px-5" style="margin-top: 15px;" data-toggle="modal">' . Yii::t($this->_config['translationCategory'], 'Add Your Comment') . '</a>';
     }
     echo "</div>";
     echo '<div class="comments-list-outer">';

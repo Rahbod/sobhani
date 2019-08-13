@@ -44,7 +44,7 @@ class SiteController extends Controller
      * This is the default 'index' action that is invoked
      * when an action is not explicitly requested by users.
      */
-    public function actionIndex()
+    public function actionIndexOld()
     {
         Yii::app()->theme = "frontend";
         $this->layout = "public";
@@ -63,7 +63,42 @@ class SiteController extends Controller
         $criteria->limit = 5;
         $lastEvents = UserNotifications::model()->findAll($criteria);
 
-        $this->render('index', compact('slider', 'count', 'lastEvents'));
+        $this->render('index_old', compact('slider', 'count', 'lastEvents'));
+    }
+
+    public function actionIndex()
+    {
+        Yii::app()->theme = "new";
+        $this->layout = "public";
+
+        $criteria = new CDbCriteria();
+        $criteria->compare('status', Lists::STATUS_APPROVED);
+        $criteria->order = 'seen DESC';
+        $criteria->limit = 10;
+        $slider = Lists::model()->findAll($criteria);
+        $count = Lists::model()->count($criteria);
+
+
+        $criteria = new CDbCriteria();
+        $criteria->compare('status', Lists::STATUS_APPROVED);
+        $criteria->order = 'id DESC';
+        $criteria->limit = 7;
+        $newLists = Lists::model()->findAll($criteria);
+
+
+        $criteria = new CDbCriteria();
+        $criteria->addCondition(new CDbExpression("id NOT IN(SELECT id from ym_user_notifications where message like '%لیست شما%' OR message like '%مدیر%')"));
+        $criteria->order = "id DESC";
+        $criteria->limit = 5;
+        $lastEvents = UserNotifications::model()->findAll($criteria);
+
+        $statistics = [
+            'lists' => Lists::model()->countByAttributes(['status' => Lists::STATUS_APPROVED]),
+            'users' => Users::model()->count(),
+            'votes' => Votes::model()->count(),
+        ];
+
+        $this->render('index', compact('slider', 'count', 'lastEvents', 'newLists','statistics'));
     }
 
     public function actionGetLastEvents()
@@ -114,7 +149,7 @@ class SiteController extends Controller
     public function actionAbout()
     {
         Yii::import('pages.models.*');
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $this->layout = '//layouts/inner';
         $model = Pages::model()->findByPk(1);
         $this->render('//site/pages/page', array('model' => $model));
@@ -123,7 +158,7 @@ class SiteController extends Controller
     public function actionTerms()
     {
         Yii::import('pages.models.*');
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $this->layout = '//layouts/inner';
         $model = Pages::model()->findByPk(3);
         $this->render('//site/pages/page', array('model' => $model));
@@ -133,7 +168,7 @@ class SiteController extends Controller
     {
         Yii::import('pages.models.*');
         Yii::app()->getModule('contact');
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $this->layout = '//layouts/inner';
         $model = new ContactForm();
         $page = Pages::model()->findByPk(5);

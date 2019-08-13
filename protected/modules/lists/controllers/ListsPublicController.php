@@ -69,7 +69,7 @@ class ListsPublicController extends Controller
      */
     public function actionView($id)
     {
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $model = $this->loadModel($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
@@ -153,7 +153,7 @@ class ListsPublicController extends Controller
     public function actionNew()
     {
         //<a href="https://telegram.me/share/url?url=http://as.com" class="telegram-link pull-left"><i></i>اشتراک گذاری در تلگرام</a>
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $model = new Lists();
         $itemImages = [];
         if (isset($_POST['Lists'])) {
@@ -215,7 +215,7 @@ class ListsPublicController extends Controller
      */
     public function actionUpdate($id)
     {
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $model = $this->loadModel($id);
 
         $image = new UploadedFiles($this->imagePath, ($model->image && is_file(Yii::getPathOfAlias('webroot') . '/uploads/lists/' . $model->image) ? $model->image : false), array(
@@ -335,7 +335,7 @@ class ListsPublicController extends Controller
     public function actionIndex()
     {
         //show categories
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $categories = ListCategories::model()->findAll(array('condition' => 'parent_id IS NULL', 'order' => 'id'));
         $this->render('index', compact('categories'));
     }
@@ -345,7 +345,8 @@ class ListsPublicController extends Controller
      */
     public function actionRows($type)
     {
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
+        //$this->layout = 'public';
         switch ($type) {
             case 'recommended':
                 $title = 'پیشنهاد ما به شما';
@@ -531,7 +532,7 @@ class ListsPublicController extends Controller
 
     public function actionSearch()
     {
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $this->layout = '//layouts/inner';
         $title = "همه لیست ها";
         $criteria = new CDbCriteria();

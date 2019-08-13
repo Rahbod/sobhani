@@ -9,17 +9,12 @@
     <link rel="icon" href="./assets/media/images/public/fav_icon.png">
     <link type="text/css" rel="stylesheet" href="./assets/js/vendors/owl-carousel/owl.carousel.min.css">
     <link type="text/css" rel="stylesheet" href="./assets/js/vendors/owl-carousel/owl.theme.default.min.css">
-    <!--<link type="text/css" rel="stylesheet" href="./assets/css/bootstrap-rtl.css">-->
     <link type="text/css" rel="stylesheet" href="./assets/css/font-awesome.css">
     <link type="text/css" rel="stylesheet" href="./assets/js/vendors/icomoon/style.css">
     <link type="text/css" rel="stylesheet" href="assets/css/iran-sans-fa-num.css">
     <link type="text/css" rel="stylesheet" href="./assets/css/global.css">
     <link type="text/css" rel="stylesheet" href="./assets/css/sidebar.css">
-
     <link type="text/css" rel="stylesheet" href="./assets/css/responsive.css">
-    <!--<link type="text/css" rel="stylesheet" href="./assets/js/vendors/slick/slick/slick.css">-->
-    <!--<link type="text/css" rel="stylesheet" href="./assets/js/vendors/slick/slick/slick-theme.css">-->
-
 </head>
 <body class="position-relative">
 
@@ -864,68 +859,7 @@
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>-->
 
 <script type="text/javascript" src="./assets/js/global.js"></script>
-<script>
-
-    jQuery(window).scroll(startCounter);
-
-    function startCounter() {
-        var hT = jQuery('.counter--container').offset().top,
-            hH = jQuery('.counter--container').outerHeight(),
-            wH = jQuery(window).height();
-        if (jQuery(window).scrollTop() > hT + hH - wH) {
-            jQuery(window).off("scroll", startCounter);
-            jQuery('.counter').each(function () {
-                var $this = jQuery(this);
-                jQuery({Counter: 0}).animate({Counter: $this.text()}, {
-                    duration: 2000,
-                    easing: 'swing',
-                    step: function () {
-                        $this.text(Math.ceil(this.Counter));
-                    }
-                });
-            });
-        }
-    }
-
-    $(document).ready(function () {
-        $('.owl-carousel').owlCarousel({
-            rtl: true,
-            nav: true,
-            center: true,
-            items: 2,
-            loop: true,
-            margin: 26,
-            dots: false,
-            responsive: {
-                // breakpoint from 0 up
-                0: {
-                    items: 1
-                },
-                // breakpoint from 768 up
-                768: {
-                    items: 2,
-                }
-            }
-        });
-    });
-
-</script>
-<script type="text/javascript">
-    //        $("#sidebar").mCustomScrollbar({
-    //            theme: "minimal"
-    //        });
-
-    $('#dismiss, .overlay').on('click', function () {
-        $('#sidebar').removeClass('active');
-        $('.overlay').removeClass('active');
-    });
-
-    $('#sidebarCollapse').on('click', function () {
-        $('#sidebar').addClass('active');
-        $('.overlay').addClass('active');
-        $('.collapse.in').toggleClass('in');
-        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-    });
-</script>
+<script type="text/javascript" src="./assets/js/index.js"></script>
 </body>
 </html>
+

@@ -24,6 +24,7 @@
  * @property ListItemRel[] $itemRel
  * @property Users[] $bookmarks
  * @property Tags[] $tags
+ * @property Votes[] $votes
  */
 class Lists extends CActiveRecord
 {
@@ -106,6 +107,7 @@ class Lists extends CActiveRecord
 			'itemObj' => array(self::MANY_MANY, 'Items', '{{list_item_rel}}(list_id, item_id)'),
 			'itemRel' => array(self::HAS_MANY, 'ListItemRel', 'list_id'),
 			'bookmarks' => array(self::MANY_MANY, 'Users', '{{user_bookmarks}}(list_id, user_id)'),
+			'votes' => array(self::HAS_MANY, 'Votes', 'list_id'),
             'tagsRel' => array(self::HAS_MANY, 'TagRel', 'model_id',
                 'on' => 'tagsRel.model_name = :model_name',
                 'params' => array(':model_name' => get_class($this))
@@ -316,8 +318,10 @@ class Lists extends CActiveRecord
         $this->formTags = CHtml::listData($this->tags,'title','title');
 	}
 
-	public function getViewUrl()
+	public function getViewUrl($absolute = false)
 	{
+        if($absolute)
+            return Yii::app()->createAbsoluteUrl('/lists/'.$this->id.'/'.str_replace(' ', '-', $this->title));
 		return Yii::app()->createUrl('/lists/'.$this->id.'/'.str_replace(' ', '-', $this->title));
 	}
 
@@ -326,6 +330,17 @@ class Lists extends CActiveRecord
 		if($this->image)
 			return $this->image;
 		else
-			return 'default.jpg';
+			return Yii::app()->theme->baseUrl.'/media/images/home/slider/p-1.png';
 	}
+
+    public function getVotedUsersCount()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('list_id = :id');
+        $criteria->addCondition('user_id IS NOT NULL');
+        $criteria->params[':id'] = $this->id;
+        $criteria->group = 'user_id';
+        $records = Votes::model()->findAll($criteria);
+        return count($records);
+    }
 }

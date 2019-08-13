@@ -8,8 +8,72 @@ $this->breadcrumbs =[
     'کلمه عبور',
 ];
 ?>
+<section class="createList section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3 mx-auto">
+                <div class="createList_header">
+                    <h4 class="-h4">تغییر کلمه عبور</h4>
+                    <p class="mb-5 mt-4">جهت تغییر کلمه عبور خود لطفا فرم زیر را پر کنید.</p>
+                </div>
+                <div class="formContainer">
+                    <?php $this->renderPartial('//partial-views/_flashMessage');?>
+                    <?php $this->renderPartial('//partial-views/_loading');?>
+                    <div class="form-row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="form-group">
+                                    <form action="<?= $this->createUrl('/users/public/sendSmsVerification') ?>" method="get" onsubmit="return false;">
+                                        <button type="submit" class="btn btn-primary submit-btn" style="margin-top: 25px; padding: 6px 50px">دریافت کد فعالسازی</button>
+                                    </form>
+                                    <p id="error-span" class="text-center" style="font-size: 11px"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <?php $form=$this->beginWidget('CActiveForm', array(
+                                'id'=>'users-form',
+                                'action' => Yii::app()->createUrl('/users/public/changePassword'),
+                                'htmlOptions' => array('class' => 'inline-form'),
+                                'enableAjaxValidation'=>false,
+                            )); ?>
 
-<div class="content-box white-bg">
+                            <div class="row">
+                                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 relative">
+                                    <span class="login-timer" style="line-height: 22px; font-size: 14px"></span>
+                                    <?php echo $form->labelEx($model,'oldPassword'); ?>
+                                    <?php echo $form->passwordField($model,'oldPassword',array('placeholder'=>$model->getAttributeLabel('oldPassword').' *','class'=>'form-control','maxlength'=>100,'value'=>'', 'id'=>'oldPass')); ?>
+                                    <?php echo $form->error($model,'oldPassword'); ?>
+                                </div>
+                                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <?php echo $form->labelEx($model,'newPassword'); ?>
+                                    <?php echo $form->passwordField($model,'newPassword',array('placeholder'=>$model->getAttributeLabel('newPassword').' *','class'=>'form-control','maxlength'=>100,'value'=>'')); ?>
+                                    <?php echo $form->error($model,'newPassword'); ?>
+                                </div>
+                                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <?php echo $form->labelEx($model,'repeatPassword'); ?>
+                                    <?php echo $form->passwordField($model,'repeatPassword',array('placeholder'=>$model->getAttributeLabel('repeatPassword').' *','class'=>'form-control','maxlength'=>100,'value'=>'')); ?>
+                                    <?php echo $form->error($model,'repeatPassword'); ?>
+                                </div>
+                                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <?php echo CHtml::submitButton('تغییر کلمه عبور',array('class'=>'btn btn-outline-success pull-left')); ?>
+                                </div>
+                            </div>
+
+                            <?php $this->endWidget(); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!-- <div class="content-box white-bg">
     <div class="center-box">
         <?php $this->renderPartial('//partial-views/_flashMessage');?>
         <?php $this->renderPartial('//partial-views/_loading');?>
@@ -58,7 +122,7 @@ $this->breadcrumbs =[
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 
 <script>

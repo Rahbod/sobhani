@@ -1,0 +1,1 @@
+&copy; <?php echo date('Y');?> <strong>10 BEHTARIN</strong>. All rights reserved.
