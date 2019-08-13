@@ -1,21 +1,29 @@
 $(function () {
+    $.ajaxSetup({
+        data: {
+            'YII_CSRF_TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     $(window).scroll(startCounter);
     function startCounter() {
-        var hT = $('.counter--container').offset().top,
-            hH = $('.counter--container').outerHeight(),
-            wH = $(window).height();
-        if ($(window).scrollTop() > hT + hH - wH) {
-            $(window).off("scroll", startCounter);
-            $('.counter').each(function () {
-                var $this = $(this);
-                $({Counter: 0}).animate({Counter: $this.text()}, {
-                    duration: 2000,
-                    easing: 'swing',
-                    step: function () {
-                        $this.text(Math.ceil(this.Counter));
-                    }
+        if($('.counter--container').length) {
+            var hT = $('.counter--container').offset().top,
+                hH = $('.counter--container').outerHeight(),
+                wH = $(window).height();
+            if ($(window).scrollTop() > hT + hH - wH) {
+                $(window).off("scroll", startCounter);
+                $('.counter').each(function () {
+                    var $this = $(this);
+                    $({Counter: 0}).animate({Counter: $this.text()}, {
+                        duration: 2000,
+                        easing: 'swing',
+                        step: function () {
+                            $this.text(Math.ceil(this.Counter));
+                        }
+                    });
                 });
-            });
+            }
         }
     }
 

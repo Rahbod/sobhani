@@ -102,7 +102,7 @@ class UsersPublicController extends Controller
      */
     public function actionDashboard()
     {
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $this->layout = '//layouts/inner';
         /* @var $user Users */
         $user = Users::model()->findByPk(Yii::app()->user->id);
@@ -114,8 +114,11 @@ class UsersPublicController extends Controller
         $lists->user_type = 'user';
         $lists->user_id = $user->id;
 
+        $recommended = $this->getRecommendedLists('dataProvider');
+        $bookmarked = $user->bookmarks;
+
         $this->pageTitle = 'پروفایل من';
-        $this->render('dashboard', compact('user', 'lists'));
+        $this->render('dashboard', compact('user', 'lists', 'recommended', 'bookmarked'));
     }
 
     /**
@@ -123,7 +126,7 @@ class UsersPublicController extends Controller
      */
     public function actionChangePassword()
     {
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $this->layout = '//layouts/inner';
         $model = Users::model()->findByPk(Yii::app()->user->getId());
         $this->pageTitle = 'تغییر کلمه عبور';
@@ -155,7 +158,7 @@ class UsersPublicController extends Controller
      */
     public function actionProfile()
     {
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $this->layout = '//layouts/inner';
 
         /* @var $user Users */
@@ -228,7 +231,7 @@ class UsersPublicController extends Controller
         if (Yii::app()->user->getId() == $id)
             $this->redirect(['/dashboard']);
 
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $this->layout = '//layouts/inner';
 
         $model = Users::model()->findByPk($id);
@@ -558,7 +561,7 @@ class UsersPublicController extends Controller
     public function actionNotifications()
     {
         $this->layout = '//layouts/inner';
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $criteria = new CDbCriteria();
         $criteria->addCondition('user_id=:user_id');
         $criteria->order = 'id DESC';

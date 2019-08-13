@@ -8,9 +8,18 @@ $this->breadcrumbs=array(
     $model->title,
 );
 ?>
-<h2><?= $model->title ?></h2>
-<div class="page-text" dir="auto"><?php
-    $purifier=new CHtmlPurifier();
-    echo $purifier->purify($model->summary);
-    ?>
-</div>
+<section class="createList section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 mx-auto">
+                <div class="createList_header">
+                    <h4 class="-h4 mb-5"><?= $model->title ?></h4>
+                </div>
+                <div class="text-justify" dir="auto">
+                    <?php $purifier=new CHtmlPurifier();
+                    echo $purifier->purify($model->summary); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

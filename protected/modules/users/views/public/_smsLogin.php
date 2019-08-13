@@ -68,9 +68,7 @@ $form = $this->beginWidget('CActiveForm', array(
                     </button>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <button type="button" class="btn btn-default form-control" data-toggle="my-tab" data-target="#username-form">ورود با نام
-                        کاربری
-                    </button>
+                    <button type="button" class="btn btn-default form-control" data-toggle="tab" data-target="#username-form">ورود با نام کاربری</button>
                 </div>
             </div>
         </div>
@@ -91,15 +89,10 @@ $form = $this->beginWidget('CActiveForm', array(
             <div class="form-group mb-0">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <button type="button" class="btn btn-outline-warning form-control" data-toggle="my-tab"
-                                data-target="#mobile-form">ورود با شماره
-                            تلفن همراه
-                        </button>
+                        <button type="button" class="btn btn-outline-warning form-control" role="tab" data-toggle="tab" data-target="#mobile-form">ورود با شماره تلفن همراه</button>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="username"
-                                class="login-submit-btn btn btn-info form-control enter-trigger">ورود به حساب کاربری
-                        </button>
+                        <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="username" class="login-submit-btn btn btn-info form-control enter-trigger">ورود به حساب کاربری</button>
                     </div>
                 </div>
             </div>
@@ -200,4 +193,4 @@ function timer(counter) {
         }
     }, 1000);
 }
-');
+');?>

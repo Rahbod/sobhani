@@ -44,7 +44,7 @@ class SiteController extends Controller
      * This is the default 'index' action that is invoked
      * when an action is not explicitly requested by users.
      */
-    public function actionIndex()
+    public function actionIndexOld()
     {
         Yii::app()->theme = "frontend";
         $this->layout = "public";
@@ -63,10 +63,10 @@ class SiteController extends Controller
         $criteria->limit = 5;
         $lastEvents = UserNotifications::model()->findAll($criteria);
 
-        $this->render('index', compact('slider', 'count', 'lastEvents'));
+        $this->render('index_old', compact('slider', 'count', 'lastEvents'));
     }
 
-    public function actionIndexNew()
+    public function actionIndex()
     {
         Yii::app()->theme = "new";
         $this->layout = "public";
@@ -98,7 +98,7 @@ class SiteController extends Controller
             'votes' => Votes::model()->count(),
         ];
 
-        $this->render('index_new', compact('slider', 'count', 'lastEvents', 'newLists','statistics'));
+        $this->render('index', compact('slider', 'count', 'lastEvents', 'newLists','statistics'));
     }
 
     public function actionGetLastEvents()
@@ -149,7 +149,7 @@ class SiteController extends Controller
     public function actionAbout()
     {
         Yii::import('pages.models.*');
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $this->layout = '//layouts/inner';
         $model = Pages::model()->findByPk(1);
         $this->render('//site/pages/page', array('model' => $model));
@@ -158,7 +158,7 @@ class SiteController extends Controller
     public function actionTerms()
     {
         Yii::import('pages.models.*');
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $this->layout = '//layouts/inner';
         $model = Pages::model()->findByPk(3);
         $this->render('//site/pages/page', array('model' => $model));
@@ -168,7 +168,7 @@ class SiteController extends Controller
     {
         Yii::import('pages.models.*');
         Yii::app()->getModule('contact');
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $this->layout = '//layouts/inner';
         $model = new ContactForm();
         $page = Pages::model()->findByPk(5);

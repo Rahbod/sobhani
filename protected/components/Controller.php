@@ -363,9 +363,10 @@ class Controller extends AuthController
     }
 
     /**
+     * @param $type string
      * @return Lists[]
      */
-    public function getRecommendedLists()
+    public function getRecommendedLists($type = 'model')
     {
         $userID = Yii::app()->user->getId();
         $criteria = new CDbCriteria();
@@ -383,6 +384,10 @@ class Controller extends AuthController
         $criteria->addInCondition('category_id', $categoriesID);
         $criteria->order = 'id DESC';
         $criteria->params[':userID'] = $userID;
+        if($type == 'dataProvider')
+            return new CActiveDataProvider('Lists', array(
+                'criteria' => $criteria,
+            ));
         return Lists::model()->findAll($criteria);
     }
 

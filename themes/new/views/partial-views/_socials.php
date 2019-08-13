@@ -6,14 +6,10 @@ $tw = $scl->twitter;
 $fb = $scl->facebook;
 $tl = $scl->telegram;
 ?>
-<div class="social-networks">
-    <div class="social-icons">
-        <?php if($tw): ?><a target="_blank" class="pull-left" href="<?= $tw; ?>"><span class="svg-icons twitter-icon grayscale"></span></a><?php endif; ?>
-        <?php if($tl): ?><a target="_blank" class="pull-left" href="<?= $tl; ?>"><span class="svg-icons telegram-icon grayscale"></span></a><?php endif; ?>
-        <?php if($fb): ?><a target="_blank" class="pull-left" href="<?= $fb; ?>"><span class="svg-icons facebook-icon grayscale"></span></a><?php endif; ?>
-<!--        --><?php //if($in): ?><!--<a target="_blank" class="pull-left" href="--><?//= $in; ?><!--"><span class="svg-icons instagram-icon grayscale"></span></a>--><?php //endif; ?>
-<!--        --><?php //if($gl): ?><!--<a target="_blank" class="pull-left" href="--><?//= $gl; ?><!--"><span class="svg-icons google-icon grayscale"></span></a>--><?php //endif; ?>
-    </div>
+<div class="footer__social social">
+    <?php if($tl): ?><a href="<?= $tl?>"><img src="<?= Yii::app()->theme->baseUrl.'/media/images/public/_telegram_1021226.png' ?>"></a><?php endif;?>
+    <?php if($tw): ?><a href="<?= $tw?>"><img src="<?= Yii::app()->theme->baseUrl.'/media/images/public/twitter-(1).png' ?>"></a><?php endif;?>
+    <?php if($fb): ?><a href="<?= $fb?>"><img src="<?= Yii::app()->theme->baseUrl.'/media/images/public/facebook-logo-button.png' ?>"></a><?php endif;?>
 </div>
 <?php
 endif;

@@ -6,6 +6,8 @@
  * The followings are the available columns in table '{{user_bookmarks}}':
  * @property string $user_id
  * @property string $list_id
+ *
+ * @property Lists $list
  */
 class UserBookmarks extends CActiveRecord
 {

@@ -23,16 +23,15 @@ Yii::app()->user->returnUrl = Yii::app()->request->url;
                 </p>
                 <div class="d-flex loginWithSocial">
                     <a href="<?= $this->createUrl('/googleLogin') ?>" class="btn btn-outline-danger w-100 gmail">
-                        <img src="<?= Yii::app()->theme->baseUrl . '/media/images/public/google-plus.svg' ?>" width="31"
-                             height="31" alt="">
+                        <img src="<?= Yii::app()->theme->baseUrl . '/media/images/public/google-plus.svg' ?>" width="31" height="31">
                         حساب گوگل
                     </a>
                     <a href="void:;" class="btn btn-outline-info w-100 mobile" data-toggle="tab" data-target="#modal-register-tab">
-                        <img src="<?= Yii::app()->theme->baseUrl . '/media/images/public/phone.png' ?>" alt="">
+                        <img src="<?= Yii::app()->theme->baseUrl . '/media/images/public/phone.png' ?>">
                         ثبت نام با موبایل
                     </a>
                 </div>
-                <?php $this->renderPartial('users.views.public._smsLogin_new', array('loading_parent' => '#login-modal')) ?>
+                <?php $this->renderPartial('users.views.public._smsLogin', array('loading_parent' => '#login-modal')) ?>
             </div>
         </div>
     </div>
