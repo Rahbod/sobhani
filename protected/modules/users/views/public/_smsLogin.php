@@ -29,9 +29,7 @@ $form = $this->beginWidget('CActiveForm', array(
             <div class="form-group mb-0">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="mobile"
-                                class="login-submit-btn btn btn-primary form-control enter-trigger">ارسال کد فعالسازی
-                        </button>
+                        <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="mobile"class="login-submit-btn btn btn-primary form-control enter-trigger">ارسال کد فعالسازی</button>
                         <a id="go-verify" data-toggle="my-tab" data-target="#mobile-verification-form"></a>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
