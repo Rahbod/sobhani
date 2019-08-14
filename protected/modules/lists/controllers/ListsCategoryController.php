@@ -37,6 +37,7 @@ class ListsCategoryController extends Controller
 	 */
 	public function actionCreate()
 	{
+//	    print_r('hi');exit;
 		$model=new ListCategories;
 
 		if(isset($_POST['ListCategories']))

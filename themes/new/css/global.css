@@ -66,7 +66,7 @@ a:active {
 }
 
 /*.modal .form-control {*/
-    /*width: 100%;*/
+/*width: 100%;*/
 /*}*/
 
 .form-group {
@@ -556,7 +556,7 @@ a:active {
 .favoriteList--leftBox {
     padding: 12px 16px;
     background: #fff;
-    height:350px;
+    height: 350px;
     -webkit-box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.05);
     -moz-box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.05);
     box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.05);
@@ -568,14 +568,14 @@ a:active {
     font-family: inherit;
     font-weight: 500;
     line-height: 25px;
-    height:50px;
+    height: 50px;
     color: #444444;
 }
 
 .favoriteList--leftBox_text {
     font-weight: 400;
     color: #808080;
-    height:40px;
+    height: 40px;
 }
 
 .favoriteList--leftBox_list {
@@ -883,6 +883,11 @@ a:active {
     margin-top: 7px;
 }
 
+#btn-default-hover:hover, #btn-default-hover:focus {
+    background: #495057;
+    color: #fff;
+}
+
 @media (min-width: 576px) {
     .modal-dialog {
         max-width: 381px;
@@ -1131,22 +1136,27 @@ a:active {
     font-weight: inherit;
 }
 
-.card-img-top{
+.card-img-top {
     width: 100%;
 }
-.pre-line{
+
+.pre-line {
     white-space: pre-line;
 }
-.list-thumbnail{
+
+.list-thumbnail {
     margin-bottom: 15px;
 }
-.home-page-list .list-thumbnail{
+
+.home-page-list .list-thumbnail {
     margin-bottom: 0;
 }
-.list-thumbnail .card-body{
-    min-height:128px;
+
+.list-thumbnail .card-body {
+    min-height: 128px;
 }
-.favoriteList.section .owl-item a img{
+
+.favoriteList.section .owl-item a img {
     width: 768px;
     height:480px;
 }

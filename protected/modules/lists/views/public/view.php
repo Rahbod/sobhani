@@ -12,7 +12,7 @@ $this->pageTitle = $model->title;
 <section class="listView section">
     <div class="container">
         <div class="row">
-            <div class="col-md-8 order-0 order-md-0">
+            <div class="col-md-8 order-0">
                 <?php $this->renderPartial("//partial-views/_flashMessage"); ?>
                 <div class="card">
                     <?php $this->widget('zii.widgets.CBreadcrumbs', array(
@@ -64,7 +64,7 @@ $this->pageTitle = $model->title;
                     <img class="card-img-bottom" src="<?= Yii::app()->baseUrl.'/uploads/lists/thumbs/400x300/'.$model->getImage()?>" alt="<?= $model->title ?>" title="<?= $model->title ?>">
                     <div class="card-body">
                         <a href="void:;" class="d-flex align-items-center mb-4">
-                            <img class="ml-3" src="<?= $model->user->userDetails->getAvatar()?>" alt="">
+                            <img  width="51" height="51" class="ml-3" src="<?= $model->user->userDetails->getAvatar()?>" alt="">
                             <div class="flex-fill">
                                 <p class="pb-1 listView--rightBox -subTitle"><?= $model->user->userDetails->getShowName()?></p>
                                 <p class="m-0 listView--rightBox -listNumber"><?php echo count($model->user->lists)?> لیست</p>
@@ -81,8 +81,14 @@ $this->pageTitle = $model->title;
                         <a href="https://telegram.me/share/url?url=<?= $model->getViewUrl(true) ?>"><img src="<?= Yii::app()->theme->baseUrl?>/media/images/public/telegram.png" alt="telegram"></a>
                     </div>
                 </div>
+                <div class="listView--section2 d-flex mb-3 pb-3">
+                    <div class="row">
+                        <?php $this->renderPartial('_items',compact('items', 'model')); ?>
+                    </div>
+                </div>
+
             </div>
-            <div class="col-md-4 order-2 order-md-1">
+            <div class="col-md-4 order-1">
                 <div class="listView--leftBox">
                     <!-- <div class="listView--leftBox listView--leftBox--reports mb-3">
                         <h5 class="-h5 mb-3 pb-3 listView--leftBox -title">آمار و جزئیات</h5>
@@ -156,7 +162,6 @@ $this->pageTitle = $model->title;
                             <?php endforeach; ?>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="col-md-8 order-4 order-md-2">
@@ -177,19 +182,21 @@ $this->pageTitle = $model->title;
                                         <div>
                                             <img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/400x300/'. $list->getImage() ?>" alt="<?= $list->title ?>">
                                         </div>
-                                        <div class="flex-fill listView--leftBox--related--descriptionsContainer">
-                                            <p><?= $list->title ?></p>
-                                            <p class="text-muted"><?= $list->seen ?>&nbsp;بازدید</p>
-                                        </div>
                                     </div>
-                                </a>
+                                 </a>
                             <?php endforeach; ?>
                         </div>
                     </div>
-
                 </div>
             </div>
-            <div class="col-md-8 order-1 order-md-4">
+
+            </div>
+        </div>
+<!--            <div class="col-md-8 order-4 order-md-2">-->
+<!--            </div>-->
+<!--            <div class="col-md-4 order-3 order-md-3">-->
+<!--            </div>-->
+            <div class="col-md-8 order-4 order-md-4">
                 <?php if(!Yii::app()->user->isGuest):?>
                     <button type="button" style="margin-bottom: 15px;" class="btn btn-info px-5 add-new-item" data-toggle="collapse" data-target="#add-new-item-form">افزودن گزینه جدید</button>
                     <div class="step_3 steps p-3 mb-3 bg-white -shadow collapse" id="add-new-item-form">
@@ -255,10 +262,10 @@ $this->pageTitle = $model->title;
                         <?= CHtml::endForm();?>
                     </div>
                 <?php else:?>
-                    <a class="btn btn-info px-5 add-new-item" data-toggle="modal" href="#login-modal"><i class="glyphicon glyphicon-plus"></i>افزودن گزینه جدید</a>
+                    <a class="btn btn-info px-5 add-new-item my-3" data-toggle="modal" href="#login-modal"><i class="glyphicon glyphicon-plus"></i>افزودن گزینه جدید</a>
                 <?php endif;?>
             </div>
-            <div class="col-md-8 order-5 order-md-5">
+            <div class="col-md-8 order-3">
                 <div class="">
                     <span class="ml-2">اشتراک گذاری :</span>
                     <a href="https://www.facebook.com/sharer/sharer.php?u=<?= $model->getViewUrl(true) ?>" target="_blank"><img src="<?= Yii::app()->theme->baseUrl?>/media/images/public/facebook.png" alt="facebook"></a>

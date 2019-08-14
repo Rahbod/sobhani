@@ -36,4 +36,5 @@ class UsersModule extends CWebModule
 		else
 			return false;
 	}
+
 }

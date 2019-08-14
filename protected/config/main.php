@@ -22,6 +22,7 @@ return array(
 		'application.modules.lists.models.*',
 		'application.modules.car.models.*',
 		'application.modules.setting.models.*',
+		'application.modules.pages.models.Pages',
 	),
 
 	'modules'=>array(

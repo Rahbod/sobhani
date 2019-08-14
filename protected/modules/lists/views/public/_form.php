@@ -253,8 +253,6 @@ foreach ($parents as $parentID => $parent){
 <h5 style="font-weight: normal">- هر لیست باید  حداقل ۳ و حداکثر ۱۰ گزینه داشته باشد.</h5>
 <h5 style="font-weight: normal">- لیست ایجاد شده توسط شما پس از تایید کارشناسان به صورت عمومی نمایش داده خواهد شد.</h5>
 
-
-
     <div class="add-list-form">
         <div class="form-row">
             <?php echo $form->textField($model,'title',array('class'=>'transparent-input', 'placeholder' => 'عنوان لیست')); ?>

@@ -554,14 +554,25 @@ a:active {
 }
 
 .listView--section2--number span {
+    /*position: absolute;*/
+    /*font-size: 17px !important;*/
+    /*content: '';*/
+    /*height: 0;*/
+    /*width: 0;*/
+    /*left: calc(50% + 4px);*/
+    /*top: calc(50% - 11px);*/
+
     position: absolute;
     font-size: 17px !important;
     content: '';
-    height: 0;
-    width: 0;
-    left: calc(50% + 4px);
-    top: calc(50% - 11px);
-
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .progress {
