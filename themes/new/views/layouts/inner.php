@@ -67,7 +67,7 @@
                     <h4>ده لیست برتر</h4>
                     <?php foreach ($this->getTopListBySeen() as $item): ?>
                         <div class="trending">
-                            <a href="<?= $item->getViewUrl() ?>"><img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/200x200/'. $item->getImage() ?>" alt="<?= $item->title ?>" title="<?= $item->title ?>">
+                            <a href="<?= $item->getViewUrl() ?>"><img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/400x300/'. $item->getImage() ?>" alt="<?= $item->title ?>" title="<?= $item->title ?>">
                                 <?= $item->title ?></a>
                             <br>
                             <?= $item->seen ?>&nbsp;بازدید
@@ -80,7 +80,7 @@
                         <h4>لیست های مرتبط</h4>
                         <?php foreach ($this->similarProvider as $item): ?>
                             <div class="trending">
-                                <a href="<?= $item->getViewUrl() ?>"><img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/200x200/'. $item->getImage() ?>" alt="<?= $item->title ?>" title="<?= $item->title ?>">
+                                <a href="<?= $item->getViewUrl() ?>"><img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/400x300/'. $item->getImage() ?>" alt="<?= $item->title ?>" title="<?= $item->title ?>">
                                     <?= $item->title ?></a>
                                 <br>
                                 <?= $item->seen ?>&nbsp;بازدید

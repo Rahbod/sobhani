@@ -295,7 +295,7 @@ class UsersPublicController extends Controller
      */
     public function actionForgetPassword()
     {
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $this->layout = '//layouts/inner';
         if (!Yii::app()->user->isGuest and Yii::app()->user->type != 'admin')
             $this->redirect($this->createAbsoluteUrl('//'));
@@ -436,7 +436,7 @@ class UsersPublicController extends Controller
 
     public function actionLogin()
     {
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $this->layout = '//layouts/inner';
 
         if (!Yii::app()->user->isGuest && Yii::app()->user->type == 'user')
@@ -468,8 +468,11 @@ class UsersPublicController extends Controller
                     Yii::app()->end();
                 } else
                     $this->redirect($redirect);
-            } else
+            } else {
                 $model->password = '';
+                if (isset($_GET['ajax']))
+                    echo CJSON::encode(array('status' => false, 'msg' => 'نام کاربری یا کلمه عبور اشتباه است.'));
+            }
         }
         // End of login codes
         if (!isset($_GET['ajax']))
@@ -761,7 +764,7 @@ class UsersPublicController extends Controller
                         $result = array('status' => false, 'message' => "خطا در ورود!");
                     break;
                 default:
-                    $result = array('status' => false);
+                    $result = array('status' => false, 'message' => 'نام کاربری یا کلمه عبور اشتباه است.');
                     break;
             }
             if (isset($_GET['ajax'])) {

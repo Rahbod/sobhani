@@ -4,7 +4,7 @@
 <header class="header">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="<?= $this->createUrl('/') ?>">
+            <a class="navbar-brand" href="<?= $this->createUrl('/home') ?>">
                 <img src="<?= Yii::app()->theme->baseUrl . '/media/images/public/site_logo.png' ?>" class="siteLogo__image" alt="بهترین ها به انتخاب من و تو">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse"

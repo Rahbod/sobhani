@@ -102,12 +102,12 @@ class ListsManageController extends Controller
             $model->status = Lists::STATUS_APPROVED;
             $image = $model->image ? new UploadedFiles($this->tempPath, $model->image, array(
                 'thumbnail' => array(
-                    'width' => 200,
-                    'height' => 200
+                    'width' => 400,
+                    'height' => 300
                 ),
                 'resize' => array(
-                    'width' => 600,
-                    'height' => 400
+                    'width' => 768,
+                    'height' => 480
                 ))) : [];
             if ($model->items) {
                 foreach ($model->items as $key => $item) {
@@ -115,12 +115,12 @@ class ListsManageController extends Controller
                     if (isset($item['image']))
                         $itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
                             'thumbnail' => array(
-                                'width' => 200,
-                                'height' => 200
+                                'width' => 150,
+                                'height' => 150
                             ),
                             'resize' => array(
-                                'width' => 600,
-                                'height' => 400
+                                'width' => 400,
+                                'height' => 300
                             )));
                 }
             }
@@ -153,12 +153,12 @@ class ListsManageController extends Controller
 
         $image = new UploadedFiles($this->imagePath, ($model->image && is_file(Yii::getPathOfAlias('webroot') . '/uploads/lists/' . $model->image) ? $model->image : false), array(
             'thumbnail' => array(
-                'width' => 200,
-                'height' => 200
+                'width' => 400,
+                'height' => 300
             ),
             'resize' => array(
-                'width' => 600,
-                'height' => 400
+                'width' => 768,
+                'height' => 480
             )));
 
         $oldItemImages = [];
@@ -177,23 +177,23 @@ class ListsManageController extends Controller
                     if (isset($item['image']) && isset($oldItemImages[$key]) && $oldItemImages[$key] != $item['image'])
                         $itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
                             'thumbnail' => array(
-                                'width' => 200,
-                                'height' => 200
+                                'width' => 150,
+                                'height' => 150
                             ),
                             'resize' => array(
-                                'width' => 600,
-                                'height' => 400
+                                'width' => 400,
+                                'height' => 300
                             )));
                     else {
                         if (isset($item['image']))
                             $itemImages[$key] = new UploadedFiles($this->tempPath, $item['image'], array(
                                 'thumbnail' => array(
-                                    'width' => 200,
-                                    'height' => 200
+                                    'width' => 150,
+                                    'height' => 150
                                 ),
                                 'resize' => array(
-                                    'width' => 600,
-                                    'height' => 400
+                                    'width' => 400,
+                                    'height' => 300
                                 )));
                         else
                             $itemImages[$key] = [];
@@ -220,12 +220,12 @@ class ListsManageController extends Controller
                 if ($item->image)
                     $itemImages[$key] = new UploadedFiles($this->itemImagePath, $item->image, array(
                         'thumbnail' => array(
-                            'width' => 200,
-                            'height' => 200
+                            'width' => 150,
+                            'height' => 150
                         ),
                         'resize' => array(
-                            'width' => 600,
-                            'height' => 400
+                            'width' => 400,
+                            'height' => 300
                         )));
             }
         }

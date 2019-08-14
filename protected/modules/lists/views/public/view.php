@@ -61,7 +61,7 @@ $this->pageTitle = $model->title;
                             ));
                         endif; ?>
                     </div>
-                    <img class="card-img-bottom" src="<?= Yii::app()->baseUrl.'/uploads/lists/thumbs/200x200/'.$model->getImage()?>" alt="<?= $model->title ?>" title="<?= $model->title ?>">
+                    <img class="card-img-bottom" src="<?= Yii::app()->baseUrl.'/uploads/lists/thumbs/400x300/'.$model->getImage()?>" alt="<?= $model->title ?>" title="<?= $model->title ?>">
                     <div class="card-body">
                         <a href="void:;" class="d-flex align-items-center mb-4">
                             <img class="ml-3" src="<?= $model->user->userDetails->getAvatar()?>" alt="">
@@ -145,7 +145,7 @@ $this->pageTitle = $model->title;
                                 <a href="<?= $model->getViewUrl() ?>">
                                     <div class="d-flex">
                                         <div>
-                                            <img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/200x200/'. $item->getImage() ?>" alt="<?= $item->title ?>">
+                                            <img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/400x300/'. $item->getImage() ?>" alt="<?= $item->title ?>">
                                         </div>
                                         <div class="flex-fill listView--leftBox--related--descriptionsContainer">
                                             <p><?= $item->title ?></p>
@@ -175,7 +175,7 @@ $this->pageTitle = $model->title;
                                 <a href="<?= $list->getViewUrl() ?>">
                                     <div class="d-flex">
                                         <div>
-                                            <img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/200x200/'. $list->getImage() ?>" alt="<?= $list->title ?>">
+                                            <img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/400x300/'. $list->getImage() ?>" alt="<?= $list->title ?>">
                                         </div>
                                         <div class="flex-fill listView--leftBox--related--descriptionsContainer">
                                             <p><?= $list->title ?></p>
@@ -288,7 +288,7 @@ $this->pageTitle = $model->title;
 <!--</div>-->
 <!--<div class="list-item-view">-->
 <!--    <div class="image-box">-->
-<!--        <img src="--><?//= Yii::app()->baseUrl.'/uploads/lists/thumbs/200x200/'.$model->getImage()?><!--" class="image" alt="--><?//= $model->title ?><!--" title="--><?//= $model->title ?><!--">-->
+<!--        <img src="--><?//= Yii::app()->baseUrl.'/uploads/lists/thumbs/400x300/'.$model->getImage()?><!--" class="image" alt="--><?//= $model->title ?><!--" title="--><?//= $model->title ?><!--">-->
 <!--        <h2>--><?//= $model->title ?><!--</h2>-->
 <!--        --><?php //if($model->user_type == 'user'):?>
 <!--        <div class="user-image">-->

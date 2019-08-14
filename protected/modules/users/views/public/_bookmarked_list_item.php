@@ -2,7 +2,7 @@
 /* @var $this UsersPublicController */
 /* @var $data UserBookmarks */
 
-$url = Yii::app()->getBaseUrl(true).'/uploads/lists/thumbs/200x200/';
+$url = Yii::app()->getBaseUrl(true).'/uploads/lists/thumbs/400x300/';
 $list = $data->list;
 ?>
 <div class="col-12 list-item">

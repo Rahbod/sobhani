@@ -3,7 +3,7 @@
 /* @var $bookmarks UserBookmarks[] */
 
 $path = Yii::getPathOfAlias('webroot').'/uploads/lists/';
-$url = Yii::app()->getBaseUrl(true).'/uploads/lists/thumbs/200x200/';
+$url = Yii::app()->getBaseUrl(true).'/uploads/lists/thumbs/400x300/';
 $this->breadcrumbs = array(
     'داشبورد' => array('/dashboard'),
     'علاقه مندی ها'

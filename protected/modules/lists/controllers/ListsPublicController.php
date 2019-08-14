@@ -162,12 +162,12 @@ class ListsPublicController extends Controller
             $model->user_id = Yii::app()->user->getId();
             $image = $model->image ? new UploadedFiles($this->tempPath, $model->image, array(
                 'thumbnail' => array(
-                    'width' => 200,
-                    'height' => 200
+                    'width' => 400,
+                    'height' => 300
                 ),
                 'resize' => array(
-                    'width' => 400,
-                    'height' => 300,
+                    'width' => 768,
+                    'height' => 480,
                     'quality' => 60
                 ))) : [];
             $model->status = isset($_POST['draft']) ? Lists::STATUS_DRAFT : ($model->user_type == 'admin' ? Lists::STATUS_APPROVED : Lists::STATUS_PENDING);
@@ -220,12 +220,12 @@ class ListsPublicController extends Controller
 
         $image = new UploadedFiles($this->imagePath, ($model->image && is_file(Yii::getPathOfAlias('webroot') . '/uploads/lists/' . $model->image) ? $model->image : false), array(
             'thumbnail' => array(
-                'width' => 200,
-                'height' => 200
+                'width' => 400,
+                'height' => 300
             ),
             'resize' => array(
-                'width' => 400,
-                'height' => 300,
+                'width' => 768,
+                'height' => 480,
                 'quality' => 60
             )));
 
