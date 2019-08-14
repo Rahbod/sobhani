@@ -2,7 +2,7 @@
 /* @var $this UsersPublicController */
 /* @var $data Lists */
 
-$url = Yii::app()->getBaseUrl(true).'/uploads/lists/thumbs/200x200/';
+$url = Yii::app()->getBaseUrl(true).'/uploads/lists/thumbs/400x300/';
 ?>
 <div class="col-12">
     <div class="container-fluid px-0 -opacity">
@@ -29,7 +29,9 @@ $url = Yii::app()->getBaseUrl(true).'/uploads/lists/thumbs/200x200/';
                         elseif($data->status == Lists::STATUS_DRAFT)
                             $statusClass = 'warning';
                         ?>
-                        <span class="btn-<?= $statusClass?> rounded btn-status"><?= $data->statusLabels[$data->status] ?></span>
+                        <?php if(Yii::app()->user->getId() == $data->user_id):?>
+                            <span class="btn-<?= $statusClass?> rounded btn-status"><?= $data->statusLabels[$data->status] ?></span>
+                        <?php endif;?>
                     </h5>
                 </div>
                 <p class="tab-content__publishedDate -fw-400"><?php echo JalaliDate::differenceTime($data->create_date)?></p>
@@ -61,10 +63,12 @@ $url = Yii::app()->getBaseUrl(true).'/uploads/lists/thumbs/200x200/';
                         </li>
                     </ul>
                 </div>
-                <div class="tab-content--buttons">
-                    <a href="<?= Yii::app()->createUrl("lists/public/update/".$data->id)?>" title="ویرایش" class="ml-md-3 btn btn-outline-info -fw-400">ویرایش</a>
-                    <a href="<?= Yii::app()->createUrl("lists/public/delete/".$data->id)?>" title="درخواست حذف" class="btn btn-outline-danger -fw-400 btn-delete-list">درخواست حذف</a>
-                </div>
+                <?php if(!Yii::app()->user->isGuest and Yii::app()->user->getId() == $data->user_id):?>
+                    <div class="tab-content--buttons">
+                        <a href="<?= Yii::app()->createUrl("lists/public/update/".$data->id)?>" title="ویرایش" class="ml-md-3 btn btn-outline-info -fw-400">ویرایش</a>
+                        <a href="<?= Yii::app()->createUrl("lists/public/delete/".$data->id)?>" title="درخواست حذف" class="btn btn-outline-danger -fw-400 btn-delete-list">درخواست حذف</a>
+                    </div>
+                <?php endif;?>
             </div>
             <div class="col-12">
                 <hr class="">

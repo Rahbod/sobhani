@@ -40,7 +40,7 @@ $model = UserDetails::model()->findByPk($user->id);
                                 if(responseObj.status){
                                     {serverName} = responseObj.fileName;
                                     $(".uploader-message").html("");
-                                    location.reload();
+                                    //location.reload();
                                 }
                                 else{
                                     $(".uploader-message").html(responseObj.message);

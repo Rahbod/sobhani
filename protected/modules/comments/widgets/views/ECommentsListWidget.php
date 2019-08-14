@@ -17,7 +17,7 @@
         echo '&nbsp;<a href=" #login-modal" class="btn btn-outline-info px-5" style="margin-top: 15px;" data-toggle="modal">' . Yii::t($this->_config['translationCategory'], 'Add Your Comment') . '</a>';
     }
     echo "</div>";
-    echo '<div class="comments-list-outer">';
+    echo '<div class="comments-list-outer mt-4">';
     $this->render('ECommentsWidgetComments', array('newComment' => $newComment, 'comments' => $comments));
     echo '</div>';
     ?>

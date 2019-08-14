@@ -147,8 +147,8 @@ class UserDetails extends CActiveRecord
         if (strpos($this->avatar, 'https://') === 0)
             return $this->avatar;
 
-        if ($this->avatar && is_file(Yii::getPathOfAlias('webroot') . '/uploads/users/' . $this->avatar))
-            return Yii::app()->getBaseUrl(true) . '/uploads/users/' . $this->avatar;
+        if ($this->avatar && is_file(Yii::getPathOfAlias('webroot') . '/uploads/users/avatar/' . $this->avatar))
+            return Yii::app()->getBaseUrl(true) . '/uploads/users/avatar/' . $this->avatar;
         return Yii::app()->theme->baseUrl . '/media/images/public/user_avatar.png';
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /* @var $data Lists */
 $path = Yii::getPathOfAlias('webroot').'/uploads/lists/';
-$url = Yii::app()->getBaseUrl(true).'/uploads/lists/thumbs/200x200/';
+$url = Yii::app()->getBaseUrl(true).'/uploads/lists/thumbs/400x300/';
 ?>
 <div class="col-sm-6 col-md-4 col-md-3 list-thumbnail">
     <div class="card">

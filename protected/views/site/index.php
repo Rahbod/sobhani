@@ -9,8 +9,8 @@
  * @var $statistics []
  */
 
-$listPath = Yii::getPathOfAlias('webroot') . '/uploads/lists/thumbs/200x200/';
-$listUrl = Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/200x200/';
+$listPath = Yii::getPathOfAlias('webroot') . '/uploads/lists/thumbs/400x300/';
+$listUrl = Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/400x300/';
 
 $listItemPath = Yii::getPathOfAlias('webroot') . '/uploads/items/thumbs/150x150/';
 $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/150x150/';
@@ -29,7 +29,7 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/150x150/';
                     <?php foreach ($slider as $item): ?>
                         <a href="<?= $item->getViewUrl() ?>" class="sliderItem__link" title="<?= $item->title ?>">
                             <img class="sliderItem__title"
-                                 src="<?= $listUrl . $item->getImage() ?>" alt="<?= $item->title ?>"/>
+                                 src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/' . $item->getImage() ?>" alt="<?= $item->title ?>"/>
                             <h5 class="-h5 sliderItem__title">
                                 <?= $item->title ?>
                             </h5>
@@ -68,38 +68,32 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/150x150/';
                             <div class="col-sm-8 col-lg-8 pl-sm-0">
                                 <div class="favoriteList--rightBox">
                                     <a href="<?= $list->getViewUrl() ?>">
-                                        <img src="<?= $listUrl . $list->getImage() ?>" class="img-fluid" alt="">
+                                        <img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/' . $list->getImage() ?>" class="img-fluid" alt="">
                                     </a>
                                 </div>
                             </div>
                             <div class="col-sm-4 col-lg-4 pr-sm-0">
                                 <div class="favoriteList--leftBox">
-                                    <h5 class="favoriteList--leftBox_title"><?= $list->title ?></h5>
+                                    <a href="<?= $list->getViewUrl() ?>"><h5 class="favoriteList--leftBox_title"><?= $list->title ?></h5></a>
 
                                     <div class="favoriteList--leftBox__descriptions">
                                         <p class="favoriteList--leftBox_text"><?= Controller::cutText($list->description) ?></p>
                                         <ul class="favoriteList--leftBox_list">
-                                            <li class="position-relative"><a
-                                                        href="void:;"><?= $list->itemObj[0]->title ?></a></li>
-                                            <li class="position-relative"><a
-                                                        href="void:;"><?= $list->itemObj[1]->title ?></a></li>
-                                            <li class="position-relative"><a
-                                                        href="void:;"><?= $list->itemObj[2]->title ?></a></li>
-                                            <li class="position-relative"><a href="void:;">نمایش سایر گزینه ها</a></li>
+                                            <li class="position-relative"><a><?= $list->itemObj[0]->title ?></a></li>
+                                            <li class="position-relative"><a><?= $list->itemObj[1]->title ?></a></li>
+                                            <li class="position-relative"><a><?= $list->itemObj[2]->title ?></a></li>
+                                            <li class="position-relative"><a href="<?= $list->getViewUrl() ?>">نمایش سایر گزینه ها</a></li>
                                         </ul>
                                     </div>
                                     <hr>
                                     <div class="favoriteList--leftBox__footer">
-                                        <a href="void:;" class="favoriteList--leftBox__footer_link">
+                                        <a href="<?php echo $this->createUrl('/users/public/viewProfile/'.$list->user_id.'/'.urlencode($list->user->userDetails->getShowName()))?>" class="favoriteList--leftBox__footer_link">
                                             <img class="favoriteList--leftBox__footer_userAvatar"
                                                  src="<?= $list->user->userDetails->getAvatar() ?>" alt="">
                                             <div class="d-inline-block">
                                                 <h6 class="favoriteList--leftBox__footer_userName -h6"><?= $list->user->userDetails->getShowName() ?></h6>
                                                 <p class="m-0"><?= $list->user->getListCount(true) ?> لیست</p>
                                             </div>
-                                            <img class="favoriteList--leftBox__footer_listImage"
-                                                 src="<?= Yii::app()->theme->baseUrl . '/media/images/public/icon-1.png' ?>"
-                                                 alt="bookmark">
                                         </a>
                                     </div>
                                 </div>
@@ -111,16 +105,13 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/150x150/';
                                     <div class="card">
                                         <div class="card-header favoriteList--leftBox__footer">
                                             <?php if ($list->user): ?>
-                                                <a href="<?= $list->getViewUrl() ?>" class="favoriteList--leftBox__footer_link">
+                                                <a href="<?php echo $this->createUrl('/users/public/viewProfile/'.$list->user_id.'/'.urlencode($list->user->userDetails->getShowName()))?>" class="favoriteList--leftBox__footer_link">
                                                     <img class="favoriteList--leftBox__footer_userAvatar"
                                                          src="<?= $list->user->userDetails->getAvatar() ?>" alt="">
                                                     <div class="d-inline-block">
                                                         <h6 class="favoriteList--leftBox__footer_userName -h6"><?= $list->user->userDetails->getShowName() ?></h6>
                                                         <p class="m-0"><?= $list->user->getListCount(true) ?> لیست</p>
                                                     </div>
-                                                    <img class="favoriteList--leftBox__footer_listImage"
-                                                         src="<?= Yii::app()->theme->baseUrl . '/media/images/public/icon-1.png' ?>"
-                                                         alt="bookmark">
                                                 </a>
                                             <?php else: ?>
                                                 <a href="<?= $list->getViewUrl() ?>" class="favoriteList--leftBox__footer_link">
@@ -128,12 +119,8 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/150x150/';
                                                          src="<?= Yii::app()->theme->baseUrl . '/media/images/public/user_avatar.png' ?>"
                                                          alt="">
                                                     <div class="d-inline-block">
-                                                        <h6 class="favoriteList--leftBox__footer_userName -h6">
-                                                            ناشناس</h6>
+                                                        <h6 class="favoriteList--leftBox__footer_userName -h6" style="line-height: 42px;">ناشناس</h6>
                                                     </div>
-                                                    <img class="favoriteList--leftBox__footer_listImage"
-                                                         src="<?= Yii::app()->theme->baseUrl . '/media/images/public/icon-1.png' ?>"
-                                                         alt="bookmark">
                                                 </a>
                                             <?php endif; ?>
                                         </div>

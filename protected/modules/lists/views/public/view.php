@@ -61,7 +61,7 @@ $this->pageTitle = $model->title;
                             ));
                         endif; ?>
                     </div>
-                    <img class="card-img-bottom" src="<?= Yii::app()->baseUrl.'/uploads/lists/thumbs/200x200/'.$model->getImage()?>" alt="<?= $model->title ?>" title="<?= $model->title ?>">
+                    <img class="card-img-bottom" src="<?= Yii::app()->baseUrl.'/uploads/lists/thumbs/400x300/'.$model->getImage()?>" alt="<?= $model->title ?>" title="<?= $model->title ?>">
                     <div class="card-body">
                         <a href="void:;" class="d-flex align-items-center mb-4">
                             <img  width="51" height="51" class="ml-3" src="<?= $model->user->userDetails->getAvatar()?>" alt="">
@@ -151,7 +151,7 @@ $this->pageTitle = $model->title;
                                 <a href="<?= $model->getViewUrl() ?>">
                                     <div class="d-flex">
                                         <div>
-                                            <img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/200x200/'. $item->getImage() ?>" alt="<?= $item->title ?>">
+                                            <img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/400x300/'. $item->getImage() ?>" alt="<?= $item->title ?>">
                                         </div>
                                         <div class="flex-fill listView--leftBox--related--descriptionsContainer">
                                             <p><?= $item->title ?></p>
@@ -162,30 +162,36 @@ $this->pageTitle = $model->title;
                             <?php endforeach; ?>
                         </div>
                     </div>
-                    <div class="listView--leftBox mb-3">
-                        <div class="listView--leftBox--related listView--leftBox--newest">
-                            <h5 class="-h5 mb-3 pb-3 listView--leftBox -title">جدیدترین لیست ها</h5>
-                            <div class="listView--leftBox--item">
-                                <?php foreach($this->getLatestListsByID() as $list): ?>
-                                    <a href="<?= $list->getViewUrl() ?>">
-                                        <div class="d-flex">
-                                            <div>
-                                                <img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/200x200/'. $list->getImage() ?>" alt="<?= $list->title ?>">
-                                            </div>
-                                            <div class="flex-fill listView--leftBox--related--descriptionsContainer">
-                                                <p><?= $list->title ?></p>
-                                                <p class="text-muted"><?= $list->seen ?>&nbsp;بازدید</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-
-                    </div>
-
                 </div>
             </div>
+            <div class="col-md-8 order-4 order-md-2">
+                <div class="listView--section2 d-flex mb-3 pb-3">
+                    <div class="row">
+                        <?php $this->renderPartial('_items',compact('items', 'model')); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 order-3 order-md-3">
+                <div class="listView--leftBox mb-3">
+                    <div class="listView--leftBox--related listView--leftBox--newest">
+                        <h5 class="-h5 mb-3 pb-3 listView--leftBox -title">جدیدترین لیست ها</h5>
+                        <div class="listView--leftBox--item">
+                            <?php foreach($this->getLatestListsByID() as $list): ?>
+                                <a href="<?= $list->getViewUrl() ?>">
+                                    <div class="d-flex">
+                                        <div>
+                                            <img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/400x300/'. $list->getImage() ?>" alt="<?= $list->title ?>">
+                                        </div>
+                                    </div>
+                                 </a>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
 <!--            <div class="col-md-8 order-4 order-md-2">-->
 <!--            </div>-->
 <!--            <div class="col-md-4 order-3 order-md-3">-->
@@ -289,7 +295,7 @@ $this->pageTitle = $model->title;
 <!--</div>-->
 <!--<div class="list-item-view">-->
 <!--    <div class="image-box">-->
-<!--        <img src="--><?//= Yii::app()->baseUrl.'/uploads/lists/thumbs/200x200/'.$model->getImage()?><!--" class="image" alt="--><?//= $model->title ?><!--" title="--><?//= $model->title ?><!--">-->
+<!--        <img src="--><?//= Yii::app()->baseUrl.'/uploads/lists/thumbs/400x300/'.$model->getImage()?><!--" class="image" alt="--><?//= $model->title ?><!--" title="--><?//= $model->title ?><!--">-->
 <!--        <h2>--><?//= $model->title ?><!--</h2>-->
 <!--        --><?php //if($model->user_type == 'user'):?>
 <!--        <div class="user-image">-->

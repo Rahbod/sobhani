@@ -113,6 +113,7 @@ return array(
 			'showScriptName'=>false,
 			'appendParams'=>true,
 			'rules'=>array(
+				'home' => 'site/index',
 				'search' => 'lists/public/search',
 				'lists' => 'lists/public/index',
 				'lists/<id:\d+>/<title:.*>'=>'lists/public/view',

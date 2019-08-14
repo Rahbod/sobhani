@@ -94,12 +94,48 @@
                         <a class="nav-link" href="<?= $this->createUrl('/new') ?>">ایجاد لیست</a>
                     </li>
                     <li class="nav-item">
+                        <?php if (Yii::app()->user->isGuest): ?>
+                            <a href="#login-modal" data-toggle="modal" class="nav-link signUp btn-outline-light mr-3">ورود / ثبت نام</a>
+                        <?php endif;?>
+                        <?php if (!Yii::app()->user->isGuest && Yii::app()->user->type == 'user'): ?>
+                            <div class="dropdown show">
+                                <a class="btn dropdown-toggle" href="#"
+                                   role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false" style="color: #fff;padding-top: 0;padding-bottom: 0;line-height: 37px;">
+                                    <span><?= Yii::app()->user->showName ?></span>
+                                    <img src="<?= Yii::app()->user->avatar ?>" class="mr-3 img-fluid user-image" alt="">
+                                    <?php if ($this->userNotifications != 0 and Yii::app()->request->pathInfo != 'notifications'): ?>
+                                        <span class="badge"><?= $this->userNotifications ?></span>
+                                    <?php endif; ?>
+                                </a>
 
-                        <a href="#login-modal" data-toggle="modal" class="nav-link signUp btn-outline-light mr-3">
-                            ورود / ثبت نام
-                        </a>
+                                <div class="dropdown-menu text-right p-3" aria-labelledby="dropdownMenuLink">
+                                    <div class="arrow"></div>
+                                    <a class="dropdown-item" href="<?= $this->createUrl('/dashboard') ?>">
+                                        <p class="mb-1"><?= Yii::app()->user->showName ?></p>
+                                    </a>
+                                    <a class="dropdown-item" href="<?= $this->createUrl('/profile') ?>">
+                                        <p class="mb-1">ویرایش پروفایل</p>
+                                    </a>
+                                    <a class="dropdown-item" href="<?= $this->createUrl('/changePassword') ?>">
+                                        <p class="mb-1">تغییر کلمه عبور</p>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+
+                                    <a class="dropdown-item" href="<?= $this->createUrl('/new') ?>">ایجاد لیست جدید</a>
+                                    <a class="dropdown-item" href="<?= $this->createUrl('/notifications') ?>">
+                                        اطلاعیه ها
+                                        <?php if ($this->userNotifications != 0 and Yii::app()->request->pathInfo != 'notifications'): ?>
+                                            <span class="badge"><?= $this->userNotifications ?></span>
+                                        <?php endif; ?>
+                                    </a>
+                                    <a class="dropdown-item" href="<?= $this->createUrl('/recommended') ?>">لیست های پیشنهادی</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="<?= $this->createUrl('/logout') ?>">خروج</a>
+                                </div>
+                            </div>
+                        <?php endif;?>
                     </li>
-
                 </ul>
             </div>
         </nav>
@@ -125,10 +161,10 @@
 
             <h4 class="-white my-5 -h5">شما نیز میتوانید لیستی از بهترین ها بسازید!</h4>
 
-            <a href="<?= $this->createUrl('/new') ?>"
-               class="btn btn-outline-light rounded searchBox__createListBtn -white">ایجاد لیست</a>
-            <a href="#login-modal" data-target="#login-modal" data-toggle="modal"
-               class="btn btn-outline-light rounded searchBox__loginBtn -white mr-5">ورود / ثبت نام</a>
+            <a href="<?= $this->createUrl('/new') ?>" class="btn btn-outline-light rounded searchBox__createListBtn -white">ایجاد لیست</a>
+            <?php if(Yii::app()->user->isGuest):?>
+                <a href="#login-modal" data-target="#login-modal" data-toggle="modal" class="btn btn-outline-light rounded searchBox__loginBtn -white mr-5">ورود / ثبت نام</a>
+            <?php endif;?>
             <div class="scrollDownContainer text-center">
                 <span class="scrollDown"></span>
             </div>
