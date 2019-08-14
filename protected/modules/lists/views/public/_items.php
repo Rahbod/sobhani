@@ -33,7 +33,7 @@ foreach($voteAvg as $itemID => $avg):
                     <div class="group--item p-3 bg-white">
                         <div class="align-items-center">
                             <div class="d-inline-block listView--section2--number">
-                                <img class=" pl-2" src="<?= Yii::app()->theme->baseUrl?>/media/images/public/rounded-star.png">
+                                <img class="" src="<?= Yii::app()->theme->baseUrl?>/media/images/public/rounded-star.png">
                                 <span><?= $i?></span>
                             </div>
                             <h4 class="-h4 listView--section2__title d-inline-block flex-fill"><?= $item->item->title ?></h4>

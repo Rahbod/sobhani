@@ -15,7 +15,7 @@ $form = $this->beginWidget('CActiveForm', array(
     ),
 )); ?>
     <p id="login-error" class="text-center" style="font-size: 11px"></p>
-    <div class="tab-content">
+    <div class="tab-content" id="tabPansBlock">
         <div class="tab-pane fade" id="mobile-form">
             <div class="d-flex loginNormal">
                 <hr class="w-50">
@@ -29,13 +29,17 @@ $form = $this->beginWidget('CActiveForm', array(
             <div class="form-group mb-0">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="mobile"class="login-submit-btn btn btn-primary form-control enter-trigger">ارسال کد فعالسازی</button>
+                        <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="mobile"
+                                class="login-submit-btn btn btn-primary form-control enter-trigger">ارسال کد فعالسازی
+                        </button>
                         <a id="go-verify" data-toggle="my-tab" data-target="#mobile-verification-form"></a>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <button type="button" class="btn btn-default form-control" data-toggle="my-tab"
-                                data-target="#username-form">ورود با
-                            نام کاربری
+                        <button type="button" class="btn btn-default form-control border"
+                                aria-controls="username-form"
+                                onclick="$('#mobile-form').removeClass('active show');$('#username-form').addClass('active show');"
+                                role="tab" id="btn-default-hover">
+                            ورود با نام کاربری
                         </button>
                     </div>
                 </div>
@@ -59,14 +63,17 @@ $form = $this->beginWidget('CActiveForm', array(
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="resend-verification"
+                    <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>"
+                            value="resend-verification"
                             class="login-submit-btn btn btn-default resend-btn form-control">
                         <i class="icon icon-refresh"></i>
                         ارسال مجدد کد فعالسازی
                     </button>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <button type="button" class="btn btn-default form-control" data-toggle="tab" data-target="#username-form">ورود با نام کاربری</button>
+                    <button type="button" class="btn btn-default form-control" data-toggle="tab"
+                            data-target="#username-form">ورود با نام کاربری
+                    </button>
                 </div>
             </div>
         </div>
@@ -87,10 +94,17 @@ $form = $this->beginWidget('CActiveForm', array(
             <div class="form-group mb-0">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <button type="button" class="btn btn-outline-warning form-control" role="tab" data-toggle="tab" data-target="#mobile-form">ورود با شماره تلفن همراه</button>
+                        <button type="button" class="btn btn-outline-warning form-control"
+                                aria-controls="mobile-form" id="mobile-form-tab"
+                                onclick="$('#username-form').removeClass('active show');$('#mobile-form').addClass('active show')"
+                                role="tab">
+                            ورود با شماره تلفن همراه
+                        </button>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="username" class="login-submit-btn btn btn-info form-control enter-trigger">ورود به حساب کاربری</button>
+                        <button type="submit" name="<?= CHtml::activeName($model, 'login_mode') ?>" value="username"
+                                class="login-submit-btn btn btn-info form-control enter-trigger">ورود به حساب کاربری
+                        </button>
                     </div>
                 </div>
             </div>
@@ -100,7 +114,7 @@ $form = $this->beginWidget('CActiveForm', array(
 
 
 <?php
-Yii::app()->clientScript->registerScript('modal-login','
+Yii::app()->clientScript->registerScript('modal-login', '
 $("body").on("click", ".login-submit-btn", function () {
     var $this = $(this),
         loginMode = $this.val(),
@@ -191,4 +205,5 @@ function timer(counter) {
         }
     }, 1000);
 }
-');?>
+
+'); ?>
