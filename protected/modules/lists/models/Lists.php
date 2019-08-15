@@ -330,7 +330,7 @@ class Lists extends CActiveRecord
 		if($this->image)
 			return $this->image;
 		else
-			return Yii::app()->theme->baseUrl.'/media/images/home/slider/p-1.png';
+			return Yii::app()->theme->baseUrl.'/media/images/home/logo.jpg';
 	}
 
     public function getVotedUsersCount()

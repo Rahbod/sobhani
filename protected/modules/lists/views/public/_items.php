@@ -5,14 +5,18 @@ $itemImagePath = Yii::getPathOfAlias('webroot').'/uploads/items/thumbs/150x150/'
 $itemImageUrl = Yii::app()->getBaseUrl(true).'/uploads/items/thumbs/150x150/';
 $i = 1;
 $voteAvg = Votes::VoteAverages($model->id);
-Yii::app()->clientScript->registerScript('target', '
+arsort($voteAvg, SORT_DESC);?>
+
+<script>
     var target = null;
-    $(".vote-trigger").click(function(){
-        target = $(this);
+    $(document).ready(function(){
+        $("body").on('click', '.vote-trigger', function(){
+            target = $(this);
+        });
     });
-');
-arsort($voteAvg, SORT_DESC);
-foreach($voteAvg as $itemID => $avg):
+</script>
+
+<?php foreach($voteAvg as $itemID => $avg):
     if(!isset($items[$itemID]))
         continue;
     $item = $items[$itemID];
@@ -22,13 +26,15 @@ foreach($voteAvg as $itemID => $avg):
     <div class="col-md-12 mb-3">
         <div class="container-fluid px-0 -shadow">
             <div class="row">
-                <?php if($item->image && is_file($itemImagePath.$item->image)):?>
-                    <div class="col-md-4 pl-md-0 text-center PB-3 pb-md-0">
-                        <div class="h-100 bg-white pt-md-3 pr-md-3">
-                            <img class="listView--section2__image mb-3 mb-md-0" src="<?= $itemImageUrl.$item->image ?>" alt="<?= $item->item->title ?>" title="<?= $item->item->title ?>">
-                        </div>
+                <?php $image = Yii::app()->theme->baseUrl . '/media/images/home/logo.jpg';
+                if($item->image && is_file($itemImagePath.$item->image)){
+                    $image = $itemImageUrl.$item->image;
+                }?>
+                <div class="col-md-4 pl-md-0 text-center PB-3 pb-md-0">
+                    <div class="h-100 bg-white pt-md-3 pr-md-3">
+                        <img class="listView--section2__image mb-3 mb-md-0" src="<?= $image ?>" alt="<?= $item->item->title ?>" title="<?= $item->item->title ?>">
                     </div>
-                <?php endif;?>
+                </div>
                 <div class="col-md-8 pr-md-0">
                     <div class="group--item p-3 bg-white">
                         <div class="align-items-center">
@@ -41,7 +47,7 @@ foreach($voteAvg as $itemID => $avg):
                                 <div class="flex-fill">
                                     <?php
                                     // vote btn
-                                    echo CHtml::ajaxLink('<img src="'.Yii::app()->theme->baseUrl.'/media/images/public/check_2.png">ثبت رای', array('/lists/public/json'), array(
+                                    echo CHtml::ajaxLink('<img src="'.Yii::app()->theme->baseUrl.'/media/images/public/check_2.png" class="ml-2">ثبت رای', array('/lists/public/json'), array(
                                         'type' => 'POST',
                                         'dataType' => 'JSON',
                                         'data' => array('method' => 'vote', 'hash' => $hash),
@@ -49,27 +55,25 @@ foreach($voteAvg as $itemID => $avg):
                                             if(target.hasClass("loading"))
                                                 return false;
                                             target.addClass("loading");
-                                            $(".view-alert").addClass("hidden").removeClass("alert-success alert-warning").find("span").text("");
                                         }',
                                         'success' => 'js: function(data){
                                             target.removeClass("loading");
                                             if(data.status){
                                                 target.parent().find(".vote-trigger.active.pull-left").text("%"+data.newAvg);
                                                 // target.toggleClass("gray").data("method", "unvote").find("i").toggleClass("icon-check-sign icon-remove-sign");
-                                                target.addClass("hidden");
-                                                target.parent().find(".un-vote-btn").removeClass("hidden");
-                                                $(".view-alert").addClass("alert-success").find("span").text(data.message);
+                                                target.addClass("d-none");
+                                                target.parent().find(".unvote-btn").removeClass("d-none");
+                                                alert(data.message);
                                             }
                                             else
-                                                $(".view-alert").addClass("alert-warning").find("span").text(data.message);
-                                            $(".view-alert").removeClass("hidden");
+                                                alert(data.message);
                                         }'
                                     ), array(
-                                        'class' => 'btn btn-outline-info listView--section2__vote float-left '.($voted?" d-none":"")
+                                        'class' => 'btn btn-outline-info vote-trigger listView--section2__vote vote-btn float-left '.($voted?" d-none":"")
                                     ));
 
                                     // un vote btn
-                                    echo CHtml::ajaxLink('<i class="icon-remove-sign"></i>', array('/lists/public/json'), array(
+                                    echo CHtml::ajaxLink('حذف رای', array('/lists/public/json'), array(
                                         'type' => 'POST',
                                         'dataType' => 'JSON',
                                         'data' => array('method' => 'unvote', 'hash' => $hash),
@@ -77,23 +81,20 @@ foreach($voteAvg as $itemID => $avg):
                                             if(target.hasClass("loading"))
                                                 return false;
                                             target.addClass("loading");
-                                            $(".view-alert").addClass("hidden").removeClass("alert-success alert-warning").find("span").text("");
                                         }',
                                         'success' => 'js: function(data){
                                             target.removeClass("loading");
                                             if(data.status){
                                                 target.parent().find(".vote-trigger.active.pull-left").text("%"+data.newAvg);
-                    //                                target.toggleClass("gray").data("method", "vote").find("i").toggleClass("icon-check-sign icon-remove-sign");
-                                                target.addClass("hidden");
-                                                target.parent().find(".vote-btn").removeClass("hidden");
-                                                $(".view-alert").addClass("alert-success").find("span").text(data.message);
-                                            }
-                                            else
-                                                $(".view-alert").addClass("alert-warning").find("span").text(data.message);
-                                            $(".view-alert").removeClass("hidden");
+                                                // target.toggleClass("gray").data("method", "vote").find("i").toggleClass("icon-check-sign icon-remove-sign");
+                                                target.addClass("d-none");
+                                                target.parent().find(".vote-btn").removeClass("d-none");
+                                                alert(data.message);
+                                            } else
+                                                alert(data.message);
                                         }'
                                     ), array(
-                                        'class' => 'un-vote-btn vote-trigger pull-left gray'.(!$voted?" d-none":"")
+                                        'class' => 'btn btn-outline-danger vote-trigger listView--section2__vote unvote-btn float-left'.(!$voted?" d-none":"")
                                     ));
                                     ?>
                                 </div>
@@ -105,15 +106,17 @@ foreach($voteAvg as $itemID => $avg):
                                 <!--</div>-->
                                 <!--</div>-->
 
-                                <div class="progress yellow float-left ml-3">
-                                    <span class="progress-left">
-                                        <span class="progress-bar"></span>
-                                    </span>
-                                        <span class="progress-right">
-                                        <span class="progress-bar"></span>
-                                    </span>
-                                    <div class="progress-value"><?= $voted?$avg:$voteAvg[$item->item_id]?>%</div>
-                                </div>
+<!--                                <div class="progress yellow float-left ml-3">-->
+<!--                                    <span class="progress-left">-->
+<!--                                        <span class="progress-bar"></span>-->
+<!--                                    </span>-->
+<!--                                        <span class="progress-right">-->
+<!--                                        <span class="progress-bar"></span>-->
+<!--                                    </span>-->
+<!--                                    <div class="progress-value">--><?//= $voted?$avg:$voteAvg[$item->item_id]?><!--%</div>-->
+<!--                                </div>-->
+
+                                <div class="progress-bar2" data-percent="<?= $voted?$avg:$voteAvg[$item->item_id]?>" data-duration="1000" data-color="#f5f5f5,#f7941d"></div>
 
                             </div>
                         </div>

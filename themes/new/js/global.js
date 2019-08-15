@@ -11,4 +11,6 @@ $(document).ready(function () {
             scrollTop: $(".header").offset().top + header_height
         }, 1500);
     });
+
+    $(".progress-bar2").loading();
 });

@@ -1227,15 +1227,6 @@ a:active {
     }
 }
 
-@media (min-width: 768px) {
-    /*#region list view*/
-    .listView--section2__vote {
-        margin-top: 0.8rem;
-    }
-
-    /*endregion*/
-}
-
 @media (min-width: 992px) {
     .header .navbar-brand {
         margin: 0;
@@ -1537,4 +1528,14 @@ a:active {
     font-weight: 400;
     color: #808080;
     height:40px;
+}
+.bookmark-link{
+    width: 25px;
+    height:30px;
+    background: url("../media/images/public/icon-1.png") no-repeat center;
+    background-size: 25px;
+}
+.bookmark-link.active{
+    background: url("../media/images/public/icon-2.png") no-repeat center;
+    background-size: 25px;
 }
