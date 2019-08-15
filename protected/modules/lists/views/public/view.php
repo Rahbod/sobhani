@@ -11,6 +11,7 @@ $this->pageTitle = $model->title;
 
 Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/jQuery-plugin-progressbar.css');
 Yii::app()->getClientScript()->registerScriptFile(Yii::app()->theme->baseUrl.'/js/jQuery-plugin-progressbar.js', CClientScript::POS_END);
+Yii::app()->getClientScript()->registerScript('loading', '$(".progress-bar2").loading();');
 ?>
 <section class="listView section">
     <div class="container">
