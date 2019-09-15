@@ -18,7 +18,7 @@ $model = UserDetails::model()->findByPk($user->id);
             <div class="col-lg-9 mx-auto">
                 <div class="userPage--header d-flex align-items-center">
                     <div class="uploader-container">
-                        <img src="<?= $user->userDetails->getAvatar() ?>" alt="<?= $user->userDetails->getShowName() ?>" title="<?= $user->userDetails->getShowName() ?>" class="img-fluid userAvatar">
+                        <img src="<?= $user->userDetails->getAvatar() ?>" alt="<?= $user->userDetails->getShowName() ?>" title="<?= $user->userDetails->getShowName() ?>" class="img-fluid userAvatar rounded-circle">
                         <?php $this->widget('ext.dropZoneUploader.dropZoneUploader', array(
                             'id' => 'uploaderLogo',
                             'model' => $model,

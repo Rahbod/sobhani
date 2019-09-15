@@ -33,6 +33,7 @@
     $cs->registerCssFile($baseUrl.'/css/global.css');
     $cs->registerCssFile($baseUrl.'/css/sidebar.css');
     $cs->registerCssFile($baseUrl.'/css/responsive.css');
+    $cs->registerCssFile($baseUrl.'/fonts/vazir-font-master/dist/font-face.css');
 
     $cs->registerScriptFile($baseUrl.'/js/bootstrap.min.js', CClientScript::POS_END);
     $cs->registerScriptFile($baseUrl.'/js/vendors/owl-carousel/owl.carousel.min.js', CClientScript::POS_END);

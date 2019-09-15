@@ -26,6 +26,7 @@
     $cs->registerCssFile($baseUrl.'/css/font-awesome.css');
     $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.css?3.5');
     $cs->registerCssFile($baseUrl.'/css/responsive-theme.css?3.5');
+    $cs->registerCssFile($baseUrl.'/fonts/vazir-font-master/dist/font-face.css');
 
     $cs->registerScriptFile($baseUrl.'/js/bootstrap.min.js', CClientScript::POS_END);
     $cs->registerScriptFile($baseUrl.'/js/bootstrap-select.min.js', CClientScript::POS_END);

@@ -86,6 +86,7 @@
 }
 
 #sidebar .sidebar-header {
+    text-align: center;
     color: #fff;
     padding: 20px;
     background: #32b4d8;

@@ -106,8 +106,8 @@ class ListsManageController extends Controller
                     'height' => 300
                 ),
                 'resize' => array(
-                    'width' => 768,
-                    'height' => 480
+                    'width' => 765,
+                    'height' => 350
                 ))) : [];
             if ($model->items) {
                 foreach ($model->items as $key => $item) {
@@ -157,8 +157,8 @@ class ListsManageController extends Controller
                 'height' => 300
             ),
             'resize' => array(
-                'width' => 768,
-                'height' => 480
+                'width' => 765,
+                'height' => 350
             )));
 
         $oldItemImages = [];

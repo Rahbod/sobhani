@@ -26,16 +26,18 @@ arsort($voteAvg, SORT_DESC);?>
     <div class="col-md-12 mb-3">
         <div class="container-fluid px-0 -shadow">
             <div class="row">
-                <?php $image = Yii::app()->theme->baseUrl . '/media/images/home/logo.jpg';
+                <?php $image = null; //Yii::app()->theme->baseUrl . '/media/images/home/logo.jpg';
                 if($item->image && is_file($itemImagePath.$item->image)){
                     $image = $itemImageUrl.$item->image;
                 }?>
-                <div class="col-md-4 pl-md-0 text-center PB-3 pb-md-0">
-                    <div class="h-100 bg-white pt-md-3 pr-md-3">
-                        <img class="listView--section2__image mb-3 mb-md-0" src="<?= $image ?>" alt="<?= $item->item->title ?>" title="<?= $item->item->title ?>">
+                <?php if($image):?>
+                    <div class="col-md-4 pl-md-0 text-center PB-3 pb-md-0">
+                        <div class="h-100 bg-white pt-md-3 pr-md-3">
+                            <img class="listView--section2__image mb-3 mb-md-0" src="<?= $image ?>" alt="<?= $item->item->title ?>" title="<?= $item->item->title ?>">
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-8 pr-md-0">
+                <?php endif;?>
+                <div class="<?php if($image):?>col-md-8 pr-md-0<?php else:?>col-md-12<?php endif;?>">
                     <div class="group--item p-3 bg-white">
                         <div class="align-items-center">
                             <div class="d-inline-block listView--section2--number">
@@ -47,7 +49,7 @@ arsort($voteAvg, SORT_DESC);?>
                                 <div class="flex-fill">
                                     <?php
                                     // vote btn
-                                    echo CHtml::ajaxLink('<img src="'.Yii::app()->theme->baseUrl.'/media/images/public/check_2.png" class="ml-2">ثبت رای', array('/lists/public/json'), array(
+                                    echo CHtml::ajaxLink('<i class="fas fa-check-circle ml-2"></i>ثبت رای', array('/lists/public/json'), array(
                                         'type' => 'POST',
                                         'dataType' => 'JSON',
                                         'data' => array('method' => 'vote', 'hash' => $hash),
@@ -116,7 +118,7 @@ arsort($voteAvg, SORT_DESC);?>
 <!--                                    <div class="progress-value">--><?//= $voted?$avg:$voteAvg[$item->item_id]?><!--%</div>-->
 <!--                                </div>-->
 
-                                <div class="progress-bar2" data-percent="<?= $voted?$avg:$voteAvg[$item->item_id]?>" data-duration="1000" data-color="#f5f5f5,#f7941d"></div>
+                                <div class="progress-bar2" data-percent="<?= $voted?$avg:$voteAvg[$item->item_id]?>" data-duration="1000" data-color="#dcdcdc,#f7941d"></div>
 
                             </div>
                         </div>

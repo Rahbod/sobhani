@@ -4,7 +4,7 @@
             <div class="comments--item clearfix" id="comment-<?php echo $comment->comment_id; ?>">
                 <h6 class=""><?php echo CHtml::encode($comment->comment_text);?></h6>
                 <span class="text-muted"><?php echo $comment->userName;?></span>
-                <span class="text-muted"><?php echo JalaliDate::differenceTime($comment->create_time);?></span>
+                <span class="text-muted float-left"><?php echo JalaliDate::differenceTime($comment->create_time);?></span>
 <!--                <a href="void:;" title="like" class="like">-->
 <!--                    54-->
 <!--                    <i class="icon-heart"></i>-->

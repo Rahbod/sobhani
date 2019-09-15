@@ -166,9 +166,9 @@ class ListsPublicController extends Controller
                     'height' => 300
                 ),
                 'resize' => array(
-                    'width' => 768,
-                    'height' => 480,
-                    'quality' => 60
+                    'width' => 765,
+                    'height' => 350,
+                    'quality' => 100
                 ))) : [];
             $model->status = isset($_POST['draft']) ? Lists::STATUS_DRAFT : ($model->user_type == 'admin' ? Lists::STATUS_APPROVED : Lists::STATUS_PENDING);
 
@@ -224,9 +224,9 @@ class ListsPublicController extends Controller
                 'height' => 300
             ),
             'resize' => array(
-                'width' => 768,
-                'height' => 480,
-                'quality' => 60
+                'width' => 765,
+                'height' => 350,
+                'quality' => 100
             )));
 
         $oldItemImages = [];

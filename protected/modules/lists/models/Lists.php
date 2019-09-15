@@ -343,4 +343,25 @@ class Lists extends CActiveRecord
         $records = Votes::model()->findAll($criteria);
         return count($records);
     }
+
+    public function getVoteCount()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('list_id = :id');
+        $criteria->addCondition('user_id IS NOT NULL');
+        $criteria->params[':id'] = $this->id;
+
+        $records = Votes::model()->findAll($criteria);
+        return count($records);
+    }
+
+    public function getBookmarkedCount()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('list_id = :id');
+        $criteria->params[':id'] = $this->id;
+
+        $records = UserBookmarks::model()->findAll($criteria);
+        return count($records);
+    }
 }

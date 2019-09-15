@@ -6,7 +6,7 @@
     <!--        <i class="fas fa-arrow-left"></i>-->
     <!--    </div>-->
     <div class="sidebar-header">
-        <h4 class="-h4">10 بهترین</h4>
+        <img src="<?php echo Yii::app()->theme->baseUrl;?>/media/images/public/site_logo.png" class="siteLogo__image" alt="10 بهترین">
         <p>بهترین ها به انتخاب من و تو</p>
     </div>
 
@@ -27,31 +27,24 @@
         <?php if (!Yii::app()->user->isGuest && Yii::app()->user->type == 'user'): ?>
             <li>
                 <div class="d-flex">
-                    <a href="<?= $this->createUrl('/dashboard') ?>" class="flex-fill menu-item">سعید سبحانی</a>
+                    <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="flex-fill menu-item"><?= Yii::app()->user->showName ?></a>
                     <a class="submenu" href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false"></a>
                 </div>
                 <ul class="collapse list-unstyled" id="homeSubmenu2">
-                    <li>
-                        <a class="menu-item" href="<?= $this->createUrl('/new') ?>">ایجاد لیست جدید</a>
-                    </li>
+                    <li><a class="menu-item" href="<?= $this->createUrl('/dashboard') ?>">داشبورد</a></li>
+                    <li><a class="menu-item" href="<?= $this->createUrl('/profile') ?>">ویرایش پروفایل</a></li>
+                    <li><a class="menu-item" href="<?= $this->createUrl('/changePassword') ?>">تغییر کلمه عبور</a></li>
+                    <li><a class="menu-item" href="<?= $this->createUrl('/new') ?>">ایجاد لیست جدید</a></li>
                     <li>
                         <a class="menu-item" href="<?= $this->createUrl('/notifications') ?>">اطلاعیه
-                            ها <?php if ($this->userNotifications != 0 and Yii::app()->request->pathInfo != 'notifications'): ?>
-                                <span class="notification-count"><?= $this->userNotifications ?></span><?php endif; ?>
+                        ها <?php if ($this->userNotifications != 0 and Yii::app()->request->pathInfo != 'notifications'): ?>
+                                <span class="badge" style="left: 15px;"><?= $this->userNotifications ?></span>
+                            <?php endif; ?>
                         </a>
                     </li>
-                    <li>
-                        <a class="menu-item" href="<?= $this->createUrl('/my-lists') ?>">لیست های من</a>
-                    </li>
-                    <li>
-                        <a class="menu-item" href="<?= $this->createUrl('/bookmarks') ?>">لیست های ذخیره شده</a>
-                    </li>
-                    <li>
-                        <a class="menu-item" href="<?= $this->createUrl('/recommended') ?>">لیست های پیشنهادی</a>
-                    </li>
-                    <li>
-                        <a class="menu-item" href="<?= $this->createUrl('/logout') ?>">خروج</a>
-                    </li>
+                    <li><a class="menu-item" href="<?= $this->createUrl('/bookmarks') ?>">لیست های ذخیره شده</a></li>
+                    <li><a class="menu-item" href="<?= $this->createUrl('/recommended') ?>">لیست های پیشنهادی</a></li>
+                    <li><a class="menu-item" href="<?= $this->createUrl('/logout') ?>">خروج</a></li>
                 </ul>
             </li>
         <?php else: ?>
@@ -103,7 +96,7 @@
                                    role="button" id="dropdownMenuLink" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false" style="color: #fff;padding-top: 0;padding-bottom: 0;line-height: 37px;">
                                     <span><?= Yii::app()->user->showName ?></span>
-                                    <img src="<?= Yii::app()->user->avatar ?>" class="mr-3 img-fluid user-image" alt="">
+                                    <img src="<?= Yii::app()->user->avatar ?>" class="mr-3 img-fluid user-image rounded-circle" alt="">
                                     <?php if ($this->userNotifications != 0 and Yii::app()->request->pathInfo != 'notifications'): ?>
                                         <span class="badge"><?= $this->userNotifications ?></span>
                                     <?php endif; ?>
@@ -129,6 +122,7 @@
                                             <span class="badge"><?= $this->userNotifications ?></span>
                                         <?php endif; ?>
                                     </a>
+                                    <a class="dropdown-item" href="<?= $this->createUrl('/bookmarks') ?>">لیست های ذخیره شده</a>
                                     <a class="dropdown-item" href="<?= $this->createUrl('/recommended') ?>">لیست های پیشنهادی</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="<?= $this->createUrl('/logout') ?>">خروج</a>

@@ -31,12 +31,14 @@
     $cs->registerCssFile($baseUrl.'/css/global_2.css');
     $cs->registerCssFile($baseUrl.'/css/sidebar.css');
     $cs->registerCssFile($baseUrl.'/css/responsive.css');
+    $cs->registerCssFile($baseUrl.'/fonts/vazir-font-master/dist/font-face.css');
 
     $cs->registerScriptFile($baseUrl.'/js/bootstrap.min.js', CClientScript::POS_END);
     $cs->registerScriptFile($baseUrl.'/js/vendors/owl-carousel/owl.carousel.min.js', CClientScript::POS_END);
     $cs->registerScriptFile($baseUrl.'/js/global.js', CClientScript::POS_END);
     $cs->registerScriptFile($baseUrl.'/js/index.js', CClientScript::POS_END);
     ?>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
 <body>
 <?php $this->renderPartial('//partial-views/_inner_header');?>
@@ -45,54 +47,5 @@
 </main>
 <?php $this->renderPartial('//partial-views/_footer');?>
 <?php $this->renderPartial('//partial-views/_login_popup');?>
-
-
-
-
-
-
-<!-- <div class="page inner">
-    <?php $this->renderPartial('//partial-views/_inner_header');?>
-    <div class="content">
-        <div class="container">
-            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 left-side">
-                <div class="context">
-                    <?php $this->renderPartial('//partial-views/_breadcrumb');?>
-                    <?php //echo $content;?>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 right-side">
-                <?php $this->renderPartial('//partial-views/_right_col'); ?>
-                <div class="tren">
-                    <h4>ده لیست برتر</h4>
-                    <?php foreach ($this->getTopListBySeen() as $item): ?>
-                        <div class="trending">
-                            <a href="<?= $item->getViewUrl() ?>"><img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/400x300/'. $item->getImage() ?>" alt="<?= $item->title ?>" title="<?= $item->title ?>">
-                                <?= $item->title ?></a>
-                            <br>
-                            <?= $item->seen ?>&nbsp;بازدید
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-
-                <?php if($this->similarProvider):?>
-                    <div class="tren">
-                        <h4>لیست های مرتبط</h4>
-                        <?php foreach ($this->similarProvider as $item): ?>
-                            <div class="trending">
-                                <a href="<?= $item->getViewUrl() ?>"><img src="<?= Yii::app()->getBaseUrl(true) . '/uploads/lists/thumbs/400x300/'. $item->getImage() ?>" alt="<?= $item->title ?>" title="<?= $item->title ?>">
-                                    <?= $item->title ?></a>
-                                <br>
-                                <?= $item->seen ?>&nbsp;بازدید
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
-    <?php //$this->renderPartial('//partial-views/_footer');?>
-    <?php //$this->renderPartial('//partial-views/_login_popup');?>
-</div> -->
 </body>
 </html>

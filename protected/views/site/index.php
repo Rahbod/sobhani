@@ -224,7 +224,7 @@ $listItemUrl = Yii::app()->getBaseUrl(true) . '/uploads/items/thumbs/150x150/';
                                                         <a href="void:;" class="-text-blue"><img src="<?= Yii::app()->theme->baseUrl . '/media/images/public/user_avatar.png' ?>"></a>
                                                     <?php endif; ?>
                                                 </div>
-                                                <div class="flex-fill"><?= $event->message ?></div>
+                                                <div class="flex-fill"><?= $event->message ?><span class="text-muted"><?php echo JalaliDate::differenceTime($event->date);?></span></div>
                                             </div>
                                         </li>
                                     <?php endforeach; ?>

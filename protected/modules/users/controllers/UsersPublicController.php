@@ -583,15 +583,18 @@ class UsersPublicController extends Controller
      */
     public function actionBookmarks()
     {
-        Yii::app()->theme = 'frontend';
+        Yii::app()->theme = 'new';
         $this->layout = '//layouts/inner';
 
         $user = Users::model()->findByPk(Yii::app()->user->getId());
         /* @var $user Users */
 
-        $this->render('bookmarks', array(
-            'bookmarks' => $user->bookmarks
-        ));
+        $title = 'لیست های ذخیره شده';
+        foreach($user->bookmarks as $bookmark)
+            $lists[] = $bookmark->list;
+
+        $this->pageTitle = $title;
+        $this->render('lists.views.public.list', compact('lists', 'title'));
     }
 
     public function actionLists()
